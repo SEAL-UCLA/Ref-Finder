@@ -1,4 +1,4 @@
-# RefFinder
+# Ref-Finder
 
 [Website for Ref-Finder Tool Demo](https://sites.google.com/site/reffindertool/)
 
