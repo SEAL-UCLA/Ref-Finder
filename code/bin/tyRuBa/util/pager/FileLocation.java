@@ -1,74 +1,68 @@
-/*    */ package tyRuBa.util.pager;
-/*    */ 
-/*    */ import java.io.File;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class FileLocation
-/*    */   extends Location
-/*    */ {
-/* 18 */   File base = null;
-/*    */   
-/*    */   int myHashCode;
-/*    */   
-/*    */ 
-/*    */   public FileLocation(File theBasePath)
-/*    */   {
-/* 25 */     this.base = theBasePath;
-/* 26 */     this.myHashCode = this.base.hashCode();
-/*    */   }
-/*    */   
-/*    */   public FileLocation(String filename)
-/*    */   {
-/* 31 */     this(new File(filename));
-/*    */   }
-/*    */   
-/*    */   public File getBase()
-/*    */   {
-/* 36 */     return this.base;
-/*    */   }
-/*    */   
-/*    */ 
-/*    */ 
-/*    */   public boolean equals(Object other)
-/*    */   {
-/* 43 */     if ((other instanceof FileLocation)) {
-/* 44 */       FileLocation flOther = (FileLocation)other;
-/* 45 */       return flOther.base.equals(this.base);
-/*    */     }
-/* 47 */     return false;
-/*    */   }
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public int hashCode()
-/*    */   {
-/* 55 */     return this.myHashCode;
-/*    */   }
-/*    */   
-/*    */ 
-/*    */ 
-/*    */   public Pager.ResourceId getResourceID(String relativeID)
-/*    */   {
-/* 62 */     return new FileResourceID(this, relativeID);
-/*    */   }
-/*    */   
-/*    */   public String toString() {
-/* 66 */     return this.base.toString();
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.util.pager;
 
+import java.io.File;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/util/pager/FileLocation.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class FileLocation
+  extends Location
+{
+  File base = null;
+  int myHashCode;
+  
+  public FileLocation(File theBasePath)
+  {
+    this.base = theBasePath;
+    this.myHashCode = this.base.hashCode();
+  }
+  
+  public FileLocation(String filename)
+  {
+    this(new File(filename));
+  }
+  
+  public File getBase()
+  {
+    return this.base;
+  }
+  
+  public boolean equals(Object other)
+  {
+    if ((other instanceof FileLocation))
+    {
+      FileLocation flOther = (FileLocation)other;
+      return flOther.base.equals(this.base);
+    }
+    return false;
+  }
+  
+  public int hashCode()
+  {
+    return this.myHashCode;
+  }
+  
+  public Pager.ResourceId getResourceID(String relativeID)
+  {
+    return new FileResourceID(this, relativeID);
+  }
+  
+  public String toString()
+  {
+    return this.base.toString();
+  }
+}

@@ -1,107 +1,119 @@
-/*    */ package tyRuBa.util;
-/*    */ 
-/*    */ import java.util.NoSuchElementException;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ final class MapElementSource
-/*    */   extends ElementSource
-/*    */ {
-/* 11 */   private Object next = null;
-/*    */   private ElementSource remaining;
-/*    */   private Action action;
-/*    */   
-/*    */   public MapElementSource(ElementSource on, Action what) {
-/* 16 */     this.action = what;
-/* 17 */     this.remaining = on;
-/*    */   }
-/*    */   
-/*    */   public int status()
-/*    */   {
-/* 22 */     if (this.next == null) {
-/* 23 */       advance();
-/*    */     }
-/* 25 */     if (this.next == null) {
-/* 26 */       if (this.remaining == null) {
-/* 27 */         return -1;
-/*    */       }
-/* 29 */       int result = this.remaining.status();
-/* 30 */       return result;
-/*    */     }
-/*    */     
-/*    */ 
-/* 34 */     return 1;
-/*    */   }
-/*    */   
-/*    */   public Object nextElement() {
-/* 38 */     if (status() == 1) {
-/* 39 */       Object theNext = this.next;
-/* 40 */       this.next = null;
-/* 41 */       return theNext;
-/*    */     }
-/*    */     
-/* 44 */     throw new NoSuchElementException("MapElementSource");
-/*    */   }
-/*    */   
-/*    */   public void print(PrintingState p) {
-/* 48 */     p.print("Map(");
-/* 49 */     p.indent();
-/* 50 */     if (this.next != null) {
-/* 51 */       p.print("ready=" + this.next + " ");
-/*    */     }
-/* 53 */     p.print("Action= " + this.action.toString());p.newline();
-/* 54 */     p.print("on =");
-/* 55 */     p.indent();
-/* 56 */     if (this.remaining == null) {
-/* 57 */       p.print("null");
-/*    */     } else
-/* 59 */       this.remaining.print(p);
-/* 60 */     p.outdent();
-/* 61 */     p.outdent();
-/* 62 */     p.print(")");
-/*    */   }
-/*    */   
-/*    */   private int advance() {
-/* 66 */     int result = 1;
-/* 67 */     this.next = null;
-/*    */     
-/* 69 */     while ((this.next == null) && ((result = this.remaining.status()) == 1))
-/*    */     {
-/* 71 */       this.next = this.action.compute(this.remaining.nextElement());
-/*    */     }
-/*    */     
-/* 74 */     if (result == -1) {
-/* 75 */       this.remaining = ElementSource.theEmpty;
-/*    */     }
-/* 77 */     return result;
-/*    */   }
-/*    */   
-/*    */   public boolean isEmpty() {
-/* 81 */     return (this.next == null) && (this.remaining.isEmpty());
-/*    */   }
-/*    */   
-/*    */   public ElementSource first() {
-/* 85 */     if (this.next != null) {
-/* 86 */       return ElementSource.singleton(this.next);
-/*    */     }
-/*    */     
-/* 89 */     return this.remaining.first().map(this.action);
-/*    */   }
-/*    */   
-/*    */   public void release() {
-/* 93 */     super.release();
-/* 94 */     this.next = null;
-/* 95 */     this.action = null;
-/* 96 */     if (this.remaining != null) {
-/* 97 */       this.remaining.release();
-/* 98 */       this.remaining = null;
-/*    */     }
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.util;
 
+import java.util.NoSuchElementException;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/tyRuBa/util/MapElementSource.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+final class MapElementSource
+  extends ElementSource
+{
+  private Object next = null;
+  private ElementSource remaining;
+  private Action action;
+  
+  public MapElementSource(ElementSource on, Action what)
+  {
+    this.action = what;
+    this.remaining = on;
+  }
+  
+  public int status()
+  {
+    if (this.next == null) {
+      advance();
+    }
+    if (this.next == null)
+    {
+      if (this.remaining == null) {
+        return -1;
+      }
+      int result = this.remaining.status();
+      return result;
+    }
+    return 1;
+  }
+  
+  public Object nextElement()
+  {
+    if (status() == 1)
+    {
+      Object theNext = this.next;
+      this.next = null;
+      return theNext;
+    }
+    throw new NoSuchElementException("MapElementSource");
+  }
+  
+  public void print(PrintingState p)
+  {
+    p.print("Map(");
+    p.indent();
+    if (this.next != null) {
+      p.print("ready=" + this.next + " ");
+    }
+    p.print("Action= " + this.action.toString());p.newline();
+    p.print("on =");
+    p.indent();
+    if (this.remaining == null) {
+      p.print("null");
+    } else {
+      this.remaining.print(p);
+    }
+    p.outdent();
+    p.outdent();
+    p.print(")");
+  }
+  
+  private int advance()
+  {
+    int result = 1;
+    this.next = null;
+    while ((this.next == null) && ((result = this.remaining.status()) == 1)) {
+      this.next = this.action.compute(this.remaining.nextElement());
+    }
+    if (result == -1) {
+      this.remaining = ElementSource.theEmpty;
+    }
+    return result;
+  }
+  
+  public boolean isEmpty()
+  {
+    return (this.next == null) && (this.remaining.isEmpty());
+  }
+  
+  public ElementSource first()
+  {
+    if (this.next != null) {
+      return ElementSource.singleton(this.next);
+    }
+    return this.remaining.first().map(this.action);
+  }
+  
+  public void release()
+  {
+    super.release();
+    this.next = null;
+    this.action = null;
+    if (this.remaining != null)
+    {
+      this.remaining.release();
+      this.remaining = null;
+    }
+  }
+}

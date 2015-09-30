@@ -1,94 +1,115 @@
-/*    */ package lsdSimplified;
-/*    */ 
-/*    */ import java.io.File;
-/*    */ import java.io.PrintStream;
-/*    */ import java.util.ArrayList;
-/*    */ import java.util.HashMap;
-/*    */ import java.util.LinkedHashSet;
-/*    */ import java.util.List;
-/*    */ import lsd.facts.LSDFactBase;
-/*    */ import lsd.io.LSDAlchemyRuleReader;
-/*    */ import lsd.io.LSDTyrubaFactReader;
-/*    */ import lsd.rule.LSDFact;
-/*    */ import lsd.rule.LSDPredicate;
-/*    */ import lsd.rule.LSDRule;
-/*    */ 
-/*    */ public class LSdiffOutputExaminer
-/*    */ {
-/* 18 */   LSDFactBase localFB = new LSDFactBase();
-/* 19 */   ArrayList<LSDRule> lsdiffRules = new ArrayList();
-/* 20 */   File winnowingRulesFile = new File("input/winnowingRules.rub");
-/*    */   
-/*    */   public static void main(String[] args) {
-/* 23 */     String project = "jfreechart";
-/* 24 */     String oldVersion = "0.9.10";
-/* 25 */     String newVersion = "0.9.11";
-/* 26 */     File twoKBFile = new File(
-/* 27 */       "/Volumes/gorillaHD2/LSdiff/Tyruba/lsd/jfreechart/" + oldVersion + "_" + newVersion + "2KB.rub");
-/* 28 */     File deltaKBFile = new File("/Volumes/gorillaHD2/LSdiff/Tyruba/lsd/jfreechart/" + oldVersion + "_" + newVersion + "delta.rub");
-/*    */     
-/* 30 */     LSdiffOutputExaminer lsdiffExaminer = new LSdiffOutputExaminer(twoKBFile, deltaKBFile, null);
-/* 31 */     lsdiffExaminer.compute_LSdiff_FACTTYPE();
-/* 32 */     lsdiffExaminer.print(System.out);
-/*    */   }
-/*    */   
-/*    */   public LSdiffOutputExaminer(File twoKBFile, File deltaKBFile, File lsdiffRuleFile)
-/*    */   {
-/*    */     try {
-/* 38 */       if (twoKBFile != null) {
-/* 39 */         ArrayList<LSDFact> twoKB = new LSDTyrubaFactReader(twoKBFile).getFacts();
-/* 40 */         this.localFB.load2KBFactBase(twoKB);
-/*    */       }
-/* 42 */       if (deltaKBFile != null) {
-/* 43 */         ArrayList<LSDFact> deltaKB = new LSDTyrubaFactReader(deltaKBFile).getFacts();
-/* 44 */         this.localFB.loadDeltaKBFactBase(deltaKB);
-/*    */       }
-/*    */     } catch (Exception e) {
-/* 47 */       e.printStackTrace();
-/*    */     }
-/*    */     
-/* 50 */     ArrayList<LSDRule> winnowingRules = new LSDAlchemyRuleReader(
-/* 51 */       this.winnowingRulesFile).getRules();
-/* 52 */     if ((twoKBFile != null) && (deltaKBFile != null)) this.localFB.loadWinnowingRules(winnowingRules);
-/* 53 */     List<LSDFact> afterWinnowing = this.localFB.getRemainingFacts(true);
-/* 54 */     if (lsdiffRuleFile != null) {
-/* 55 */       this.lsdiffRules = new LSDAlchemyRuleReader(lsdiffRuleFile).getRules();
-/*    */     }
-/*    */   }
-/*    */   
-/*    */ 
-/*    */ 
-/* 61 */   private HashMap<String, ArrayList<LSDFact>> predicateToFacts = new HashMap();
-/*    */   
-/*    */   public void compute_LSdiff_FACTTYPE() {
-/* 64 */     LinkedHashSet<LSDFact> deltaKBFacts = this.localFB.getDeltaKBFact();
-/* 65 */     for (LSDFact fact : deltaKBFacts) {
-/* 66 */       LSDPredicate predicate = fact.getPredicate();
-/* 67 */       String predicateType = predicate.getName();
-/*    */       
-/* 69 */       ArrayList<LSDFact> facts = (ArrayList)this.predicateToFacts.get(predicateType);
-/* 70 */       if (facts == null) {
-/* 71 */         facts = new ArrayList();
-/* 72 */         this.predicateToFacts.put(predicateType, facts);
-/*    */       }
-/* 74 */       facts.add(fact);
-/*    */     }
-/*    */   }
-/*    */   
-/* 78 */   public void print(PrintStream p) { p.println("2KB Size:\t" + this.localFB.num2KBFactSize());
-/* 79 */     p.println("DeltaKB Size:\t" + this.localFB.numDeltaKBFactSize());
-/* 80 */     p.println("Categorization of Delta KB Facts");
-/*    */     
-/* 82 */     for (String predicateType : this.predicateToFacts.keySet()) {
-/* 83 */       ArrayList<LSDFact> facts = (ArrayList)this.predicateToFacts.get(predicateType);
-/* 84 */       p.println(predicateType);
-/* 85 */       p.println("# Facts:\t" + facts.size());
-/*    */     }
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package lsdSimplified;
 
+import java.io.File;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import lsd.facts.LSDFactBase;
+import lsd.io.LSDAlchemyRuleReader;
+import lsd.io.LSDTyrubaFactReader;
+import lsd.rule.LSDFact;
+import lsd.rule.LSDPredicate;
+import lsd.rule.LSDRule;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/lsdSimplified/LSdiffOutputExaminer.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class LSdiffOutputExaminer
+{
+  LSDFactBase localFB = new LSDFactBase();
+  ArrayList<LSDRule> lsdiffRules = new ArrayList();
+  File winnowingRulesFile = new File("input/winnowingRules.rub");
+  
+  public static void main(String[] args)
+  {
+    String project = "jfreechart";
+    String oldVersion = "0.9.10";
+    String newVersion = "0.9.11";
+    File twoKBFile = new File(
+      "/Volumes/gorillaHD2/LSdiff/Tyruba/lsd/jfreechart/" + oldVersion + "_" + newVersion + "2KB.rub");
+    File deltaKBFile = new File("/Volumes/gorillaHD2/LSdiff/Tyruba/lsd/jfreechart/" + oldVersion + "_" + newVersion + "delta.rub");
+    
+    LSdiffOutputExaminer lsdiffExaminer = new LSdiffOutputExaminer(twoKBFile, deltaKBFile, null);
+    lsdiffExaminer.compute_LSdiff_FACTTYPE();
+    lsdiffExaminer.print(System.out);
+  }
+  
+  public LSdiffOutputExaminer(File twoKBFile, File deltaKBFile, File lsdiffRuleFile)
+  {
+    try
+    {
+      if (twoKBFile != null)
+      {
+        ArrayList<LSDFact> twoKB = new LSDTyrubaFactReader(twoKBFile).getFacts();
+        this.localFB.load2KBFactBase(twoKB);
+      }
+      if (deltaKBFile != null)
+      {
+        ArrayList<LSDFact> deltaKB = new LSDTyrubaFactReader(deltaKBFile).getFacts();
+        this.localFB.loadDeltaKBFactBase(deltaKB);
+      }
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    ArrayList<LSDRule> winnowingRules = new LSDAlchemyRuleReader(
+      this.winnowingRulesFile).getRules();
+    if ((twoKBFile != null) && (deltaKBFile != null)) {
+      this.localFB.loadWinnowingRules(winnowingRules);
+    }
+    List<LSDFact> afterWinnowing = this.localFB.getRemainingFacts(true);
+    if (lsdiffRuleFile != null) {
+      this.lsdiffRules = new LSDAlchemyRuleReader(lsdiffRuleFile).getRules();
+    }
+  }
+  
+  private HashMap<String, ArrayList<LSDFact>> predicateToFacts = new HashMap();
+  
+  public void compute_LSdiff_FACTTYPE()
+  {
+    LinkedHashSet<LSDFact> deltaKBFacts = this.localFB.getDeltaKBFact();
+    for (LSDFact fact : deltaKBFacts)
+    {
+      LSDPredicate predicate = fact.getPredicate();
+      String predicateType = predicate.getName();
+      
+      ArrayList<LSDFact> facts = (ArrayList)this.predicateToFacts.get(predicateType);
+      if (facts == null)
+      {
+        facts = new ArrayList();
+        this.predicateToFacts.put(predicateType, facts);
+      }
+      facts.add(fact);
+    }
+  }
+  
+  public void print(PrintStream p)
+  {
+    p.println("2KB Size:\t" + this.localFB.num2KBFactSize());
+    p.println("DeltaKB Size:\t" + this.localFB.numDeltaKBFactSize());
+    p.println("Categorization of Delta KB Facts");
+    for (String predicateType : this.predicateToFacts.keySet())
+    {
+      ArrayList<LSDFact> facts = (ArrayList)this.predicateToFacts.get(predicateType);
+      p.println(predicateType);
+      p.println("# Facts:\t" + facts.size());
+    }
+  }
+}

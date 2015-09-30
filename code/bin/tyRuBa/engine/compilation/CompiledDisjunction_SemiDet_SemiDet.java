@@ -1,50 +1,63 @@
-/*    */ package tyRuBa.engine.compilation;
-/*    */ 
-/*    */ import tyRuBa.engine.Frame;
-/*    */ import tyRuBa.engine.RBContext;
-/*    */ import tyRuBa.util.ElementSource;
-/*    */ 
-/*    */ public class CompiledDisjunction_SemiDet_SemiDet extends Compiled
-/*    */ {
-/*    */   private final SemiDetCompiled left;
-/*    */   private final SemiDetCompiled right;
-/*    */   
-/*    */   public CompiledDisjunction_SemiDet_SemiDet(SemiDetCompiled left, SemiDetCompiled right)
-/*    */   {
-/* 14 */     super(left.getMode().add(right.getMode()));
-/* 15 */     this.left = left;
-/* 16 */     this.right = right;
-/*    */   }
-/*    */   
-/*    */   public ElementSource runNonDet(Object input, RBContext context) {
-/* 20 */     Frame leftResult = this.left.runSemiDet(input, context);
-/* 21 */     Frame rightResult = this.right.runSemiDet(input, context);
-/* 22 */     if ((leftResult == null) && (rightResult == null)) {
-/* 23 */       return ElementSource.theEmpty;
-/*    */     }
-/* 25 */     if (leftResult == null)
-/*    */     {
-/* 27 */       return ElementSource.singleton(rightResult); }
-/* 28 */     if (rightResult == null)
-/*    */     {
-/* 30 */       return ElementSource.singleton(leftResult);
-/*    */     }
-/* 32 */     return ElementSource.with(new Object[] { leftResult, rightResult });
-/*    */   }
-/*    */   
-/*    */ 
-/*    */   public SemiDetCompiled first()
-/*    */   {
-/* 38 */     return new SemiDetCompiledDisjunction(this.left, this.right);
-/*    */   }
-/*    */   
-/*    */   public String toString() {
-/* 42 */     return "(" + this.right + " + " + this.left + ")";
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.engine.compilation;
 
+import tyRuBa.engine.Frame;
+import tyRuBa.engine.RBContext;
+import tyRuBa.modes.Mode;
+import tyRuBa.util.ElementSource;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/engine/compilation/CompiledDisjunction_SemiDet_SemiDet.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class CompiledDisjunction_SemiDet_SemiDet
+  extends Compiled
+{
+  private final SemiDetCompiled left;
+  private final SemiDetCompiled right;
+  
+  public CompiledDisjunction_SemiDet_SemiDet(SemiDetCompiled left, SemiDetCompiled right)
+  {
+    super(left.getMode().add(right.getMode()));
+    this.left = left;
+    this.right = right;
+  }
+  
+  public ElementSource runNonDet(Object input, RBContext context)
+  {
+    Frame leftResult = this.left.runSemiDet(input, context);
+    Frame rightResult = this.right.runSemiDet(input, context);
+    if ((leftResult == null) && (rightResult == null)) {
+      return ElementSource.theEmpty;
+    }
+    if (leftResult == null) {
+      return ElementSource.singleton(rightResult);
+    }
+    if (rightResult == null) {
+      return ElementSource.singleton(leftResult);
+    }
+    return ElementSource.with(new Object[] { leftResult, rightResult });
+  }
+  
+  public SemiDetCompiled first()
+  {
+    return new SemiDetCompiledDisjunction(this.left, this.right);
+  }
+  
+  public String toString()
+  {
+    return "(" + this.right + " + " + this.left + ")";
+  }
+}

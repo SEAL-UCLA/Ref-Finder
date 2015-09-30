@@ -1,38 +1,50 @@
-/*    */ package tyRuBa.modes;
-/*    */ 
-/*    */ import java.util.Collection;
-/*    */ import tyRuBa.engine.RBExpression;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class ModeCase
-/*    */ {
-/*    */   private Collection boundVars;
-/*    */   private RBExpression exp;
-/*    */   
-/*    */   public ModeCase(Collection boundVars, RBExpression exp)
-/*    */   {
-/* 15 */     this.boundVars = boundVars;
-/* 16 */     this.exp = exp;
-/*    */   }
-/*    */   
-/*    */   public RBExpression getExp() {
-/* 20 */     return this.exp;
-/*    */   }
-/*    */   
-/*    */   public Collection getBoundVars() {
-/* 24 */     return this.boundVars;
-/*    */   }
-/*    */   
-/*    */   public String toString() {
-/* 28 */     String varString = getBoundVars().toString();
-/* 29 */     return "BOUND " + varString.substring(1, varString.length() - 1) + 
-/* 30 */       " : " + getExp();
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.modes;
 
+import java.util.Collection;
+import tyRuBa.engine.RBExpression;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/tyRuBa/modes/ModeCase.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class ModeCase
+{
+  private Collection boundVars;
+  private RBExpression exp;
+  
+  public ModeCase(Collection boundVars, RBExpression exp)
+  {
+    this.boundVars = boundVars;
+    this.exp = exp;
+  }
+  
+  public RBExpression getExp()
+  {
+    return this.exp;
+  }
+  
+  public Collection getBoundVars()
+  {
+    return this.boundVars;
+  }
+  
+  public String toString()
+  {
+    String varString = getBoundVars().toString();
+    return "BOUND " + varString.substring(1, varString.length() - 1) + 
+      " : " + getExp();
+  }
+}

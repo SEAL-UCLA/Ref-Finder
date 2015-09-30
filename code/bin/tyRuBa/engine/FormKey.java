@@ -1,29 +1,41 @@
-/*    */ package tyRuBa.engine;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ class FormKey
-/*    */ {
-/*    */   RBTerm theKey;
-/*    */   
-/*    */ 
-/* 10 */   FormKey(RBTerm t) { this.theKey = t; }
-/*    */   
-/*    */   public boolean equals(Object other) {
-/* 13 */     if ((other instanceof FormKey)) {
-/* 14 */       return this.theKey.sameForm(((FormKey)other).theKey);
-/*    */     }
-/*    */     
-/* 17 */     return false;
-/*    */   }
-/*    */   
-/*    */   public int hashCode() {
-/* 21 */     return this.theKey.formHashCode();
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.engine;
 
-
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/engine/FormKey.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+class FormKey
+{
+  RBTerm theKey;
+  
+  FormKey(RBTerm t)
+  {
+    this.theKey = t;
+  }
+  
+  public boolean equals(Object other)
+  {
+    if ((other instanceof FormKey)) {
+      return this.theKey.sameForm(((FormKey)other).theKey);
+    }
+    return false;
+  }
+  
+  public int hashCode()
+  {
+    return this.theKey.formHashCode();
+  }
+}

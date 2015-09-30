@@ -1,45 +1,65 @@
-/*    */ package tyRuBa.util;
-/*    */ 
-/*    */ import java.util.ArrayList;
-/*    */ 
-/*    */ public class ArrayListSource extends ElementSource
-/*    */ {
-/*  7 */   int pos = 0;
-/*    */   int sz;
-/*    */   ArrayList els;
-/*    */   
-/*    */   public ArrayListSource(ArrayList els) {
-/* 12 */     this.els = els;
-/* 13 */     this.sz = els.size();
-/*    */   }
-/*    */   
-/*    */   public int status() {
-/* 17 */     return this.pos < this.sz ? 1 : -1;
-/*    */   }
-/*    */   
-/* 20 */   public Object nextElement() { return this.els.get(this.pos++); }
-/*    */   
-/*    */   public void print(PrintingState p) {
-/* 23 */     p.print("{");
-/* 24 */     for (int i = this.pos; i < this.els.size(); i++) {
-/* 25 */       if (i > 0)
-/* 26 */         p.print(",");
-/* 27 */       p.print(this.els.get(i).toString());
-/*    */     }
-/* 29 */     p.print("}");
-/*    */   }
-/*    */   
-/*    */   public ElementSource first()
-/*    */   {
-/* 34 */     if (hasMoreElements()) {
-/* 35 */       return ElementSource.singleton(nextElement());
-/*    */     }
-/* 37 */     return ElementSource.theEmpty;
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.util;
 
+import java.util.ArrayList;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/tyRuBa/util/ArrayListSource.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class ArrayListSource
+  extends ElementSource
+{
+  int pos = 0;
+  int sz;
+  ArrayList els;
+  
+  public ArrayListSource(ArrayList els)
+  {
+    this.els = els;
+    this.sz = els.size();
+  }
+  
+  public int status()
+  {
+    return this.pos < this.sz ? 1 : -1;
+  }
+  
+  public Object nextElement()
+  {
+    return this.els.get(this.pos++);
+  }
+  
+  public void print(PrintingState p)
+  {
+    p.print("{");
+    for (int i = this.pos; i < this.els.size(); i++)
+    {
+      if (i > 0) {
+        p.print(",");
+      }
+      p.print(this.els.get(i).toString());
+    }
+    p.print("}");
+  }
+  
+  public ElementSource first()
+  {
+    if (hasMoreElements()) {
+      return ElementSource.singleton(nextElement());
+    }
+    return ElementSource.theEmpty;
+  }
+}

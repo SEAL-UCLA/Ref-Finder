@@ -1,204 +1,176 @@
-/*     */ package serp.util;
-/*     */ 
-/*     */ import java.util.Collection;
-/*     */ import java.util.Comparator;
-/*     */ import java.util.HashMap;
-/*     */ import java.util.Iterator;
-/*     */ import java.util.Map;
-/*     */ import java.util.Map.Entry;
-/*     */ import java.util.Set;
-/*     */ import java.util.SortedMap;
-/*     */ import java.util.TreeMap;
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ public class LRUMap
-/*     */   implements SortedMap
-/*     */ {
-/*  21 */   private Map _orders = new HashMap();
-/*  22 */   private TreeMap _values = new TreeMap();
-/*  23 */   private int _order = Integer.MAX_VALUE;
-/*     */   
-/*     */ 
-/*     */   public Comparator comparator()
-/*     */   {
-/*  28 */     return null;
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public Object firstKey()
-/*     */   {
-/*  34 */     return ((LRUMap.OrderKey)this._values.firstKey()).key;
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public Object lastKey()
-/*     */   {
-/*  40 */     return ((LRUMap.OrderKey)this._values.lastKey()).key;
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   public SortedMap headMap(Object toKey)
-/*     */   {
-/*  49 */     throw new UnsupportedOperationException();
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   public SortedMap subMap(Object fromKey, Object toKey)
-/*     */   {
-/*  58 */     throw new UnsupportedOperationException();
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   public SortedMap tailMap(Object fromKey)
-/*     */   {
-/*  67 */     throw new UnsupportedOperationException();
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public void clear()
-/*     */   {
-/*  73 */     this._orders.clear();
-/*  74 */     this._values.clear();
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public boolean containsKey(Object key)
-/*     */   {
-/*  80 */     return this._orders.containsKey(key);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public boolean containsValue(Object value)
-/*     */   {
-/*  86 */     return this._values.containsValue(value);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public Set entrySet()
-/*     */   {
-/*  92 */     return new LRUMap.EntrySet(this, null);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public boolean equals(Object other)
-/*     */   {
-/*  98 */     if (other == this)
-/*  99 */       return true;
-/* 100 */     if (!(other instanceof Map)) {
-/* 101 */       return false;
-/*     */     }
-/*     */     
-/* 104 */     return new HashMap(this).equals(other);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public Object get(Object key)
-/*     */   {
-/* 110 */     Object order = this._orders.remove(key);
-/* 111 */     if (order == null) {
-/* 112 */       return null;
-/*     */     }
-/*     */     
-/* 115 */     Object value = this._values.remove(order);
-/* 116 */     order = nextOrderKey(key);
-/* 117 */     this._orders.put(key, order);
-/* 118 */     this._values.put(order, value);
-/*     */     
-/* 120 */     return value;
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public boolean isEmpty()
-/*     */   {
-/* 126 */     return this._orders.isEmpty();
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public Set keySet()
-/*     */   {
-/* 132 */     return new LRUMap.KeySet(this, null);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public Object put(Object key, Object value)
-/*     */   {
-/* 138 */     Object order = nextOrderKey(key);
-/* 139 */     Object oldOrder = this._orders.put(key, order);
-/*     */     
-/* 141 */     Object rem = null;
-/* 142 */     if (oldOrder != null) {
-/* 143 */       rem = this._values.remove(oldOrder);
-/*     */     }
-/* 145 */     this._values.put(order, value);
-/* 146 */     return rem;
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */   public void putAll(Map map)
-/*     */   {
-/* 153 */     for (Iterator itr = map.entrySet().iterator(); itr.hasNext();)
-/*     */     {
-/* 155 */       Map.Entry entry = (Map.Entry)itr.next();
-/* 156 */       put(entry.getKey(), entry.getValue());
-/*     */     }
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public Object remove(Object key)
-/*     */   {
-/* 163 */     Object order = this._orders.remove(key);
-/* 164 */     if (order != null)
-/* 165 */       return this._values.remove(order);
-/* 166 */     return null;
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public int size()
-/*     */   {
-/* 172 */     return this._orders.size();
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public Collection values()
-/*     */   {
-/* 178 */     return new LRUMap.ValueCollection(this, null);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public String toString()
-/*     */   {
-/* 184 */     return entrySet().toString();
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   private synchronized LRUMap.OrderKey nextOrderKey(Object key)
-/*     */   {
-/* 193 */     LRUMap.OrderKey ok = new LRUMap.OrderKey(null);
-/* 194 */     ok.key = key;
-/* 195 */     ok.order = (this._order--);
-/* 196 */     return ok;
-/*     */   }
-/*     */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package serp.util;
 
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/serp/util/LRUMap.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class LRUMap
+  implements SortedMap
+{
+  private Map _orders = new HashMap();
+  private TreeMap _values = new TreeMap();
+  private int _order = Integer.MAX_VALUE;
+  
+  public Comparator comparator()
+  {
+    return null;
+  }
+  
+  public Object firstKey()
+  {
+    return ((LRUMap.OrderKey)this._values.firstKey()).key;
+  }
+  
+  public Object lastKey()
+  {
+    return ((LRUMap.OrderKey)this._values.lastKey()).key;
+  }
+  
+  public SortedMap headMap(Object toKey)
+  {
+    throw new UnsupportedOperationException();
+  }
+  
+  public SortedMap subMap(Object fromKey, Object toKey)
+  {
+    throw new UnsupportedOperationException();
+  }
+  
+  public SortedMap tailMap(Object fromKey)
+  {
+    throw new UnsupportedOperationException();
+  }
+  
+  public void clear()
+  {
+    this._orders.clear();
+    this._values.clear();
+  }
+  
+  public boolean containsKey(Object key)
+  {
+    return this._orders.containsKey(key);
+  }
+  
+  public boolean containsValue(Object value)
+  {
+    return this._values.containsValue(value);
+  }
+  
+  public Set entrySet()
+  {
+    return new LRUMap.EntrySet(this, null);
+  }
+  
+  public boolean equals(Object other)
+  {
+    if (other == this) {
+      return true;
+    }
+    if (!(other instanceof Map)) {
+      return false;
+    }
+    return new HashMap(this).equals(other);
+  }
+  
+  public Object get(Object key)
+  {
+    Object order = this._orders.remove(key);
+    if (order == null) {
+      return null;
+    }
+    Object value = this._values.remove(order);
+    order = nextOrderKey(key);
+    this._orders.put(key, order);
+    this._values.put(order, value);
+    
+    return value;
+  }
+  
+  public boolean isEmpty()
+  {
+    return this._orders.isEmpty();
+  }
+  
+  public Set keySet()
+  {
+    return new LRUMap.KeySet(this, null);
+  }
+  
+  public Object put(Object key, Object value)
+  {
+    Object order = nextOrderKey(key);
+    Object oldOrder = this._orders.put(key, order);
+    
+    Object rem = null;
+    if (oldOrder != null) {
+      rem = this._values.remove(oldOrder);
+    }
+    this._values.put(order, value);
+    return rem;
+  }
+  
+  public void putAll(Map map)
+  {
+    for (Iterator itr = map.entrySet().iterator(); itr.hasNext();)
+    {
+      Map.Entry entry = (Map.Entry)itr.next();
+      put(entry.getKey(), entry.getValue());
+    }
+  }
+  
+  public Object remove(Object key)
+  {
+    Object order = this._orders.remove(key);
+    if (order != null) {
+      return this._values.remove(order);
+    }
+    return null;
+  }
+  
+  public int size()
+  {
+    return this._orders.size();
+  }
+  
+  public Collection values()
+  {
+    return new LRUMap.ValueCollection(this, null);
+  }
+  
+  public String toString()
+  {
+    return entrySet().toString();
+  }
+  
+  private synchronized LRUMap.OrderKey nextOrderKey(Object key)
+  {
+    LRUMap.OrderKey ok = new LRUMap.OrderKey(null);
+    ok.key = key;
+    ok.order = (this._order--);
+    return ok;
+  }
+}

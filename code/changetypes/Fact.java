@@ -1,304 +1,319 @@
-/*     */ package changetypes;
-/*     */ 
-/*     */ import java.util.Vector;
-/*     */ 
-/*     */ public class Fact {
-/*     */   public static final String PRIVATE = "private";
-/*     */   public static final String PROTECTED = "protected";
-/*     */   
-/*   9 */   public static enum FactTypes { PACKAGE, 
-/*  10 */     TYPE, 
-/*  11 */     METHOD, 
-/*  12 */     FIELD, 
-/*  13 */     RETURN, 
-/*  14 */     FIELDOFTYPE, 
-/*  15 */     ACCESSES, 
-/*  16 */     CALLS, 
-/*  17 */     SUBTYPE, 
-/*  18 */     EXTENDS, 
-/*  19 */     IMPLEMENTS, 
-/*  20 */     INHERITEDFIELD, 
-/*  21 */     INHERITEDMETHOD, 
-/*  22 */     TYPEINTYPE, 
-/*     */     
-/*  24 */     METHODBODY, 
-/*  25 */     METHODSIGNATURE, 
-/*  26 */     CONDITIONAL, 
-/*  27 */     PARAMETER, 
-/*  28 */     METHODMODIFIER, 
-/*  29 */     FIELDMODIFIER, 
-/*     */     
-/*  31 */     CAST, 
-/*  32 */     TRYCATCH, 
-/*  33 */     THROWN, 
-/*  34 */     GETTER, 
-/*  35 */     SETTER, 
-/*  36 */     LOCALVAR;
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public static final String PUBLIC = "public";
-/*     */   
-/*     */   public static final String PACKAGE = "package";
-/*     */   
-/*     */   public static final String INTERFACE = "interface";
-/*     */   
-/*     */   public static final String CLASS = "class";
-/*     */   
-/*     */   public FactTypes type;
-/*     */   public Vector<String> params;
-/*     */   public int params_length;
-/*  51 */   public String filename = "";
-/*     */   public int startposition;
-/*     */   public int length;
-/*     */   
-/*     */   private Fact(FactTypes mytype, Vector<String> myparams) {
-/*  56 */     this.type = mytype;
-/*  57 */     this.params = new Vector(myparams);
-/*     */   }
-/*     */   
-/*     */   public Fact(Fact f) {
-/*  61 */     this.type = f.type;
-/*  62 */     this.params = f.params;
-/*     */   }
-/*     */   
-/*     */   public int hashCode() {
-/*  66 */     return this.params.hashCode() + this.type.ordinal() * 1000;
-/*     */   }
-/*     */   
-/*     */   public boolean equals(Object o)
-/*     */   {
-/*  71 */     if (o.getClass() != getClass()) return false;
-/*  72 */     Fact f = (Fact)o;
-/*  73 */     if (!this.type.equals(f.type)) return false;
-/*  74 */     for (int i = 0; i < this.params.size(); i++) {
-/*  75 */       if ((!((String)this.params.get(i)).equals(f.params.get(i))) && 
-/*  76 */         (!((String)this.params.get(i)).equals("*")) && (!((String)f.params.get(i)).equals("*")))
-/*  77 */         return false;
-/*     */     }
-/*  79 */     return true;
-/*     */   }
-/*     */   
-/*     */   public String toString() {
-/*  83 */     StringBuilder res = new StringBuilder();
-/*  84 */     res.append(this.type.toString());
-/*  85 */     res.append("(");
-/*  86 */     boolean first = true;
-/*  87 */     for (String arg : this.params) {
-/*  88 */       if (!first) res.append(", ");
-/*  89 */       res.append(arg);
-/*  90 */       first = false;
-/*     */     }
-/*  92 */     res.append(")");
-/*     */     
-/*  94 */     return res.toString();
-/*     */   }
-/*     */   
-/*     */   public static Fact makeModifierMethodFact(String mFullName, String modifier)
-/*     */   {
-/*  99 */     Vector<String> params = new Vector();
-/* 100 */     params.add(mFullName);
-/* 101 */     params.add(modifier);
-/* 102 */     return new Fact(FactTypes.METHODMODIFIER, params);
-/*     */   }
-/*     */   
-/* 105 */   public static Fact makeFieldModifierFact(String fFullName, String modifier) { Vector<String> params = new Vector();
-/* 106 */     params.add(fFullName);
-/* 107 */     params.add(modifier);
-/* 108 */     return new Fact(FactTypes.FIELDMODIFIER, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeConditionalFact(String condition, String ifBlockName, String elseBlockName, String typeFullName)
-/*     */   {
-/* 113 */     Vector<String> params = new Vector();
-/* 114 */     params.add(condition);
-/* 115 */     params.add(ifBlockName);
-/* 116 */     params.add(elseBlockName);
-/* 117 */     params.add(typeFullName);
-/* 118 */     return new Fact(FactTypes.CONDITIONAL, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeParameterFact(String methodFullName, String paramList, String paramChange) {
-/* 122 */     Vector<String> params = new Vector();
-/* 123 */     params.add(methodFullName);
-/* 124 */     params.add(paramList);
-/* 125 */     params.add(paramChange);
-/* 126 */     return new Fact(FactTypes.PARAMETER, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makePackageFact(String packageFullName) {
-/* 130 */     Vector<String> params = new Vector();
-/* 131 */     params.add(packageFullName);
-/* 132 */     return new Fact(FactTypes.PACKAGE, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeTypeFact(String typeFullName, String typeShortName, String packageFullName, String typeKind) {
-/* 136 */     Vector<String> params = new Vector();
-/* 137 */     params.add(typeFullName);
-/* 138 */     params.add(typeShortName);
-/* 139 */     params.add(packageFullName);
-/* 140 */     params.add(typeKind);
-/* 141 */     return new Fact(FactTypes.TYPE, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeFieldFact(String fieldFullName, String fieldShortName, String typeFullName, String visibility) {
-/* 145 */     Vector<String> params = new Vector();
-/* 146 */     params.add(fieldFullName);
-/* 147 */     params.add(fieldShortName);
-/* 148 */     params.add(typeFullName);
-/* 149 */     params.add(visibility);
-/* 150 */     return new Fact(FactTypes.FIELD, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeMethodFact(String methodFullName, String methodShortName, String typeFullName, String visibility) {
-/* 154 */     Vector<String> params = new Vector();
-/* 155 */     params.add(methodFullName);
-/* 156 */     params.add(methodShortName);
-/* 157 */     params.add(typeFullName);
-/* 158 */     params.add(visibility);
-/* 159 */     return new Fact(FactTypes.METHOD, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeFieldTypeFact(String fieldFullName, String declaredTypeFullName) {
-/* 163 */     Vector<String> params = new Vector();
-/* 164 */     params.add(fieldFullName);
-/* 165 */     params.add(declaredTypeFullName);
-/* 166 */     return new Fact(FactTypes.FIELDOFTYPE, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeTypeInTypeFact(String innerTypeFullName, String outerTypeFullName) {
-/* 170 */     Vector<String> params = new Vector();
-/* 171 */     params.add(innerTypeFullName);
-/* 172 */     params.add(outerTypeFullName);
-/* 173 */     return new Fact(FactTypes.TYPEINTYPE, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeReturnsFact(String methodFullName, String returnTypeFullName) {
-/* 177 */     Vector<String> params = new Vector();
-/* 178 */     params.add(methodFullName);
-/* 179 */     params.add(returnTypeFullName);
-/* 180 */     return new Fact(FactTypes.RETURN, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeSubtypeFact(String superTypeFullName, String subTypeFullName) {
-/* 184 */     Vector<String> params = new Vector();
-/* 185 */     params.add(superTypeFullName);
-/* 186 */     params.add(subTypeFullName);
-/* 187 */     return new Fact(FactTypes.SUBTYPE, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeImplementsFact(String superTypeFullName, String subTypeFullName) {
-/* 191 */     Vector<String> params = new Vector();
-/* 192 */     params.add(superTypeFullName);
-/* 193 */     params.add(subTypeFullName);
-/* 194 */     return new Fact(FactTypes.IMPLEMENTS, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeExtendsFact(String superTypeFullName, String subTypeFullName) {
-/* 198 */     Vector<String> params = new Vector();
-/* 199 */     params.add(superTypeFullName);
-/* 200 */     params.add(subTypeFullName);
-/* 201 */     return new Fact(FactTypes.EXTENDS, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeInheritedFieldFact(String fieldShortName, String superTypeFullName, String subTypeFullName) {
-/* 205 */     Vector<String> params = new Vector();
-/* 206 */     params.add(fieldShortName);
-/* 207 */     params.add(superTypeFullName);
-/* 208 */     params.add(subTypeFullName);
-/* 209 */     return new Fact(FactTypes.INHERITEDFIELD, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeInheritedMethodFact(String methodShortName, String superTypeFullName, String subTypeFullName) {
-/* 213 */     Vector<String> params = new Vector();
-/* 214 */     params.add(methodShortName);
-/* 215 */     params.add(superTypeFullName);
-/* 216 */     params.add(subTypeFullName);
-/* 217 */     return new Fact(FactTypes.INHERITEDMETHOD, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeMethodBodyFact(String methodFullName, String methodBody) {
-/* 221 */     Vector<String> params = new Vector();
-/* 222 */     params.add(methodFullName);
-/* 223 */     params.add(methodBody);
-/* 224 */     return new Fact(FactTypes.METHODBODY, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeMethodArgsFact(String methodFullName, String methodSignature) {
-/* 228 */     Vector<String> params = new Vector();
-/* 229 */     params.add(methodFullName);
-/* 230 */     params.add(methodSignature);
-/* 231 */     return new Fact(FactTypes.METHODSIGNATURE, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeCallsFact(String callerMethodFullName, String calleeMethodFullName) {
-/* 235 */     Vector<String> params = new Vector();
-/* 236 */     params.add(callerMethodFullName);
-/* 237 */     params.add(calleeMethodFullName);
-/* 238 */     return new Fact(FactTypes.CALLS, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeAccessesFact(String fieldFullName, String accessorMethodFullName) {
-/* 242 */     Vector<String> params = new Vector();
-/* 243 */     params.add(fieldFullName);
-/* 244 */     params.add(accessorMethodFullName);
-/* 245 */     return new Fact(FactTypes.ACCESSES, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeCastFact(String expression, String type, String methodName) {
-/* 249 */     Vector<String> params = new Vector();
-/* 250 */     params.add(expression);
-/* 251 */     params.add(type);
-/* 252 */     params.add(methodName);
-/* 253 */     return new Fact(FactTypes.CAST, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeTryCatchFact(String tryBlock, String catchClauses, String finallyBlock, String methodName) {
-/* 257 */     Vector<String> params = new Vector();
-/* 258 */     params.add(tryBlock);
-/* 259 */     params.add(catchClauses);
-/* 260 */     params.add(finallyBlock);
-/* 261 */     params.add(methodName);
-/* 262 */     return new Fact(FactTypes.TRYCATCH, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeThrownExceptionFact(String methodQualifiedName, String exceptionQualifiedName)
-/*     */   {
-/* 267 */     Vector<String> params = new Vector();
-/* 268 */     params.add(methodQualifiedName);
-/* 269 */     params.add(exceptionQualifiedName);
-/* 270 */     return new Fact(FactTypes.THROWN, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeGetterFact(String methodQualifiedName, String fieldQualifiedName)
-/*     */   {
-/* 275 */     Vector<String> params = new Vector();
-/* 276 */     params.add(methodQualifiedName);
-/* 277 */     params.add(fieldQualifiedName);
-/* 278 */     return new Fact(FactTypes.GETTER, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeSetterFact(String methodQualifiedName, String fieldQualifiedName)
-/*     */   {
-/* 283 */     Vector<String> params = new Vector();
-/* 284 */     params.add(methodQualifiedName);
-/* 285 */     params.add(fieldQualifiedName);
-/* 286 */     return new Fact(FactTypes.SETTER, params);
-/*     */   }
-/*     */   
-/*     */   public static Fact makeLocalVarFact(String methodQualifiedName, String typeQualifiedName, String identifier, String expression)
-/*     */   {
-/* 291 */     Vector<String> params = new Vector();
-/* 292 */     params.add(methodQualifiedName);
-/* 293 */     params.add(typeQualifiedName);
-/* 294 */     params.add(identifier);
-/* 295 */     params.add(expression);
-/* 296 */     return new Fact(FactTypes.LOCALVAR, params);
-/*     */   }
-/*     */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package changetypes;
 
+import java.util.Vector;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/changetypes/Fact.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class Fact
+{
+  public static final String PRIVATE = "private";
+  public static final String PROTECTED = "protected";
+  public static final String PUBLIC = "public";
+  public static final String PACKAGE = "package";
+  public static final String INTERFACE = "interface";
+  public static final String CLASS = "class";
+  public FactTypes type;
+  public Vector<String> params;
+  public int params_length;
+  
+  public static enum FactTypes
+  {
+    PACKAGE,  TYPE,  METHOD,  FIELD,  RETURN,  FIELDOFTYPE,  ACCESSES,  CALLS,  SUBTYPE,  EXTENDS,  IMPLEMENTS,  INHERITEDFIELD,  INHERITEDMETHOD,  TYPEINTYPE,  METHODBODY,  METHODSIGNATURE,  CONDITIONAL,  PARAMETER,  METHODMODIFIER,  FIELDMODIFIER,  CAST,  TRYCATCH,  THROWN,  GETTER,  SETTER,  LOCALVAR;
+  }
+  
+  public String filename = "";
+  public int startposition;
+  public int length;
+  
+  private Fact(FactTypes mytype, Vector<String> myparams)
+  {
+    this.type = mytype;
+    this.params = new Vector(myparams);
+  }
+  
+  public Fact(Fact f)
+  {
+    this.type = f.type;
+    this.params = f.params;
+  }
+  
+  public int hashCode()
+  {
+    return this.params.hashCode() + this.type.ordinal() * 1000;
+  }
+  
+  public boolean equals(Object o)
+  {
+    if (o.getClass() != getClass()) {
+      return false;
+    }
+    Fact f = (Fact)o;
+    if (!this.type.equals(f.type)) {
+      return false;
+    }
+    for (int i = 0; i < this.params.size(); i++) {
+      if ((!((String)this.params.get(i)).equals(f.params.get(i))) && 
+        (!((String)this.params.get(i)).equals("*")) && (!((String)f.params.get(i)).equals("*"))) {
+        return false;
+      }
+    }
+    return true;
+  }
+  
+  public String toString()
+  {
+    StringBuilder res = new StringBuilder();
+    res.append(this.type.toString());
+    res.append("(");
+    boolean first = true;
+    for (String arg : this.params)
+    {
+      if (!first) {
+        res.append(", ");
+      }
+      res.append(arg);
+      first = false;
+    }
+    res.append(")");
+    
+    return res.toString();
+  }
+  
+  public static Fact makeModifierMethodFact(String mFullName, String modifier)
+  {
+    Vector<String> params = new Vector();
+    params.add(mFullName);
+    params.add(modifier);
+    return new Fact(FactTypes.METHODMODIFIER, params);
+  }
+  
+  public static Fact makeFieldModifierFact(String fFullName, String modifier)
+  {
+    Vector<String> params = new Vector();
+    params.add(fFullName);
+    params.add(modifier);
+    return new Fact(FactTypes.FIELDMODIFIER, params);
+  }
+  
+  public static Fact makeConditionalFact(String condition, String ifBlockName, String elseBlockName, String typeFullName)
+  {
+    Vector<String> params = new Vector();
+    params.add(condition);
+    params.add(ifBlockName);
+    params.add(elseBlockName);
+    params.add(typeFullName);
+    return new Fact(FactTypes.CONDITIONAL, params);
+  }
+  
+  public static Fact makeParameterFact(String methodFullName, String paramList, String paramChange)
+  {
+    Vector<String> params = new Vector();
+    params.add(methodFullName);
+    params.add(paramList);
+    params.add(paramChange);
+    return new Fact(FactTypes.PARAMETER, params);
+  }
+  
+  public static Fact makePackageFact(String packageFullName)
+  {
+    Vector<String> params = new Vector();
+    params.add(packageFullName);
+    return new Fact(FactTypes.PACKAGE, params);
+  }
+  
+  public static Fact makeTypeFact(String typeFullName, String typeShortName, String packageFullName, String typeKind)
+  {
+    Vector<String> params = new Vector();
+    params.add(typeFullName);
+    params.add(typeShortName);
+    params.add(packageFullName);
+    params.add(typeKind);
+    return new Fact(FactTypes.TYPE, params);
+  }
+  
+  public static Fact makeFieldFact(String fieldFullName, String fieldShortName, String typeFullName, String visibility)
+  {
+    Vector<String> params = new Vector();
+    params.add(fieldFullName);
+    params.add(fieldShortName);
+    params.add(typeFullName);
+    params.add(visibility);
+    return new Fact(FactTypes.FIELD, params);
+  }
+  
+  public static Fact makeMethodFact(String methodFullName, String methodShortName, String typeFullName, String visibility)
+  {
+    Vector<String> params = new Vector();
+    params.add(methodFullName);
+    params.add(methodShortName);
+    params.add(typeFullName);
+    params.add(visibility);
+    return new Fact(FactTypes.METHOD, params);
+  }
+  
+  public static Fact makeFieldTypeFact(String fieldFullName, String declaredTypeFullName)
+  {
+    Vector<String> params = new Vector();
+    params.add(fieldFullName);
+    params.add(declaredTypeFullName);
+    return new Fact(FactTypes.FIELDOFTYPE, params);
+  }
+  
+  public static Fact makeTypeInTypeFact(String innerTypeFullName, String outerTypeFullName)
+  {
+    Vector<String> params = new Vector();
+    params.add(innerTypeFullName);
+    params.add(outerTypeFullName);
+    return new Fact(FactTypes.TYPEINTYPE, params);
+  }
+  
+  public static Fact makeReturnsFact(String methodFullName, String returnTypeFullName)
+  {
+    Vector<String> params = new Vector();
+    params.add(methodFullName);
+    params.add(returnTypeFullName);
+    return new Fact(FactTypes.RETURN, params);
+  }
+  
+  public static Fact makeSubtypeFact(String superTypeFullName, String subTypeFullName)
+  {
+    Vector<String> params = new Vector();
+    params.add(superTypeFullName);
+    params.add(subTypeFullName);
+    return new Fact(FactTypes.SUBTYPE, params);
+  }
+  
+  public static Fact makeImplementsFact(String superTypeFullName, String subTypeFullName)
+  {
+    Vector<String> params = new Vector();
+    params.add(superTypeFullName);
+    params.add(subTypeFullName);
+    return new Fact(FactTypes.IMPLEMENTS, params);
+  }
+  
+  public static Fact makeExtendsFact(String superTypeFullName, String subTypeFullName)
+  {
+    Vector<String> params = new Vector();
+    params.add(superTypeFullName);
+    params.add(subTypeFullName);
+    return new Fact(FactTypes.EXTENDS, params);
+  }
+  
+  public static Fact makeInheritedFieldFact(String fieldShortName, String superTypeFullName, String subTypeFullName)
+  {
+    Vector<String> params = new Vector();
+    params.add(fieldShortName);
+    params.add(superTypeFullName);
+    params.add(subTypeFullName);
+    return new Fact(FactTypes.INHERITEDFIELD, params);
+  }
+  
+  public static Fact makeInheritedMethodFact(String methodShortName, String superTypeFullName, String subTypeFullName)
+  {
+    Vector<String> params = new Vector();
+    params.add(methodShortName);
+    params.add(superTypeFullName);
+    params.add(subTypeFullName);
+    return new Fact(FactTypes.INHERITEDMETHOD, params);
+  }
+  
+  public static Fact makeMethodBodyFact(String methodFullName, String methodBody)
+  {
+    Vector<String> params = new Vector();
+    params.add(methodFullName);
+    params.add(methodBody);
+    return new Fact(FactTypes.METHODBODY, params);
+  }
+  
+  public static Fact makeMethodArgsFact(String methodFullName, String methodSignature)
+  {
+    Vector<String> params = new Vector();
+    params.add(methodFullName);
+    params.add(methodSignature);
+    return new Fact(FactTypes.METHODSIGNATURE, params);
+  }
+  
+  public static Fact makeCallsFact(String callerMethodFullName, String calleeMethodFullName)
+  {
+    Vector<String> params = new Vector();
+    params.add(callerMethodFullName);
+    params.add(calleeMethodFullName);
+    return new Fact(FactTypes.CALLS, params);
+  }
+  
+  public static Fact makeAccessesFact(String fieldFullName, String accessorMethodFullName)
+  {
+    Vector<String> params = new Vector();
+    params.add(fieldFullName);
+    params.add(accessorMethodFullName);
+    return new Fact(FactTypes.ACCESSES, params);
+  }
+  
+  public static Fact makeCastFact(String expression, String type, String methodName)
+  {
+    Vector<String> params = new Vector();
+    params.add(expression);
+    params.add(type);
+    params.add(methodName);
+    return new Fact(FactTypes.CAST, params);
+  }
+  
+  public static Fact makeTryCatchFact(String tryBlock, String catchClauses, String finallyBlock, String methodName)
+  {
+    Vector<String> params = new Vector();
+    params.add(tryBlock);
+    params.add(catchClauses);
+    params.add(finallyBlock);
+    params.add(methodName);
+    return new Fact(FactTypes.TRYCATCH, params);
+  }
+  
+  public static Fact makeThrownExceptionFact(String methodQualifiedName, String exceptionQualifiedName)
+  {
+    Vector<String> params = new Vector();
+    params.add(methodQualifiedName);
+    params.add(exceptionQualifiedName);
+    return new Fact(FactTypes.THROWN, params);
+  }
+  
+  public static Fact makeGetterFact(String methodQualifiedName, String fieldQualifiedName)
+  {
+    Vector<String> params = new Vector();
+    params.add(methodQualifiedName);
+    params.add(fieldQualifiedName);
+    return new Fact(FactTypes.GETTER, params);
+  }
+  
+  public static Fact makeSetterFact(String methodQualifiedName, String fieldQualifiedName)
+  {
+    Vector<String> params = new Vector();
+    params.add(methodQualifiedName);
+    params.add(fieldQualifiedName);
+    return new Fact(FactTypes.SETTER, params);
+  }
+  
+  public static Fact makeLocalVarFact(String methodQualifiedName, String typeQualifiedName, String identifier, String expression)
+  {
+    Vector<String> params = new Vector();
+    params.add(methodQualifiedName);
+    params.add(typeQualifiedName);
+    params.add(identifier);
+    params.add(expression);
+    return new Fact(FactTypes.LOCALVAR, params);
+  }
+}

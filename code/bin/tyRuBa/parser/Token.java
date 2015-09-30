@@ -1,85 +1,40 @@
-/*    */ package tyRuBa.parser;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class Token
-/*    */ {
-/*    */   public int kind;
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public int beginLine;
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public int beginColumn;
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public int endLine;
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public int endColumn;
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public String image;
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public Token next;
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public Token specialToken;
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public String toString()
-/*    */   {
-/* 58 */     return this.image;
-/*    */   }
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public static final Token newToken(int ofKind)
-/*    */   {
-/* 77 */     return new Token();
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.parser;
 
-
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/parser/Token.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class Token
+{
+  public int kind;
+  public int beginLine;
+  public int beginColumn;
+  public int endLine;
+  public int endColumn;
+  public String image;
+  public Token next;
+  public Token specialToken;
+  
+  public String toString()
+  {
+    return this.image;
+  }
+  
+  public static final Token newToken(int ofKind)
+  {
+    return new Token();
+  }
+}

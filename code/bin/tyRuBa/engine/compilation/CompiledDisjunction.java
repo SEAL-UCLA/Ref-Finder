@@ -1,34 +1,51 @@
-/*    */ package tyRuBa.engine.compilation;
-/*    */ 
-/*    */ import tyRuBa.engine.RBContext;
-/*    */ 
-/*    */ public class CompiledDisjunction extends Compiled
-/*    */ {
-/*    */   private Compiled right;
-/*    */   private Compiled left;
-/*    */   
-/*    */   public CompiledDisjunction(Compiled left, Compiled right)
-/*    */   {
-/* 12 */     super(left.getMode().add(right.getMode()));
-/* 13 */     this.left = left;
-/* 14 */     this.right = right;
-/*    */   }
-/*    */   
-/*    */   public tyRuBa.util.ElementSource runNonDet(Object input, RBContext context) {
-/* 18 */     return this.left.runNonDet(input, context).append(this.right.runNonDet(input, context));
-/*    */   }
-/*    */   
-/*    */   public Compiled negate() {
-/* 22 */     return this.left.negate().conjoin(this.right.negate());
-/*    */   }
-/*    */   
-/*    */   public String toString() {
-/* 26 */     return "(" + this.right + " + " + this.left + ")";
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.engine.compilation;
 
+import tyRuBa.engine.RBContext;
+import tyRuBa.modes.Mode;
+import tyRuBa.util.ElementSource;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/engine/compilation/CompiledDisjunction.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class CompiledDisjunction
+  extends Compiled
+{
+  private Compiled right;
+  private Compiled left;
+  
+  public CompiledDisjunction(Compiled left, Compiled right)
+  {
+    super(left.getMode().add(right.getMode()));
+    this.left = left;
+    this.right = right;
+  }
+  
+  public ElementSource runNonDet(Object input, RBContext context)
+  {
+    return this.left.runNonDet(input, context).append(this.right.runNonDet(input, context));
+  }
+  
+  public Compiled negate()
+  {
+    return this.left.negate().conjoin(this.right.negate());
+  }
+  
+  public String toString()
+  {
+    return "(" + this.right + " + " + this.left + ")";
+  }
+}

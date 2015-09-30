@@ -1,168 +1,191 @@
-/*     */ package tyRuBa.util;
-/*     */ 
-/*     */ import java.io.IOException;
-/*     */ import java.io.ObjectInputStream;
-/*     */ import java.io.ObjectOutputStream;
-/*     */ import java.io.PrintStream;
-/*     */ import java.io.Serializable;
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ public class ObjectTuple
-/*     */   implements Serializable
-/*     */ {
-/*     */   private boolean isSingleton;
-/*     */   private Object[] objects;
-/*     */   private Object singletonObj;
-/*  19 */   public static ObjectTuple theEmpty = new ObjectTuple(new Object[0]);
-/*     */   
-/*     */   private ObjectTuple(Object[] objects) {
-/*  22 */     this.objects = objects;
-/*     */   }
-/*     */   
-/*     */   private ObjectTuple(Object object, boolean isSingleton) {
-/*  26 */     this.singletonObj = object;
-/*  27 */     this.isSingleton = isSingleton;
-/*  28 */     System.err.println("MAKING A SINGLETON ObjectTuple, something probably isn't right");
-/*     */   }
-/*     */   
-/*     */   private void writeObject(ObjectOutputStream out) throws IOException {
-/*  32 */     out.writeBoolean(this.isSingleton);
-/*  33 */     if (this.isSingleton) {
-/*  34 */       out.writeObject(this.singletonObj);
-/*     */     } else {
-/*  36 */       out.writeInt(this.objects.length);
-/*  37 */       for (int i = 0; i < this.objects.length; i++) {
-/*  38 */         out.writeObject(this.objects[i]);
-/*     */       }
-/*     */     }
-/*     */   }
-/*     */   
-/*     */   private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-/*  44 */     this.isSingleton = in.readBoolean();
-/*  45 */     if (this.isSingleton) {
-/*  46 */       this.singletonObj = in.readObject();
-/*  47 */       if ((this.singletonObj instanceof String)) {
-/*  48 */         this.singletonObj = ((String)this.singletonObj).intern();
-/*     */       }
-/*     */     } else {
-/*  51 */       this.objects = new Object[in.readInt()];
-/*  52 */       for (int i = 0; i < this.objects.length; i++) {
-/*  53 */         this.objects[i] = in.readObject();
-/*  54 */         if ((this.objects[i] instanceof String)) {
-/*  55 */           this.objects[i] = ((String)this.objects[i]).intern();
-/*     */         }
-/*     */       }
-/*     */     }
-/*     */   }
-/*     */   
-/*     */   public static ObjectTuple make(Object[] objs) {
-/*  62 */     if (objs.length == 0)
-/*  63 */       return theEmpty;
-/*  64 */     if (objs.length == 1) {
-/*  65 */       return new ObjectTuple(objs[0], true);
-/*     */     }
-/*     */     
-/*  68 */     return new ObjectTuple(objs);
-/*     */   }
-/*     */   
-/*     */   public static ObjectTuple makeSingleton(Object o)
-/*     */   {
-/*  73 */     return new ObjectTuple(o, true);
-/*     */   }
-/*     */   
-/*     */   public int size() {
-/*  77 */     if (this.isSingleton) {
-/*  78 */       return 1;
-/*     */     }
-/*  80 */     return this.objects.length;
-/*     */   }
-/*     */   
-/*     */   public Object get(int i)
-/*     */   {
-/*  85 */     if (this.isSingleton) {
-/*  86 */       if (i != 0) {
-/*  87 */         throw new Error("Index out of bounds");
-/*     */       }
-/*  89 */       return this.singletonObj;
-/*     */     }
-/*  91 */     return this.objects[i];
-/*     */   }
-/*     */   
-/*     */   public boolean equals(Object obj)
-/*     */   {
-/*  96 */     if (obj.getClass() == getClass()) {
-/*  97 */       if (this == obj) {
-/*  98 */         return true;
-/*     */       }
-/*     */       
-/* 101 */       ObjectTuple other = (ObjectTuple)obj;
-/*     */       
-/* 103 */       if ((this.isSingleton) && (other.isSingleton))
-/* 104 */         return this.singletonObj.equals(other.singletonObj);
-/* 105 */       if (this.isSingleton != other.isSingleton) {
-/* 106 */         return false;
-/*     */       }
-/* 108 */       for (int i = 0; i < this.objects.length; i++) {
-/* 109 */         if (!this.objects[i].equals(other.objects[i])) {
-/* 110 */           return false;
-/*     */         }
-/*     */       }
-/* 113 */       return true;
-/*     */     }
-/*     */     
-/* 116 */     return false;
-/*     */   }
-/*     */   
-/*     */   public static ObjectTuple append(ObjectTuple first, ObjectTuple second)
-/*     */   {
-/* 121 */     Object[] result = new Object[first.size() + second.size()];
-/* 122 */     for (int i = 0; i < first.size(); i++) {
-/* 123 */       result[i] = first.get(i);
-/*     */     }
-/* 125 */     for (int i = 0; i < second.size(); i++) {
-/* 126 */       result[(first.size() + i)] = second.get(i);
-/*     */     }
-/* 128 */     return make(result);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public String toString()
-/*     */   {
-/* 134 */     StringBuffer result = new StringBuffer();
-/* 135 */     result.append("<<");
-/* 136 */     if (this.isSingleton) {
-/* 137 */       result.append(this.singletonObj);
-/*     */     } else {
-/* 139 */       for (int i = 0; i < this.objects.length; i++) {
-/* 140 */         if (i > 0)
-/* 141 */           result.append(", ");
-/* 142 */         result.append(this.objects[i].toString());
-/*     */       }
-/*     */     }
-/* 145 */     result.append(">>");
-/* 146 */     return result.toString();
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */   public int hashCode()
-/*     */   {
-/* 153 */     if (this.isSingleton) {
-/* 154 */       int hash = 1;
-/* 155 */       return hash * 83 + this.singletonObj.hashCode();
-/*     */     }
-/* 157 */     int hash = this.objects.length;
-/* 158 */     for (int i = 0; i < this.objects.length; i++)
-/* 159 */       hash = hash * 83 + this.objects[i].hashCode();
-/* 160 */     return hash;
-/*     */   }
-/*     */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.util;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintStream;
+import java.io.Serializable;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/util/ObjectTuple.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class ObjectTuple
+  implements Serializable
+{
+  private boolean isSingleton;
+  private Object[] objects;
+  private Object singletonObj;
+  public static ObjectTuple theEmpty = new ObjectTuple(new Object[0]);
+  
+  private ObjectTuple(Object[] objects)
+  {
+    this.objects = objects;
+  }
+  
+  private ObjectTuple(Object object, boolean isSingleton)
+  {
+    this.singletonObj = object;
+    this.isSingleton = isSingleton;
+    System.err.println("MAKING A SINGLETON ObjectTuple, something probably isn't right");
+  }
+  
+  private void writeObject(ObjectOutputStream out)
+    throws IOException
+  {
+    out.writeBoolean(this.isSingleton);
+    if (this.isSingleton)
+    {
+      out.writeObject(this.singletonObj);
+    }
+    else
+    {
+      out.writeInt(this.objects.length);
+      for (int i = 0; i < this.objects.length; i++) {
+        out.writeObject(this.objects[i]);
+      }
+    }
+  }
+  
+  private void readObject(ObjectInputStream in)
+    throws IOException, ClassNotFoundException
+  {
+    this.isSingleton = in.readBoolean();
+    if (this.isSingleton)
+    {
+      this.singletonObj = in.readObject();
+      if ((this.singletonObj instanceof String)) {
+        this.singletonObj = ((String)this.singletonObj).intern();
+      }
+    }
+    else
+    {
+      this.objects = new Object[in.readInt()];
+      for (int i = 0; i < this.objects.length; i++)
+      {
+        this.objects[i] = in.readObject();
+        if ((this.objects[i] instanceof String)) {
+          this.objects[i] = ((String)this.objects[i]).intern();
+        }
+      }
+    }
+  }
+  
+  public static ObjectTuple make(Object[] objs)
+  {
+    if (objs.length == 0) {
+      return theEmpty;
+    }
+    if (objs.length == 1) {
+      return new ObjectTuple(objs[0], true);
+    }
+    return new ObjectTuple(objs);
+  }
+  
+  public static ObjectTuple makeSingleton(Object o)
+  {
+    return new ObjectTuple(o, true);
+  }
+  
+  public int size()
+  {
+    if (this.isSingleton) {
+      return 1;
+    }
+    return this.objects.length;
+  }
+  
+  public Object get(int i)
+  {
+    if (this.isSingleton)
+    {
+      if (i != 0) {
+        throw new Error("Index out of bounds");
+      }
+      return this.singletonObj;
+    }
+    return this.objects[i];
+  }
+  
+  public boolean equals(Object obj)
+  {
+    if (obj.getClass() == getClass())
+    {
+      if (this == obj) {
+        return true;
+      }
+      ObjectTuple other = (ObjectTuple)obj;
+      if ((this.isSingleton) && (other.isSingleton)) {
+        return this.singletonObj.equals(other.singletonObj);
+      }
+      if (this.isSingleton != other.isSingleton) {
+        return false;
+      }
+      for (int i = 0; i < this.objects.length; i++) {
+        if (!this.objects[i].equals(other.objects[i])) {
+          return false;
+        }
+      }
+      return true;
+    }
+    return false;
+  }
+  
+  public static ObjectTuple append(ObjectTuple first, ObjectTuple second)
+  {
+    Object[] result = new Object[first.size() + second.size()];
+    for (int i = 0; i < first.size(); i++) {
+      result[i] = first.get(i);
+    }
+    for (int i = 0; i < second.size(); i++) {
+      result[(first.size() + i)] = second.get(i);
+    }
+    return make(result);
+  }
+  
+  public String toString()
+  {
+    StringBuffer result = new StringBuffer();
+    result.append("<<");
+    if (this.isSingleton) {
+      result.append(this.singletonObj);
+    } else {
+      for (int i = 0; i < this.objects.length; i++)
+      {
+        if (i > 0) {
+          result.append(", ");
+        }
+        result.append(this.objects[i].toString());
+      }
+    }
+    result.append(">>");
+    return result.toString();
+  }
+  
+  public int hashCode()
+  {
+    if (this.isSingleton)
+    {
+      int hash = 1;
+      return hash * 83 + this.singletonObj.hashCode();
+    }
+    int hash = this.objects.length;
+    for (int i = 0; i < this.objects.length; i++) {
+      hash = hash * 83 + this.objects[i].hashCode();
+    }
+    return hash;
+  }
+}

@@ -1,91 +1,88 @@
-/*    */ package tyRuBa.util;
-/*    */ 
-/*    */ import java.io.PrintStream;
-/*    */ import java.util.HashSet;
-/*    */ import java.util.Set;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class ElementSetCollector
-/*    */   extends ElementCollector
-/*    */ {
-/* 19 */   private Set seen = new HashSet();
-/*    */   
-/*    */   protected void addElement(Object e) {
-/* 22 */     super.addElement(e);
-/* 23 */     this.seen.add(e);
-/*    */   }
-/*    */   
-/*    */   public ElementSetCollector(ElementSource s)
-/*    */   {
-/* 28 */     super(s);
-/*    */   }
-/*    */   
-/*    */   public ElementSetCollector() {}
-/*    */   
-/*    */   private boolean isPresent(Object el)
-/*    */   {
-/* 35 */     return this.seen.contains(el);
-/*    */   }
-/*    */   
-/*    */   protected int newElementFromSource()
-/*    */   {
-/*    */     int status;
-/*    */     Object element;
-/*    */     do
-/*    */     {
-/* 44 */       if (this.source == null)
-/* 45 */         return -1;
-/* 46 */       status = this.source.status();
-/* 47 */       if (status != 1) break;
-/* 48 */       element = this.source.nextElement();
-/* 49 */     } while (isPresent(element));
-/* 50 */     addElement(element);
-/* 51 */     return 1;
-/*    */     
-/*    */ 
-/* 54 */     if (status == -1) {
-/* 55 */       this.source = null;
-/* 56 */       this.seen = null;
-/*    */     }
-/*    */     
-/* 59 */     return status;
-/*    */   }
-/*    */   
-/*    */ 
-/*    */ 
-/*    */   public static void main(String[] args)
-/*    */   {
-/* 66 */     ElementSetCollector testSet = new ElementSetCollector();
-/* 67 */     testSet.setSource(
-/* 68 */       testSet.elements().map(new ElementSetCollector.1())
-/*    */       
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/* 75 */       .append(
-/* 76 */       ElementSource.singleton(new Integer(1))));
-/*    */     
-/* 78 */     RemovableElementSource testSetEls = new ElementSetCollector(testSet.elements()).elements();
-/*    */     
-/* 80 */     while (testSetEls.status() == 1) {
-/* 81 */       System.out.println(testSetEls.peekNextElement());
-/* 82 */       testSetEls.removeNextElement();
-/*    */     }
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.util;
 
+import java.io.PrintStream;
+import java.util.HashSet;
+import java.util.Set;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/util/ElementSetCollector.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class ElementSetCollector
+  extends ElementCollector
+{
+  private Set seen = new HashSet();
+  
+  protected void addElement(Object e)
+  {
+    super.addElement(e);
+    this.seen.add(e);
+  }
+  
+  public ElementSetCollector(ElementSource s)
+  {
+    super(s);
+  }
+  
+  public ElementSetCollector() {}
+  
+  private boolean isPresent(Object el)
+  {
+    return this.seen.contains(el);
+  }
+  
+  protected int newElementFromSource()
+  {
+    int status;
+    Object element;
+    do
+    {
+      if (this.source == null) {
+        return -1;
+      }
+      status = this.source.status();
+      if (status != 1) {
+        break;
+      }
+      element = this.source.nextElement();
+    } while (isPresent(element));
+    addElement(element);
+    return 1;
+    if (status == -1)
+    {
+      this.source = null;
+      this.seen = null;
+    }
+    return status;
+  }
+  
+  public static void main(String[] args)
+  {
+    ElementSetCollector testSet = new ElementSetCollector();
+    testSet.setSource(
+      testSet.elements().map(new ElementSetCollector.1())
+      
+      .append(
+      ElementSource.singleton(new Integer(1))));
+    
+    RemovableElementSource testSetEls = new ElementSetCollector(testSet.elements()).elements();
+    while (testSetEls.status() == 1)
+    {
+      System.out.println(testSetEls.peekNextElement());
+      testSetEls.removeNextElement();
+    }
+  }
+}

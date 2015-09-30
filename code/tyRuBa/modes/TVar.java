@@ -1,258 +1,259 @@
-/*     */ package tyRuBa.modes;
-/*     */ 
-/*     */ import java.util.Map;
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ public class TVar
-/*     */   extends Type
-/*     */ {
-/*     */   private Type content;
-/*  17 */   private static int ctr = 1;
-/*  18 */   private int id = ++ctr;
-/*     */   private String name;
-/*     */   
-/*     */   public TVar(String name)
-/*     */   {
-/*  23 */     this.name = name;
-/*  24 */     this.content = null;
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */   public Type getContents()
-/*     */   {
-/*  31 */     TVar me = derefTVar();
-/*  32 */     if (me.content == null) {
-/*  33 */       return null;
-/*     */     }
-/*  35 */     return this.content;
-/*     */   }
-/*     */   
-/*     */   public String toString() {
-/*  39 */     TVar me = derefTVar();
-/*  40 */     if (me.isFree()) {
-/*  41 */       return "?" + me.getName() + "_" + me.id;
-/*     */     }
-/*  43 */     return me.getContents().toString();
-/*     */   }
-/*     */   
-/*     */   public String getName()
-/*     */   {
-/*  48 */     TVar me = derefTVar();
-/*  49 */     return me.name;
-/*     */   }
-/*     */   
-/*     */   private void setContents(Type other) {
-/*  53 */     this.content = other;
-/*     */   }
-/*     */   
-/*     */   public void checkEqualTypes(Type other, boolean grow) throws TypeModeError {
-/*  57 */     TVar me = derefTVar();
-/*  58 */     if (me.equals(other))
-/*  59 */       return;
-/*  60 */     if ((other instanceof TVar)) {
-/*  61 */       TVar otherVar = ((TVar)other).derefTVar();
-/*  62 */       if (me.isFree()) {
-/*  63 */         if (!otherVar.isFreeFor(this)) {
-/*  64 */           throw new TypeModeError("Recursion in inferred type " + this + " & " + 
-/*  65 */             otherVar);
-/*     */         }
-/*     */         
-/*  68 */         me.setContents(otherVar);
-/*     */       }
-/*  70 */       else if (otherVar.isFree()) {
-/*  71 */         if (!me.isFreeFor(otherVar)) {
-/*  72 */           throw new TypeModeError("Recursion in inferred type " + this + " & " + 
-/*  73 */             otherVar);
-/*     */         }
-/*     */         
-/*  76 */         otherVar.setContents(me);
-/*     */       }
-/*     */       else
-/*     */       {
-/*  80 */         me.content.checkEqualTypes(otherVar.content);
-/*  81 */         me.setContents(otherVar);
-/*     */       }
-/*     */     }
-/*  84 */     else if (me.isFree()) {
-/*  85 */       if (!other.isFreeFor(this)) {
-/*  86 */         throw new TypeModeError("Recursion in inferred type " + this + " & " + 
-/*  87 */           other);
-/*     */       }
-/*     */       
-/*  90 */       me.setContents(other);
-/*     */     } else {
-/*  92 */       me.content.checkEqualTypes(other);
-/*     */     }
-/*     */   }
-/*     */   
-/*     */   public boolean isSubTypeOf(Type declared, Map renamings) {
-/*  97 */     TVar me = derefTVar();
-/*  98 */     if (!me.isFree())
-/*  99 */       return me.getContents().isSubTypeOf(declared, renamings);
-/* 100 */     if (!(declared instanceof TVar)) {
-/* 101 */       return false;
-/*     */     }
-/* 103 */     TVar vdeclared = ((TVar)declared).derefTVar();
-/*     */     
-/* 105 */     if (!vdeclared.isFree()) {
-/* 106 */       return false;
-/*     */     }
-/* 108 */     TVar renamed = (TVar)renamings.get(me);
-/* 109 */     if (renamed == null) {
-/* 110 */       renamings.put(me, vdeclared);
-/* 111 */       return true;
-/*     */     }
-/* 113 */     return vdeclared.equals(renamed);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */   private TVar derefTVar()
-/*     */   {
-/* 120 */     if ((this.content != null) && ((this.content instanceof TVar))) {
-/* 121 */       return ((TVar)this.content).derefTVar();
-/*     */     }
-/* 123 */     return this;
-/*     */   }
-/*     */   
-/*     */   public boolean isFree()
-/*     */   {
-/* 128 */     return getContents() == null;
-/*     */   }
-/*     */   
-/*     */   public boolean isFreeFor(TVar var) {
-/* 132 */     TVar me = derefTVar();
-/* 133 */     if (!me.isFree()) {
-/* 134 */       return me.content.isFreeFor(var);
-/*     */     }
-/* 136 */     return var != me;
-/*     */   }
-/*     */   
-/*     */   public Type clone(Map varRenamings)
-/*     */   {
-/* 141 */     TVar me = derefTVar();
-/* 142 */     TVar clone = (TVar)varRenamings.get(me);
-/* 143 */     if (clone != null) {
-/* 144 */       return clone;
-/*     */     }
-/* 146 */     clone = new TVar(me.getName());
-/* 147 */     clone.setContents(me.content == null ? 
-/* 148 */       null : me.content.clone(varRenamings));
-/* 149 */     varRenamings.put(me, clone);
-/* 150 */     return clone;
-/*     */   }
-/*     */   
-/*     */   public Type union(Type other) throws TypeModeError
-/*     */   {
-/* 155 */     TVar me = derefTVar();
-/* 156 */     if (!me.isFree())
-/* 157 */       return me.getContents().union(other);
-/* 158 */     if (me.equals(other)) {
-/* 159 */       return me;
-/*     */     }
-/* 161 */     check(other.isFreeFor(me), me, other);
-/* 162 */     me.setContents(other);
-/* 163 */     return me.content;
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   public boolean equals(Object other)
-/*     */   {
-/* 179 */     if (!(other instanceof TVar)) {
-/* 180 */       return false;
-/*     */     }
-/* 182 */     return derefTVar() == ((TVar)other).derefTVar();
-/*     */   }
-/*     */   
-/*     */   public int hashCode()
-/*     */   {
-/* 187 */     TVar aliasOfMe = derefTVar();
-/* 188 */     if (aliasOfMe == this) {
-/* 189 */       return super.hashCode();
-/*     */     }
-/* 191 */     return aliasOfMe.hashCode();
-/*     */   }
-/*     */   
-/*     */   public Type intersect(Type other) throws TypeModeError {
-/* 195 */     TVar me = derefTVar();
-/* 196 */     if (me.equals(other))
-/* 197 */       return me;
-/* 198 */     if (!me.isFree()) {
-/* 199 */       me.setContents(me.content.intersect(other));
-/* 200 */       return me.content.intersect(other);
-/*     */     }
-/* 202 */     check(other.isFreeFor(me), this, other);
-/* 203 */     me.setContents(other);
-/* 204 */     return other;
-/*     */   }
-/*     */   
-/*     */   public Type copyStrictPart()
-/*     */   {
-/* 209 */     if (isFree()) {
-/* 210 */       return Factory.makeTVar(getName());
-/*     */     }
-/* 212 */     return getContents().copyStrictPart();
-/*     */   }
-/*     */   
-/*     */   public boolean hasOverlapWith(Type other)
-/*     */   {
-/* 217 */     TVar me = derefTVar();
-/* 218 */     if (!me.isFree()) {
-/* 219 */       return me.content.hasOverlapWith(other);
-/*     */     }
-/* 221 */     return true;
-/*     */   }
-/*     */   
-/*     */   public Type getParamType(String currName, Type repAs)
-/*     */   {
-/* 226 */     if ((repAs instanceof TVar)) {
-/* 227 */       if (currName.equals(((TVar)repAs).getName())) {
-/* 228 */         return this;
-/*     */       }
-/* 230 */       return null;
-/*     */     }
-/* 232 */     if (!isFree()) {
-/* 233 */       return getContents().getParamType(currName, repAs);
-/*     */     }
-/* 235 */     return null;
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   public Class javaEquivalent()
-/*     */     throws TypeModeError
-/*     */   {
-/* 246 */     Type contents = getContents();
-/* 247 */     if (contents != null) {
-/* 248 */       return contents.javaEquivalent();
-/*     */     }
-/* 250 */     throw new TypeModeError("This type variable is empty, and therefore has no java equivalent");
-/*     */   }
-/*     */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.modes;
 
+import java.util.Map;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/tyRuBa/modes/TVar.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class TVar
+  extends Type
+{
+  private Type content;
+  private static int ctr = 1;
+  private int id = ++ctr;
+  private String name;
+  
+  public TVar(String name)
+  {
+    this.name = name;
+    this.content = null;
+  }
+  
+  public Type getContents()
+  {
+    TVar me = derefTVar();
+    if (me.content == null) {
+      return null;
+    }
+    return this.content;
+  }
+  
+  public String toString()
+  {
+    TVar me = derefTVar();
+    if (me.isFree()) {
+      return "?" + me.getName() + "_" + me.id;
+    }
+    return me.getContents().toString();
+  }
+  
+  public String getName()
+  {
+    TVar me = derefTVar();
+    return me.name;
+  }
+  
+  private void setContents(Type other)
+  {
+    this.content = other;
+  }
+  
+  public void checkEqualTypes(Type other, boolean grow)
+    throws TypeModeError
+  {
+    TVar me = derefTVar();
+    if (me.equals(other)) {
+      return;
+    }
+    if ((other instanceof TVar))
+    {
+      TVar otherVar = ((TVar)other).derefTVar();
+      if (me.isFree())
+      {
+        if (!otherVar.isFreeFor(this)) {
+          throw new TypeModeError("Recursion in inferred type " + this + " & " + 
+            otherVar);
+        }
+        me.setContents(otherVar);
+      }
+      else if (otherVar.isFree())
+      {
+        if (!me.isFreeFor(otherVar)) {
+          throw new TypeModeError("Recursion in inferred type " + this + " & " + 
+            otherVar);
+        }
+        otherVar.setContents(me);
+      }
+      else
+      {
+        me.content.checkEqualTypes(otherVar.content);
+        me.setContents(otherVar);
+      }
+    }
+    else if (me.isFree())
+    {
+      if (!other.isFreeFor(this)) {
+        throw new TypeModeError("Recursion in inferred type " + this + " & " + 
+          other);
+      }
+      me.setContents(other);
+    }
+    else
+    {
+      me.content.checkEqualTypes(other);
+    }
+  }
+  
+  public boolean isSubTypeOf(Type declared, Map renamings)
+  {
+    TVar me = derefTVar();
+    if (!me.isFree()) {
+      return me.getContents().isSubTypeOf(declared, renamings);
+    }
+    if (!(declared instanceof TVar)) {
+      return false;
+    }
+    TVar vdeclared = ((TVar)declared).derefTVar();
+    if (!vdeclared.isFree()) {
+      return false;
+    }
+    TVar renamed = (TVar)renamings.get(me);
+    if (renamed == null)
+    {
+      renamings.put(me, vdeclared);
+      return true;
+    }
+    return vdeclared.equals(renamed);
+  }
+  
+  private TVar derefTVar()
+  {
+    if ((this.content != null) && ((this.content instanceof TVar))) {
+      return ((TVar)this.content).derefTVar();
+    }
+    return this;
+  }
+  
+  public boolean isFree()
+  {
+    return getContents() == null;
+  }
+  
+  public boolean isFreeFor(TVar var)
+  {
+    TVar me = derefTVar();
+    if (!me.isFree()) {
+      return me.content.isFreeFor(var);
+    }
+    return var != me;
+  }
+  
+  public Type clone(Map varRenamings)
+  {
+    TVar me = derefTVar();
+    TVar clone = (TVar)varRenamings.get(me);
+    if (clone != null) {
+      return clone;
+    }
+    clone = new TVar(me.getName());
+    clone.setContents(me.content == null ? 
+      null : me.content.clone(varRenamings));
+    varRenamings.put(me, clone);
+    return clone;
+  }
+  
+  public Type union(Type other)
+    throws TypeModeError
+  {
+    TVar me = derefTVar();
+    if (!me.isFree()) {
+      return me.getContents().union(other);
+    }
+    if (me.equals(other)) {
+      return me;
+    }
+    check(other.isFreeFor(me), me, other);
+    me.setContents(other);
+    return me.content;
+  }
+  
+  public boolean equals(Object other)
+  {
+    if (!(other instanceof TVar)) {
+      return false;
+    }
+    return derefTVar() == ((TVar)other).derefTVar();
+  }
+  
+  public int hashCode()
+  {
+    TVar aliasOfMe = derefTVar();
+    if (aliasOfMe == this) {
+      return super.hashCode();
+    }
+    return aliasOfMe.hashCode();
+  }
+  
+  public Type intersect(Type other)
+    throws TypeModeError
+  {
+    TVar me = derefTVar();
+    if (me.equals(other)) {
+      return me;
+    }
+    if (!me.isFree())
+    {
+      me.setContents(me.content.intersect(other));
+      return me.content.intersect(other);
+    }
+    check(other.isFreeFor(me), this, other);
+    me.setContents(other);
+    return other;
+  }
+  
+  public Type copyStrictPart()
+  {
+    if (isFree()) {
+      return Factory.makeTVar(getName());
+    }
+    return getContents().copyStrictPart();
+  }
+  
+  public boolean hasOverlapWith(Type other)
+  {
+    TVar me = derefTVar();
+    if (!me.isFree()) {
+      return me.content.hasOverlapWith(other);
+    }
+    return true;
+  }
+  
+  public Type getParamType(String currName, Type repAs)
+  {
+    if ((repAs instanceof TVar))
+    {
+      if (currName.equals(((TVar)repAs).getName())) {
+        return this;
+      }
+      return null;
+    }
+    if (!isFree()) {
+      return getContents().getParamType(currName, repAs);
+    }
+    return null;
+  }
+  
+  public Class javaEquivalent()
+    throws TypeModeError
+  {
+    Type contents = getContents();
+    if (contents != null) {
+      return contents.javaEquivalent();
+    }
+    throw new TypeModeError("This type variable is empty, and therefore has no java equivalent");
+  }
+}

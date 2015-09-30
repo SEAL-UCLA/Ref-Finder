@@ -1,70 +1,78 @@
-/*    */ package tyRuBa.engine.compilation;
-/*    */ 
-/*    */ import tyRuBa.engine.Frame;
-/*    */ import tyRuBa.engine.RBContext;
-/*    */ import tyRuBa.engine.RBTerm;
-/*    */ import tyRuBa.engine.RBVariable;
-/*    */ import tyRuBa.util.ElementSource;
-/*    */ 
-/*    */ public class CompiledUnique extends SemiDetCompiled
-/*    */ {
-/*    */   RBVariable[] vars;
-/*    */   Compiled exp;
-/*    */   
-/*    */   public CompiledUnique(RBVariable[] vars, Compiled exp)
-/*    */   {
-/* 16 */     this.vars = vars;
-/* 17 */     this.exp = exp;
-/*    */   }
-/*    */   
-/*    */   public Frame runSemiDet(Object input, RBContext context) {
-/* 21 */     Frame f = (Frame)input;
-/* 22 */     Frame newf = (Frame)f.clone();
-/* 23 */     RBTerm[] vals = new RBTerm[this.vars.length];
-/* 24 */     newf.removeVars(this.vars);
-/* 25 */     for (int i = 0; i < this.vars.length; i++) {
-/* 26 */       vals[i] = this.vars[i].substitute(f);
-/*    */     }
-/* 28 */     ElementSource result = this.exp.runNonDet(newf, context);
-/* 29 */     if (!result.hasMoreElements())
-/* 30 */       return null;
-/*    */     int i;
-/* 32 */     for (; result.hasMoreElements(); 
-/*    */         
-/* 34 */         i < vals.length)
-/*    */     {
-/* 33 */       Frame currentFrame = (Frame)result.nextElement();
-/* 34 */       i = 0; continue;
-/* 35 */       newf = vals[i].unify(this.vars[i].substitute(currentFrame), newf);
-/* 36 */       if (newf == null) {
-/* 37 */         return null;
-/*    */       }
-/* 34 */       i++;
-/*    */     }
-/*    */     
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/* 41 */     return newf;
-/*    */   }
-/*    */   
-/*    */   public String toString()
-/*    */   {
-/* 46 */     StringBuffer result = new StringBuffer("UNIQUE(");
-/* 47 */     for (int i = 0; i < this.vars.length; i++) {
-/* 48 */       if (i > 0) {
-/* 49 */         result.append(",");
-/*    */       }
-/* 51 */       result.append(this.vars[i]);
-/*    */     }
-/* 53 */     result.append(": " + this.exp + ")");
-/* 54 */     return result.toString();
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.engine.compilation;
 
+import tyRuBa.engine.Frame;
+import tyRuBa.engine.RBContext;
+import tyRuBa.engine.RBTerm;
+import tyRuBa.engine.RBVariable;
+import tyRuBa.util.ElementSource;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/tyRuBa/engine/compilation/CompiledUnique.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class CompiledUnique
+  extends SemiDetCompiled
+{
+  RBVariable[] vars;
+  Compiled exp;
+  
+  public CompiledUnique(RBVariable[] vars, Compiled exp)
+  {
+    this.vars = vars;
+    this.exp = exp;
+  }
+  
+  public Frame runSemiDet(Object input, RBContext context)
+  {
+    Frame f = (Frame)input;
+    Frame newf = (Frame)f.clone();
+    RBTerm[] vals = new RBTerm[this.vars.length];
+    newf.removeVars(this.vars);
+    for (int i = 0; i < this.vars.length; i++) {
+      vals[i] = this.vars[i].substitute(f);
+    }
+    ElementSource result = this.exp.runNonDet(newf, context);
+    if (!result.hasMoreElements()) {
+      return null;
+    }
+    int i;
+    for (; result.hasMoreElements(); i < vals.length)
+    {
+      Frame currentFrame = (Frame)result.nextElement();
+      i = 0; continue;
+      newf = vals[i].unify(this.vars[i].substitute(currentFrame), newf);
+      if (newf == null) {
+        return null;
+      }
+      i++;
+    }
+    return newf;
+  }
+  
+  public String toString()
+  {
+    StringBuffer result = new StringBuffer("UNIQUE(");
+    for (int i = 0; i < this.vars.length; i++)
+    {
+      if (i > 0) {
+        result.append(",");
+      }
+      result.append(this.vars[i]);
+    }
+    result.append(": " + this.exp + ")");
+    return result.toString();
+  }
+}

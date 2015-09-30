@@ -1,24 +1,38 @@
-/*    */ package tyRuBa.util;
-/*    */ 
-/*    */ import java.io.File;
-/*    */ 
-/*    */ public class Files
-/*    */ {
-/*    */   public static void deleteDirectory(File dir) {
-/*  8 */     if (dir.exists()) {
-/*  9 */       if (dir.isDirectory()) {
-/* 10 */         File[] children = dir.listFiles();
-/* 11 */         for (int i = 0; i < children.length; i++) {
-/* 12 */           deleteDirectory(children[i]);
-/*    */         }
-/*    */       }
-/* 15 */       dir.delete();
-/*    */     }
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.util;
 
+import java.io.File;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/util/Files.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class Files
+{
+  public static void deleteDirectory(File dir)
+  {
+    if (dir.exists())
+    {
+      if (dir.isDirectory())
+      {
+        File[] children = dir.listFiles();
+        for (int i = 0; i < children.length; i++) {
+          deleteDirectory(children[i]);
+        }
+      }
+      dir.delete();
+    }
+  }
+}

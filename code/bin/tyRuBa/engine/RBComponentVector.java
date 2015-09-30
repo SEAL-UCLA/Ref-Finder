@@ -1,104 +1,82 @@
-/*    */ package tyRuBa.engine;
-/*    */ 
-/*    */ import java.util.ArrayList;
-/*    */ import java.util.Iterator;
-/*    */ import tyRuBa.engine.compilation.CompilationContext;
-/*    */ import tyRuBa.engine.compilation.Compiled;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class RBComponentVector
-/*    */ {
-/*    */   public ArrayList contents;
-/*    */   
-/*    */   public RBComponentVector()
-/*    */   {
-/* 21 */     this.contents = new ArrayList();
-/*    */   }
-/*    */   
-/*    */   public void clear() {
-/* 25 */     this.contents = new ArrayList();
-/*    */   }
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public RBComponentVector(int predictedSize)
-/*    */   {
-/* 33 */     this.contents = new ArrayList(predictedSize);
-/*    */   }
-/*    */   
-/*    */ 
-/*    */   public RBComponentVector(ArrayList vect)
-/*    */   {
-/* 39 */     this.contents = vect;
-/*    */   }
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public void insert(RBComponent c)
-/*    */   {
-/* 71 */     if (c == null)
-/* 72 */       throw new NullPointerException("Not allowed to insert null");
-/* 73 */     this.contents.add(c);
-/*    */   }
-/*    */   
-/*    */   public String toString()
-/*    */   {
-/* 78 */     int len = this.contents.size();
-/* 79 */     StringBuffer result = new StringBuffer();
-/* 80 */     for (int i = 0; i < len; i++) {
-/* 81 */       result.append(this.contents.get(i) + "\n");
-/*    */     }
-/* 83 */     return result.toString();
-/*    */   }
-/*    */   
-/*    */   public Compiled compile(CompilationContext context) {
-/* 87 */     Compiled result = Compiled.fail;
-/* 88 */     for (Iterator iter = iterator(); iter.hasNext();) {
-/* 89 */       RBComponent element = (RBComponent)iter.next();
-/* 90 */       result = result.disjoin(element.compile(context));
-/*    */     }
-/* 92 */     return result;
-/*    */   }
-/*    */   
-/*    */   private Iterator iterator() {
-/* 96 */     return new RBComponentVector.1(this);
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.engine;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import tyRuBa.engine.compilation.CompilationContext;
+import tyRuBa.engine.compilation.Compiled;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/engine/RBComponentVector.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class RBComponentVector
+{
+  public ArrayList contents;
+  
+  public RBComponentVector()
+  {
+    this.contents = new ArrayList();
+  }
+  
+  public void clear()
+  {
+    this.contents = new ArrayList();
+  }
+  
+  public RBComponentVector(int predictedSize)
+  {
+    this.contents = new ArrayList(predictedSize);
+  }
+  
+  public RBComponentVector(ArrayList vect)
+  {
+    this.contents = vect;
+  }
+  
+  public void insert(RBComponent c)
+  {
+    if (c == null) {
+      throw new NullPointerException("Not allowed to insert null");
+    }
+    this.contents.add(c);
+  }
+  
+  public String toString()
+  {
+    int len = this.contents.size();
+    StringBuffer result = new StringBuffer();
+    for (int i = 0; i < len; i++) {
+      result.append(this.contents.get(i) + "\n");
+    }
+    return result.toString();
+  }
+  
+  public Compiled compile(CompilationContext context)
+  {
+    Compiled result = Compiled.fail;
+    for (Iterator iter = iterator(); iter.hasNext();)
+    {
+      RBComponent element = (RBComponent)iter.next();
+      result = result.disjoin(element.compile(context));
+    }
+    return result;
+  }
+  
+  private Iterator iterator()
+  {
+    return new RBComponentVector.1(this);
+  }
+}

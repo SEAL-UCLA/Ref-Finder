@@ -1,68 +1,75 @@
-/*    */ package tyRuBa.util;
-/*    */ 
-/*    */ import java.io.PrintStream;
-/*    */ import java.util.HashSet;
-/*    */ import java.util.Set;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class PrintingState
-/*    */ {
-/* 17 */   Set visited = new HashSet();
-/*    */   
-/* 19 */   int indentationLevel = 0;
-/* 20 */   int column = 0;
-/*    */   PrintStream out;
-/*    */   
-/*    */   public PrintingState(PrintStream s)
-/*    */   {
-/* 25 */     this.out = s;
-/*    */   }
-/*    */   
-/*    */   public void print(String o) {
-/* 29 */     String s = o.toString();
-/* 30 */     this.column += s.length();
-/* 31 */     this.out.print(s);
-/*    */   }
-/*    */   
-/*    */   void println(String o) {
-/* 35 */     print(o);
-/* 36 */     newline();
-/*    */   }
-/*    */   
-/*    */   void newline() {
-/* 40 */     this.out.println();
-/* 41 */     for (this.column = 0; this.column < this.indentationLevel; this.column += 1) {
-/* 42 */       this.out.print(" ");
-/*    */     }
-/*    */   }
-/*    */   
-/*    */   void indent() {
-/* 47 */     this.indentationLevel += 2;
-/*    */   }
-/*    */   
-/*    */   void outdent() {
-/* 51 */     this.indentationLevel -= 2;
-/*    */   }
-/*    */   
-/*    */   protected void printObj(Object object) {
-/* 55 */     if ((object instanceof ElementSource)) {
-/* 56 */       ((ElementSource)object).print(this);
-/*    */     }
-/*    */     else {
-/* 59 */       print(object.toString());
-/*    */     }
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.util;
 
+import java.io.PrintStream;
+import java.util.HashSet;
+import java.util.Set;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/tyRuBa/util/PrintingState.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class PrintingState
+{
+  Set visited = new HashSet();
+  int indentationLevel = 0;
+  int column = 0;
+  PrintStream out;
+  
+  public PrintingState(PrintStream s)
+  {
+    this.out = s;
+  }
+  
+  public void print(String o)
+  {
+    String s = o.toString();
+    this.column += s.length();
+    this.out.print(s);
+  }
+  
+  void println(String o)
+  {
+    print(o);
+    newline();
+  }
+  
+  void newline()
+  {
+    this.out.println();
+    for (this.column = 0; this.column < this.indentationLevel; this.column += 1) {
+      this.out.print(" ");
+    }
+  }
+  
+  void indent()
+  {
+    this.indentationLevel += 2;
+  }
+  
+  void outdent()
+  {
+    this.indentationLevel -= 2;
+  }
+  
+  protected void printObj(Object object)
+  {
+    if ((object instanceof ElementSource)) {
+      ((ElementSource)object).print(this);
+    } else {
+      print(object.toString());
+    }
+  }
+}

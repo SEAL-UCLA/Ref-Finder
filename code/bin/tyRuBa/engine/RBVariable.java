@@ -1,134 +1,154 @@
-/*     */ package tyRuBa.engine;
-/*     */ 
-/*     */ import java.io.IOException;
-/*     */ import java.io.ObjectInputStream;
-/*     */ import tyRuBa.engine.visitor.TermVisitor;
-/*     */ import tyRuBa.modes.BindingMode;
-/*     */ import tyRuBa.modes.Factory;
-/*     */ import tyRuBa.modes.ModeCheckContext;
-/*     */ import tyRuBa.modes.Type;
-/*     */ import tyRuBa.modes.TypeEnv;
-/*     */ 
-/*     */ public class RBVariable extends RBSubstitutable
-/*     */ {
-/*  14 */   protected static int gensymctr = 1;
-/*     */   
-/*     */   public static RBVariable makeUnique(String id) {
-/*  17 */     return new RBVariable(new String(id));
-/*     */   }
-/*     */   
-/*     */   public static RBVariable make(String id) {
-/*  21 */     return new RBVariable(id.intern());
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   protected RBVariable(String id)
-/*     */   {
-/*  27 */     super(id);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */   protected Frame bind(RBTerm val, Frame f)
-/*     */   {
-/*  34 */     f.put(this, val);
-/*  35 */     return f;
-/*     */   }
-/*     */   
-/*     */   public Frame unify(RBTerm other, Frame f)
-/*     */   {
-/*  40 */     if ((other instanceof RBIgnoredVariable))
-/*  41 */       return f;
-/*  42 */     RBTerm val = f.get(this);
-/*  43 */     if (val == null) {
-/*  44 */       other = other.substitute(f);
-/*  45 */       if (equals(other))
-/*  46 */         return f;
-/*  47 */       if (other.freefor(this)) {
-/*  48 */         return bind(other, f);
-/*     */       }
-/*  50 */       return null;
-/*     */     }
-/*  52 */     return val.unify(other, f);
-/*     */   }
-/*     */   
-/*     */   boolean freefor(RBVariable v) {
-/*  56 */     return !equals(v);
-/*     */   }
-/*     */   
-/*     */   public BindingMode getBindingMode(ModeCheckContext context) {
-/*  60 */     if (context.isBound(this)) {
-/*  61 */       return Factory.makeBound();
-/*     */     }
-/*  63 */     return Factory.makeFree();
-/*     */   }
-/*     */   
-/*     */   public boolean isGround()
-/*     */   {
-/*  68 */     return false;
-/*     */   }
-/*     */   
-/*     */   protected boolean sameForm(RBTerm other, Frame lr, Frame rl) {
-/*  72 */     if (other.getClass() != getClass()) {
-/*  73 */       return false;
-/*     */     }
-/*  75 */     RBVariable binding = (RBVariable)lr.get(this);
-/*  76 */     if (binding == null) {
-/*  77 */       lr.put(this, other);
-/*  78 */     } else if (!binding.equals(other)) {
-/*  79 */       return false;
-/*     */     }
-/*  81 */     binding = (RBVariable)rl.get(other);
-/*  82 */     if (binding == null) {
-/*  83 */       rl.put(other, this);
-/*  84 */       return true;
-/*     */     }
-/*  86 */     return equals(binding);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public int formHashCode()
-/*     */   {
-/*  92 */     return 1;
-/*     */   }
-/*     */   
-/*     */   public Object clone() {
-/*  96 */     return makeUnique(this.name);
-/*     */   }
-/*     */   
-/*     */   protected Type getType(TypeEnv env) {
-/* 100 */     return env.get(this);
-/*     */   }
-/*     */   
-/*     */   public void makeAllBound(ModeCheckContext context) {
-/* 104 */     context.makeBound(this);
-/*     */   }
-/*     */   
-/*     */   public Object accept(TermVisitor v) {
-/* 108 */     return v.visit(this);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */   private void readObject(ObjectInputStream in)
-/*     */     throws IOException, ClassNotFoundException
-/*     */   {
-/* 116 */     in.defaultReadObject();
-/* 117 */     this.name = this.name.intern();
-/*     */   }
-/*     */   
-/*     */   public String getFirst()
-/*     */   {
-/* 122 */     throw new Error("Variables cannot be two level keys");
-/*     */   }
-/*     */   
-/*     */   public Object getSecond() {
-/* 126 */     throw new Error("Variables cannot be two level keys");
-/*     */   }
-/*     */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.engine;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import tyRuBa.engine.visitor.TermVisitor;
+import tyRuBa.modes.BindingMode;
+import tyRuBa.modes.Factory;
+import tyRuBa.modes.ModeCheckContext;
+import tyRuBa.modes.Type;
+import tyRuBa.modes.TypeEnv;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/engine/RBVariable.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class RBVariable
+  extends RBSubstitutable
+{
+  protected static int gensymctr = 1;
+  
+  public static RBVariable makeUnique(String id)
+  {
+    return new RBVariable(new String(id));
+  }
+  
+  public static RBVariable make(String id)
+  {
+    return new RBVariable(id.intern());
+  }
+  
+  protected RBVariable(String id)
+  {
+    super(id);
+  }
+  
+  protected Frame bind(RBTerm val, Frame f)
+  {
+    f.put(this, val);
+    return f;
+  }
+  
+  public Frame unify(RBTerm other, Frame f)
+  {
+    if ((other instanceof RBIgnoredVariable)) {
+      return f;
+    }
+    RBTerm val = f.get(this);
+    if (val == null)
+    {
+      other = other.substitute(f);
+      if (equals(other)) {
+        return f;
+      }
+      if (other.freefor(this)) {
+        return bind(other, f);
+      }
+      return null;
+    }
+    return val.unify(other, f);
+  }
+  
+  boolean freefor(RBVariable v)
+  {
+    return !equals(v);
+  }
+  
+  public BindingMode getBindingMode(ModeCheckContext context)
+  {
+    if (context.isBound(this)) {
+      return Factory.makeBound();
+    }
+    return Factory.makeFree();
+  }
+  
+  public boolean isGround()
+  {
+    return false;
+  }
+  
+  protected boolean sameForm(RBTerm other, Frame lr, Frame rl)
+  {
+    if (other.getClass() != getClass()) {
+      return false;
+    }
+    RBVariable binding = (RBVariable)lr.get(this);
+    if (binding == null) {
+      lr.put(this, other);
+    } else if (!binding.equals(other)) {
+      return false;
+    }
+    binding = (RBVariable)rl.get(other);
+    if (binding == null)
+    {
+      rl.put(other, this);
+      return true;
+    }
+    return equals(binding);
+  }
+  
+  public int formHashCode()
+  {
+    return 1;
+  }
+  
+  public Object clone()
+  {
+    return makeUnique(this.name);
+  }
+  
+  protected Type getType(TypeEnv env)
+  {
+    return env.get(this);
+  }
+  
+  public void makeAllBound(ModeCheckContext context)
+  {
+    context.makeBound(this);
+  }
+  
+  public Object accept(TermVisitor v)
+  {
+    return v.visit(this);
+  }
+  
+  private void readObject(ObjectInputStream in)
+    throws IOException, ClassNotFoundException
+  {
+    in.defaultReadObject();
+    this.name = this.name.intern();
+  }
+  
+  public String getFirst()
+  {
+    throw new Error("Variables cannot be two level keys");
+  }
+  
+  public Object getSecond()
+  {
+    throw new Error("Variables cannot be two level keys");
+  }
+}

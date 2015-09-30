@@ -1,136 +1,154 @@
-/*     */ package tyRuBa.modes;
-/*     */ 
-/*     */ import java.util.ArrayList;
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ public class BindingList
-/*     */ {
-/*     */   private ArrayList parts;
-/*     */   
-/*     */   public BindingList()
-/*     */   {
-/*  19 */     this.parts = new ArrayList();
-/*     */   }
-/*     */   
-/*     */   public BindingList(BindingMode bm) {
-/*  23 */     this();
-/*  24 */     this.parts.add(bm);
-/*     */   }
-/*     */   
-/*     */   public int hashCode() {
-/*  28 */     int size = size();
-/*  29 */     int hash = getClass().hashCode();
-/*  30 */     for (int i = 0; i < size; i++)
-/*  31 */       hash = hash * 19 + get(i).hashCode();
-/*  32 */     return hash;
-/*     */   }
-/*     */   
-/*     */   public boolean equals(Object other) {
-/*  36 */     if ((other instanceof BindingList)) {
-/*  37 */       BindingList cother = (BindingList)other;
-/*  38 */       if (size() != cother.size()) {
-/*  39 */         return false;
-/*     */       }
-/*  41 */       for (int i = 0; i < size(); i++) {
-/*  42 */         if (!get(i).equals(cother.get(i)))
-/*  43 */           return false;
-/*     */       }
-/*  45 */       return true;
-/*     */     }
-/*     */     
-/*  48 */     return false;
-/*     */   }
-/*     */   
-/*     */   public String toString()
-/*     */   {
-/*  53 */     StringBuffer result = new StringBuffer("(");
-/*  54 */     int size = size();
-/*  55 */     for (int i = 0; i < size; i++) {
-/*  56 */       if (i > 0) {
-/*  57 */         result.append(",");
-/*     */       }
-/*  59 */       result.append(get(i).toString());
-/*     */     }
-/*  61 */     result.append(")");
-/*  62 */     return result.toString();
-/*     */   }
-/*     */   
-/*     */   public String getBFString() {
-/*  66 */     StringBuffer result = new StringBuffer();
-/*  67 */     int size = size();
-/*  68 */     for (int i = 0; i < size; i++) {
-/*  69 */       if (get(i).isBound()) {
-/*  70 */         result.append("B");
-/*     */       } else {
-/*  72 */         result.append("F");
-/*     */       }
-/*     */     }
-/*  75 */     return result.toString();
-/*     */   }
-/*     */   
-/*     */   public void add(BindingMode newPart)
-/*     */   {
-/*  80 */     this.parts.add(newPart);
-/*     */   }
-/*     */   
-/*     */   public BindingMode get(int i) {
-/*  84 */     return (BindingMode)this.parts.get(i);
-/*     */   }
-/*     */   
-/*     */   public int size() {
-/*  88 */     return this.parts.size();
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public boolean satisfyBinding(BindingList other)
-/*     */   {
-/*  94 */     for (int i = 0; i < size(); i++) {
-/*  95 */       if (!get(i).satisfyBinding(other.get(i))) {
-/*  96 */         return false;
-/*     */       }
-/*     */     }
-/*  99 */     return true;
-/*     */   }
-/*     */   
-/*     */   public boolean hasFree() {
-/* 103 */     for (int i = 0; i < size(); i++)
-/* 104 */       if (!get(i).isBound()) return true;
-/* 105 */     return false;
-/*     */   }
-/*     */   
-/*     */   public boolean isAllBound() {
-/* 109 */     for (int i = 0; i < size(); i++) {
-/* 110 */       if (!get(i).isBound()) {
-/* 111 */         return false;
-/*     */       }
-/*     */     }
-/* 114 */     return true;
-/*     */   }
-/*     */   
-/*     */   public int getNumBound() {
-/* 118 */     int result = 0;
-/* 119 */     for (int i = 0; i < size(); i++) {
-/* 120 */       if (get(i).isBound()) {
-/* 121 */         result++;
-/*     */       }
-/*     */     }
-/* 124 */     return result;
-/*     */   }
-/*     */   
-/*     */   public int getNumFree() {
-/* 128 */     return size() - getNumBound();
-/*     */   }
-/*     */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.modes;
 
+import java.util.ArrayList;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/modes/BindingList.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class BindingList
+{
+  private ArrayList parts;
+  
+  public BindingList()
+  {
+    this.parts = new ArrayList();
+  }
+  
+  public BindingList(BindingMode bm)
+  {
+    this();
+    this.parts.add(bm);
+  }
+  
+  public int hashCode()
+  {
+    int size = size();
+    int hash = getClass().hashCode();
+    for (int i = 0; i < size; i++) {
+      hash = hash * 19 + get(i).hashCode();
+    }
+    return hash;
+  }
+  
+  public boolean equals(Object other)
+  {
+    if ((other instanceof BindingList))
+    {
+      BindingList cother = (BindingList)other;
+      if (size() != cother.size()) {
+        return false;
+      }
+      for (int i = 0; i < size(); i++) {
+        if (!get(i).equals(cother.get(i))) {
+          return false;
+        }
+      }
+      return true;
+    }
+    return false;
+  }
+  
+  public String toString()
+  {
+    StringBuffer result = new StringBuffer("(");
+    int size = size();
+    for (int i = 0; i < size; i++)
+    {
+      if (i > 0) {
+        result.append(",");
+      }
+      result.append(get(i).toString());
+    }
+    result.append(")");
+    return result.toString();
+  }
+  
+  public String getBFString()
+  {
+    StringBuffer result = new StringBuffer();
+    int size = size();
+    for (int i = 0; i < size; i++) {
+      if (get(i).isBound()) {
+        result.append("B");
+      } else {
+        result.append("F");
+      }
+    }
+    return result.toString();
+  }
+  
+  public void add(BindingMode newPart)
+  {
+    this.parts.add(newPart);
+  }
+  
+  public BindingMode get(int i)
+  {
+    return (BindingMode)this.parts.get(i);
+  }
+  
+  public int size()
+  {
+    return this.parts.size();
+  }
+  
+  public boolean satisfyBinding(BindingList other)
+  {
+    for (int i = 0; i < size(); i++) {
+      if (!get(i).satisfyBinding(other.get(i))) {
+        return false;
+      }
+    }
+    return true;
+  }
+  
+  public boolean hasFree()
+  {
+    for (int i = 0; i < size(); i++) {
+      if (!get(i).isBound()) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  public boolean isAllBound()
+  {
+    for (int i = 0; i < size(); i++) {
+      if (!get(i).isBound()) {
+        return false;
+      }
+    }
+    return true;
+  }
+  
+  public int getNumBound()
+  {
+    int result = 0;
+    for (int i = 0; i < size(); i++) {
+      if (get(i).isBound()) {
+        result++;
+      }
+    }
+    return result;
+  }
+  
+  public int getNumFree()
+  {
+    return size() - getNumBound();
+  }
+}

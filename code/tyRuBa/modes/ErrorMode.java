@@ -1,37 +1,53 @@
-/*    */ package tyRuBa.modes;
-/*    */ 
-/*    */ public class ErrorMode extends Mode
-/*    */ {
-/*    */   String msg;
-/*    */   
-/*    */   public ErrorMode(String msg) {
-/*  8 */     super(Multiplicity.zero, Multiplicity.infinite);
-/*  9 */     this.msg = msg;
-/*    */   }
-/*    */   
-/*    */   public String toString() {
-/* 13 */     return "ERROR: " + this.msg;
-/*    */   }
-/*    */   
-/*    */   public boolean equals(Object other) {
-/* 17 */     if ((other instanceof ErrorMode)) {
-/* 18 */       return this.msg.equals(((ErrorMode)other).msg);
-/*    */     }
-/* 20 */     return false;
-/*    */   }
-/*    */   
-/*    */   public int hashCode()
-/*    */   {
-/* 25 */     return 122 + this.msg.hashCode();
-/*    */   }
-/*    */   
-/*    */   public Mode add(Mode other) {
-/* 29 */     return this;
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.modes;
 
-
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/tyRuBa/modes/ErrorMode.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class ErrorMode
+  extends Mode
+{
+  String msg;
+  
+  public ErrorMode(String msg)
+  {
+    super(Multiplicity.zero, Multiplicity.infinite);
+    this.msg = msg;
+  }
+  
+  public String toString()
+  {
+    return "ERROR: " + this.msg;
+  }
+  
+  public boolean equals(Object other)
+  {
+    if ((other instanceof ErrorMode)) {
+      return this.msg.equals(((ErrorMode)other).msg);
+    }
+    return false;
+  }
+  
+  public int hashCode()
+  {
+    return 122 + this.msg.hashCode();
+  }
+  
+  public Mode add(Mode other)
+  {
+    return this;
+  }
+}

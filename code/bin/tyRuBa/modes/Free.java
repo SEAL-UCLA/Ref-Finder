@@ -1,42 +1,54 @@
-/*    */ package tyRuBa.modes;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class Free
-/*    */   extends BindingMode
-/*    */ {
-/* 10 */   public static Free the = new Free();
-/*    */   
-/*    */ 
-/*    */   public int hashCode()
-/*    */   {
-/* 15 */     return getClass().hashCode();
-/*    */   }
-/*    */   
-/*    */   public boolean equals(Object other) {
-/* 19 */     return other instanceof Free;
-/*    */   }
-/*    */   
-/*    */   public String toString() {
-/* 23 */     return "F";
-/*    */   }
-/*    */   
-/*    */   public boolean satisfyBinding(BindingMode mode)
-/*    */   {
-/* 28 */     return equals(mode);
-/*    */   }
-/*    */   
-/*    */   public boolean isBound() {
-/* 32 */     return false;
-/*    */   }
-/*    */   
-/* 35 */   public boolean isFree() { return true; }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.modes;
 
-
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/modes/Free.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class Free
+  extends BindingMode
+{
+  public static Free the = new Free();
+  
+  public int hashCode()
+  {
+    return getClass().hashCode();
+  }
+  
+  public boolean equals(Object other)
+  {
+    return other instanceof Free;
+  }
+  
+  public String toString()
+  {
+    return "F";
+  }
+  
+  public boolean satisfyBinding(BindingMode mode)
+  {
+    return equals(mode);
+  }
+  
+  public boolean isBound()
+  {
+    return false;
+  }
+  
+  public boolean isFree()
+  {
+    return true;
+  }
+}

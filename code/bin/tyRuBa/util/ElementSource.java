@@ -1,253 +1,149 @@
-/*     */ package tyRuBa.util;
-/*     */ 
-/*     */ import java.io.ByteArrayOutputStream;
-/*     */ import java.io.PrintStream;
-/*     */ import java.util.ArrayList;
-/*     */ import java.util.Iterator;
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ public abstract class ElementSource
-/*     */ {
-/*     */   public static final int ELEMENT_READY = 1;
-/*     */   public static final int NO_ELEMENTS_READY = 0;
-/*     */   public static final int NO_MORE_ELEMENTS = -1;
-/*     */   
-/*     */   public boolean isEmpty()
-/*     */   {
-/*  26 */     return false;
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */   public abstract void print(PrintingState paramPrintingState);
-/*     */   
-/*     */ 
-/*     */ 
-/*     */   public abstract int status();
-/*     */   
-/*     */ 
-/*     */ 
-/*     */   public abstract Object nextElement();
-/*     */   
-/*     */ 
-/*     */   public boolean hasMoreElements()
-/*     */   {
-/*  44 */     return status() == 1;
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public static ElementSource singleton(Object e)
-/*     */   {
-/*  50 */     return new ElementSource.1(e);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*  82 */   public static final ElementSource theEmpty = EmptySource.the;
-/*     */   
-/*     */ 
-/*     */   public ElementSource append(ElementSource other)
-/*     */   {
-/*  87 */     if (other.isEmpty()) {
-/*  88 */       return this;
-/*     */     }
-/*  90 */     return new AppendSource(this, other);
-/*     */   }
-/*     */   
-/*     */   public ElementSource map(Action what)
-/*     */   {
-/*  95 */     return new MapElementSource(this, what);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   public static ElementSource with(Object[] els)
-/*     */   {
-/* 115 */     return new ElementSource.2(els);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   public static ElementSource with(ArrayList els)
-/*     */   {
-/* 144 */     if (els.isEmpty()) {
-/* 145 */       return theEmpty;
-/*     */     }
-/* 147 */     return new ArrayListSource(els);
-/*     */   }
-/*     */   
-/*     */   public static ElementSource with(Iterator it)
-/*     */   {
-/* 152 */     return new ElementSource.3(it);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   public void forceAll()
-/*     */   {
-/* 176 */     while (hasMoreElements())
-/* 177 */       nextElement();
-/*     */   }
-/*     */   
-/*     */   public String toString() {
-/* 181 */     ByteArrayOutputStream result = new ByteArrayOutputStream();
-/* 182 */     print(new PrintingState(new PrintStream(result)));
-/* 183 */     return result.toString();
-/*     */   }
-/*     */   
-/*     */   public ElementSource first() {
-/* 187 */     return new First(this);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */   public ElementSource immediateFirst()
-/*     */   {
-/* 194 */     int stat = status();
-/* 195 */     if (stat == 1)
-/* 196 */       return singleton(nextElement());
-/* 197 */     if (stat == -1) {
-/* 198 */       return theEmpty;
-/*     */     }
-/* 200 */     return first();
-/*     */   }
-/*     */   
-/*     */   public ElementSource flatten() {
-/* 204 */     return new FlattenElementSource(this);
-/*     */   }
-/*     */   
-/*     */   public SynchronizedElementSource synchronizeOn(SynchResource resource) {
-/* 208 */     return new SynchronizedElementSource(resource, this);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   public int countElements()
-/*     */   {
-/* 218 */     int result = 0;
-/* 219 */     while (hasMoreElements()) {
-/* 220 */       nextElement();
-/* 221 */       result++;
-/*     */     }
-/* 223 */     return result;
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   public void release() {}
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   public Object firstElementOrNull()
-/*     */   {
-/* 239 */     if (hasMoreElements()) {
-/* 240 */       Object result = nextElement();
-/* 241 */       release();
-/* 242 */       return result;
-/*     */     }
-/*     */     
-/* 245 */     return null;
-/*     */   }
-/*     */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.util;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Iterator;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/util/ElementSource.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public abstract class ElementSource
+{
+  public static final int ELEMENT_READY = 1;
+  public static final int NO_ELEMENTS_READY = 0;
+  public static final int NO_MORE_ELEMENTS = -1;
+  
+  public boolean isEmpty()
+  {
+    return false;
+  }
+  
+  public abstract void print(PrintingState paramPrintingState);
+  
+  public abstract int status();
+  
+  public abstract Object nextElement();
+  
+  public boolean hasMoreElements()
+  {
+    return status() == 1;
+  }
+  
+  public static ElementSource singleton(Object e)
+  {
+    return new ElementSource.1(e);
+  }
+  
+  public static final ElementSource theEmpty = EmptySource.the;
+  
+  public ElementSource append(ElementSource other)
+  {
+    if (other.isEmpty()) {
+      return this;
+    }
+    return new AppendSource(this, other);
+  }
+  
+  public ElementSource map(Action what)
+  {
+    return new MapElementSource(this, what);
+  }
+  
+  public static ElementSource with(Object[] els)
+  {
+    return new ElementSource.2(els);
+  }
+  
+  public static ElementSource with(ArrayList els)
+  {
+    if (els.isEmpty()) {
+      return theEmpty;
+    }
+    return new ArrayListSource(els);
+  }
+  
+  public static ElementSource with(Iterator it)
+  {
+    return new ElementSource.3(it);
+  }
+  
+  public void forceAll()
+  {
+    while (hasMoreElements()) {
+      nextElement();
+    }
+  }
+  
+  public String toString()
+  {
+    ByteArrayOutputStream result = new ByteArrayOutputStream();
+    print(new PrintingState(new PrintStream(result)));
+    return result.toString();
+  }
+  
+  public ElementSource first()
+  {
+    return new First(this);
+  }
+  
+  public ElementSource immediateFirst()
+  {
+    int stat = status();
+    if (stat == 1) {
+      return singleton(nextElement());
+    }
+    if (stat == -1) {
+      return theEmpty;
+    }
+    return first();
+  }
+  
+  public ElementSource flatten()
+  {
+    return new FlattenElementSource(this);
+  }
+  
+  public SynchronizedElementSource synchronizeOn(SynchResource resource)
+  {
+    return new SynchronizedElementSource(resource, this);
+  }
+  
+  public int countElements()
+  {
+    int result = 0;
+    while (hasMoreElements())
+    {
+      nextElement();
+      result++;
+    }
+    return result;
+  }
+  
+  public void release() {}
+  
+  public Object firstElementOrNull()
+  {
+    if (hasMoreElements())
+    {
+      Object result = nextElement();
+      release();
+      return result;
+    }
+    return null;
+  }
+}

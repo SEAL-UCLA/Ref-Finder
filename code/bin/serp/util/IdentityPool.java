@@ -1,65 +1,51 @@
-/*    */ package serp.util;
-/*    */ 
-/*    */ import java.util.Collection;
-/*    */ import java.util.Map;
-/*    */ import java.util.Set;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class IdentityPool
-/*    */   extends AbstractPool
-/*    */ {
-/* 18 */   private Set _free = new MapSet(new IdentityMap());
-/* 19 */   private Map _taken = new WeakKeyMap(new IdentityMap());
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public IdentityPool() {}
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public IdentityPool(int min, int max, int wait, int autoReturn)
-/*    */   {
-/* 36 */     super(min, max, wait, autoReturn);
-/*    */   }
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public IdentityPool(Collection c)
-/*    */   {
-/* 45 */     super(c);
-/*    */   }
-/*    */   
-/*    */ 
-/*    */   protected Set freeSet()
-/*    */   {
-/* 51 */     return this._free;
-/*    */   }
-/*    */   
-/*    */ 
-/*    */   protected Map takenMap()
-/*    */   {
-/* 57 */     return this._taken;
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package serp.util;
 
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/serp/util/IdentityPool.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class IdentityPool
+  extends AbstractPool
+{
+  private Set _free = new MapSet(new IdentityMap());
+  private Map _taken = new WeakKeyMap(new IdentityMap());
+  
+  public IdentityPool() {}
+  
+  public IdentityPool(int min, int max, int wait, int autoReturn)
+  {
+    super(min, max, wait, autoReturn);
+  }
+  
+  public IdentityPool(Collection c)
+  {
+    super(c);
+  }
+  
+  protected Set freeSet()
+  {
+    return this._free;
+  }
+  
+  protected Map takenMap()
+  {
+    return this._taken;
+  }
+}

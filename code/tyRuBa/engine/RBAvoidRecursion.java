@@ -1,52 +1,62 @@
-/*    */ package tyRuBa.engine;
-/*    */ 
-/*    */ import java.io.PrintStream;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class RBAvoidRecursion
-/*    */   extends RBContext
-/*    */ {
-/*    */   protected RBContext guarded;
-/*    */   protected RBRule rule;
-/*    */   private int depth;
-/* 16 */   private static int maxDepth = 0;
-/*    */   
-/* 18 */   public static int depthLimit = 250;
-/*    */   
-/*    */   public RBAvoidRecursion(RBContext aContext, RBRule r) {
-/* 21 */     this.rule = r;
-/* 22 */     this.guarded = aContext;
-/* 23 */     this.depth = (aContext.depth() + 1);
-/* 24 */     if (this.depth > maxDepth)
-/*    */     {
-/* 26 */       maxDepth = this.depth;
-/* 27 */       if (this.depth == depthLimit) {
-/* 28 */         System.err.print(this);
-/* 29 */         throw new Error("To deep recursion in rule application");
-/*    */       }
-/*    */     }
-/*    */   }
-/*    */   
-/*    */   int depth() {
-/* 35 */     return this.depth;
-/*    */   }
-/*    */   
-/*    */   public String toString() {
-/* 39 */     StringBuffer result = new StringBuffer(this.rule + "\n");
-/* 40 */     if ((this.guarded instanceof RBAvoidRecursion)) {
-/* 41 */       result.append(this.guarded.toString());
-/*    */     } else
-/* 43 */       result.append("--------------------");
-/* 44 */     return result.toString();
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.engine;
 
+import java.io.PrintStream;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/tyRuBa/engine/RBAvoidRecursion.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class RBAvoidRecursion
+  extends RBContext
+{
+  protected RBContext guarded;
+  protected RBRule rule;
+  private int depth;
+  private static int maxDepth = 0;
+  public static int depthLimit = 250;
+  
+  public RBAvoidRecursion(RBContext aContext, RBRule r)
+  {
+    this.rule = r;
+    this.guarded = aContext;
+    this.depth = (aContext.depth() + 1);
+    if (this.depth > maxDepth)
+    {
+      maxDepth = this.depth;
+      if (this.depth == depthLimit)
+      {
+        System.err.print(this);
+        throw new Error("To deep recursion in rule application");
+      }
+    }
+  }
+  
+  int depth()
+  {
+    return this.depth;
+  }
+  
+  public String toString()
+  {
+    StringBuffer result = new StringBuffer(this.rule + "\n");
+    if ((this.guarded instanceof RBAvoidRecursion)) {
+      result.append(this.guarded.toString());
+    } else {
+      result.append("--------------------");
+    }
+    return result.toString();
+  }
+}

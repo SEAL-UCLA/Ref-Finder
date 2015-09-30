@@ -1,22 +1,35 @@
-/*    */ package lsclipse.utils;
-/*    */ 
-/*    */ public class StringCleaner {
-/*    */   public static String cleanupString(String s) {
-/*  5 */     s = s.trim();
-/*  6 */     s = s.replace("\n", "");
-/*  7 */     s = s.replace("\"", "");
-/*  8 */     s = s.replace(";", "");
-/*  9 */     s = s.replace(" ", "");
-/* 10 */     s = s.replace("{", "");
-/* 11 */     s = s.replace("}", "");
-/* 12 */     s = s.replace("\\", "");
-/* 13 */     s = s.replace("return", "");
-/* 14 */     return s;
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package lsclipse.utils;
 
-
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/lsclipse/utils/StringCleaner.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class StringCleaner
+{
+  public static String cleanupString(String s)
+  {
+    s = s.trim();
+    s = s.replace("\n", "");
+    s = s.replace("\"", "");
+    s = s.replace(";", "");
+    s = s.replace(" ", "");
+    s = s.replace("{", "");
+    s = s.replace("}", "");
+    s = s.replace("\\", "");
+    s = s.replace("return", "");
+    return s;
+  }
+}

@@ -1,37 +1,53 @@
-/*    */ package tyRuBa.engine.compilation;
-/*    */ 
-/*    */ import tyRuBa.engine.Frame;
-/*    */ import tyRuBa.engine.RBContext;
-/*    */ 
-/*    */ public class CompiledNot extends SemiDetCompiled
-/*    */ {
-/*    */   private Compiled negated;
-/*    */   
-/*    */   public CompiledNot(Compiled negated)
-/*    */   {
-/* 12 */     super(negated.getMode().negate());
-/* 13 */     this.negated = negated;
-/*    */   }
-/*    */   
-/*    */   public Frame runSemiDet(Object input, RBContext context) {
-/* 17 */     if (this.negated.runNonDet(input, context).hasMoreElements()) {
-/* 18 */       return null;
-/*    */     }
-/* 20 */     return (Frame)input;
-/*    */   }
-/*    */   
-/*    */   public Compiled negate()
-/*    */   {
-/* 25 */     return new CompiledTest(this.negated);
-/*    */   }
-/*    */   
-/*    */   public String toString() {
-/* 29 */     return "NOT(" + this.negated + ")";
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.engine.compilation;
 
+import tyRuBa.engine.Frame;
+import tyRuBa.engine.RBContext;
+import tyRuBa.modes.Mode;
+import tyRuBa.util.ElementSource;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/engine/compilation/CompiledNot.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class CompiledNot
+  extends SemiDetCompiled
+{
+  private Compiled negated;
+  
+  public CompiledNot(Compiled negated)
+  {
+    super(negated.getMode().negate());
+    this.negated = negated;
+  }
+  
+  public Frame runSemiDet(Object input, RBContext context)
+  {
+    if (this.negated.runNonDet(input, context).hasMoreElements()) {
+      return null;
+    }
+    return (Frame)input;
+  }
+  
+  public Compiled negate()
+  {
+    return new CompiledTest(this.negated);
+  }
+  
+  public String toString()
+  {
+    return "NOT(" + this.negated + ")";
+  }
+}

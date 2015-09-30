@@ -1,158 +1,124 @@
-/*     */ package serp.util;
-/*     */ 
-/*     */ import java.lang.ref.ReferenceQueue;
-/*     */ import java.lang.ref.WeakReference;
-/*     */ import java.util.Collection;
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ public class WeakCollection
-/*     */   extends RefValueCollection
-/*     */ {
-/*     */   public WeakCollection() {}
-/*     */   
-/*     */   public WeakCollection(Collection coll)
-/*     */   {
-/*  52 */     super(coll);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */   protected RefValueCollection.RefValue createRefValue(Object value, ReferenceQueue queue, boolean identity)
-/*     */   {
-/*  59 */     if (queue == null) {
-/*  60 */       return new WeakValue(value, identity);
-/*     */     }
-/*  62 */     return new WeakValue(value, queue, identity);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   private static final class WeakValue
-/*     */     extends WeakReference
-/*     */     implements RefValueCollection.RefValue
-/*     */   {
-/*  73 */     private boolean _identity = false;
-/*     */     
-/*     */ 
-/*     */     public WeakValue(Object value, boolean identity)
-/*     */     {
-/*  78 */       super();
-/*  79 */       this._identity = identity;
-/*     */     }
-/*     */     
-/*     */ 
-/*     */ 
-/*     */     public WeakValue(Object value, ReferenceQueue queue, boolean identity)
-/*     */     {
-/*  86 */       super(queue);
-/*  87 */       this._identity = identity;
-/*     */     }
-/*     */     
-/*     */ 
-/*     */     public Object getValue()
-/*     */     {
-/*  93 */       return get();
-/*     */     }
-/*     */     
-/*     */ 
-/*     */     public int hashCode()
-/*     */     {
-/*  99 */       Object obj = get();
-/* 100 */       if (obj == null) {
-/* 101 */         return 0;
-/*     */       }
-/* 103 */       if (this._identity)
-/* 104 */         return System.identityHashCode(obj);
-/* 105 */       return obj.hashCode();
-/*     */     }
-/*     */     
-/*     */ 
-/*     */     public boolean equals(Object other)
-/*     */     {
-/* 111 */       if (this == other) {
-/* 112 */         return true;
-/*     */       }
-/* 114 */       if ((other instanceof RefValueCollection.RefValue)) {
-/* 115 */         other = ((RefValueCollection.RefValue)other).getValue();
-/*     */       }
-/* 117 */       Object obj = get();
-/* 118 */       if (obj == null)
-/* 119 */         return false;
-/* 120 */       if (this._identity)
-/* 121 */         return obj == other;
-/* 122 */       return obj.equals(other);
-/*     */     }
-/*     */     
-/*     */ 
-/*     */     public int compareTo(Object other)
-/*     */     {
-/* 128 */       if (this == other) {
-/* 129 */         return 0;
-/*     */       }
-/* 131 */       Object value = getValue();
-/*     */       Object otherValue;
-/* 133 */       Object otherValue; if ((other instanceof RefValueCollection.RefValue)) {
-/* 134 */         otherValue = ((RefValueCollection.RefValue)other).getValue();
-/*     */       } else {
-/* 136 */         otherValue = other;
-/*     */       }
-/* 138 */       if ((value == null) && (otherValue == null))
-/* 139 */         return 0;
-/* 140 */       if ((value == null) && (otherValue != null))
-/* 141 */         return -1;
-/* 142 */       if (otherValue == null) {
-/* 143 */         return 1;
-/*     */       }
-/* 145 */       if (!(value instanceof Comparable)) {
-/* 146 */         return System.identityHashCode(otherValue) - 
-/* 147 */           System.identityHashCode(value);
-/*     */       }
-/* 149 */       return ((Comparable)value).compareTo(otherValue);
-/*     */     }
-/*     */   }
-/*     */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package serp.util;
 
+import java.lang.ref.ReferenceQueue;
+import java.lang.ref.WeakReference;
+import java.util.Collection;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/serp/util/WeakCollection.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class WeakCollection
+  extends RefValueCollection
+{
+  public WeakCollection() {}
+  
+  public WeakCollection(Collection coll)
+  {
+    super(coll);
+  }
+  
+  protected RefValueCollection.RefValue createRefValue(Object value, ReferenceQueue queue, boolean identity)
+  {
+    if (queue == null) {
+      return new WeakValue(value, identity);
+    }
+    return new WeakValue(value, queue, identity);
+  }
+  
+  private static final class WeakValue
+    extends WeakReference
+    implements RefValueCollection.RefValue
+  {
+    private boolean _identity = false;
+    
+    public WeakValue(Object value, boolean identity)
+    {
+      super();
+      this._identity = identity;
+    }
+    
+    public WeakValue(Object value, ReferenceQueue queue, boolean identity)
+    {
+      super(queue);
+      this._identity = identity;
+    }
+    
+    public Object getValue()
+    {
+      return get();
+    }
+    
+    public int hashCode()
+    {
+      Object obj = get();
+      if (obj == null) {
+        return 0;
+      }
+      if (this._identity) {
+        return System.identityHashCode(obj);
+      }
+      return obj.hashCode();
+    }
+    
+    public boolean equals(Object other)
+    {
+      if (this == other) {
+        return true;
+      }
+      if ((other instanceof RefValueCollection.RefValue)) {
+        other = ((RefValueCollection.RefValue)other).getValue();
+      }
+      Object obj = get();
+      if (obj == null) {
+        return false;
+      }
+      if (this._identity) {
+        return obj == other;
+      }
+      return obj.equals(other);
+    }
+    
+    public int compareTo(Object other)
+    {
+      if (this == other) {
+        return 0;
+      }
+      Object value = getValue();
+      Object otherValue;
+      Object otherValue;
+      if ((other instanceof RefValueCollection.RefValue)) {
+        otherValue = ((RefValueCollection.RefValue)other).getValue();
+      } else {
+        otherValue = other;
+      }
+      if ((value == null) && (otherValue == null)) {
+        return 0;
+      }
+      if ((value == null) && (otherValue != null)) {
+        return -1;
+      }
+      if (otherValue == null) {
+        return 1;
+      }
+      if (!(value instanceof Comparable)) {
+        return System.identityHashCode(otherValue) - 
+          System.identityHashCode(value);
+      }
+      return ((Comparable)value).compareTo(otherValue);
+    }
+  }
+}

@@ -1,46 +1,61 @@
-/*    */ package tyRuBa.engine.compilation;
-/*    */ 
-/*    */ import tyRuBa.engine.Frame;
-/*    */ import tyRuBa.engine.RBContext;
-/*    */ import tyRuBa.engine.RBTuple;
-/*    */ import tyRuBa.engine.RuleBase;
-/*    */ 
-/*    */ public class SemiDetCompiledPredicateExpression extends SemiDetCompiled
-/*    */ {
-/*    */   private final RuleBase rules;
-/*    */   private final RBTuple args;
-/*    */   
-/*    */   public SemiDetCompiledPredicateExpression(tyRuBa.modes.Mode mode, RuleBase rules, RBTuple args)
-/*    */   {
-/* 15 */     super(mode);
-/* 16 */     this.rules = rules;
-/* 17 */     this.args = args;
-/*    */   }
-/*    */   
-/*    */   public final Frame runSemiDet(Object input, RBContext context) {
-/* 21 */     RBTuple goal = (RBTuple)this.args.substitute((Frame)input);
-/* 22 */     Frame result = compiledRules().runSemiDet(goal, context);
-/* 23 */     if (((Frame)input).isEmpty())
-/*    */     {
-/* 25 */       return result; }
-/* 26 */     if (result == null) {
-/* 27 */       return null;
-/*    */     }
-/* 29 */     return ((Frame)input).append(result);
-/*    */   }
-/*    */   
-/*    */   private SemiDetCompiled compiledRules()
-/*    */   {
-/* 34 */     return this.rules.getSemiDetCompiledRules();
-/*    */   }
-/*    */   
-/*    */   public String toString() {
-/* 38 */     return "SEMIDET PRED(" + this.args + ")";
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.engine.compilation;
 
+import tyRuBa.engine.Frame;
+import tyRuBa.engine.RBContext;
+import tyRuBa.engine.RBTuple;
+import tyRuBa.engine.RuleBase;
+import tyRuBa.modes.Mode;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/tyRuBa/engine/compilation/SemiDetCompiledPredicateExpression.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class SemiDetCompiledPredicateExpression
+  extends SemiDetCompiled
+{
+  private final RuleBase rules;
+  private final RBTuple args;
+  
+  public SemiDetCompiledPredicateExpression(Mode mode, RuleBase rules, RBTuple args)
+  {
+    super(mode);
+    this.rules = rules;
+    this.args = args;
+  }
+  
+  public final Frame runSemiDet(Object input, RBContext context)
+  {
+    RBTuple goal = (RBTuple)this.args.substitute((Frame)input);
+    Frame result = compiledRules().runSemiDet(goal, context);
+    if (((Frame)input).isEmpty()) {
+      return result;
+    }
+    if (result == null) {
+      return null;
+    }
+    return ((Frame)input).append(result);
+  }
+  
+  private SemiDetCompiled compiledRules()
+  {
+    return this.rules.getSemiDetCompiledRules();
+  }
+  
+  public String toString()
+  {
+    return "SEMIDET PRED(" + this.args + ")";
+  }
+}

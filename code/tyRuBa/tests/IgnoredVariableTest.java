@@ -1,41 +1,60 @@
-/*    */ package tyRuBa.tests;
-/*    */ 
-/*    */ import tyRuBa.engine.FrontEnd;
-/*    */ import tyRuBa.parser.ParseException;
-/*    */ 
-/*    */ public class IgnoredVariableTest extends TyrubaTest
-/*    */ {
-/*    */   public IgnoredVariableTest(String arg0)
-/*    */   {
-/* 10 */     super(arg0);
-/*    */   }
-/*    */   
-/*    */   protected void setUp() throws Exception {
-/* 14 */     TyrubaTest.initfile = false;
-/* 15 */     tyRuBa.engine.RuleBase.useCache = false;
-/* 16 */     super.setUp();
-/*    */   }
-/*    */   
-/*    */   public void testIgnoredVars1() throws ParseException, tyRuBa.modes.TypeModeError {
-/* 20 */     this.frontend.parse("test :: ( ) \nMODES () IS DET END\n");
-/*    */     
-/* 22 */     this.frontend.parse("foobar :: String, Integer\nMODES (F,F) IS MULTI END\n");
-/*    */     
-/* 24 */     this.frontend.parse("test() :- foobar(?,?).");
-/*    */   }
-/*    */   
-/*    */   public void testIgnoredVars2() throws ParseException, tyRuBa.modes.TypeModeError {
-/* 28 */     this.frontend.parse("foo :: String, String\nMODES (F,F) IS NONDET END");
-/*    */     
-/* 30 */     this.frontend.parse("foo(a,b).");
-/* 31 */     this.frontend.parse("foo(aa,bb).");
-/* 32 */     test_must_findall("foo(?x,?)", "?x", new String[] { "a", "aa" });
-/* 33 */     test_must_findall("foo(?,?x)", "?x", new String[] { "b", "bb" });
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.tests;
 
+import tyRuBa.engine.FrontEnd;
+import tyRuBa.modes.TypeModeError;
+import tyRuBa.parser.ParseException;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/tyRuBa/tests/IgnoredVariableTest.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class IgnoredVariableTest
+  extends TyrubaTest
+{
+  public IgnoredVariableTest(String arg0)
+  {
+    super(arg0);
+  }
+  
+  protected void setUp()
+    throws Exception
+  {
+    TyrubaTest.initfile = false;
+    tyRuBa.engine.RuleBase.useCache = false;
+    super.setUp();
+  }
+  
+  public void testIgnoredVars1()
+    throws ParseException, TypeModeError
+  {
+    this.frontend.parse("test :: ( ) \nMODES () IS DET END\n");
+    
+    this.frontend.parse("foobar :: String, Integer\nMODES (F,F) IS MULTI END\n");
+    
+    this.frontend.parse("test() :- foobar(?,?).");
+  }
+  
+  public void testIgnoredVars2()
+    throws ParseException, TypeModeError
+  {
+    this.frontend.parse("foo :: String, String\nMODES (F,F) IS NONDET END");
+    
+    this.frontend.parse("foo(a,b).");
+    this.frontend.parse("foo(aa,bb).");
+    test_must_findall("foo(?x,?)", "?x", new String[] { "a", "aa" });
+    test_must_findall("foo(?,?x)", "?x", new String[] { "b", "bb" });
+  }
+}

@@ -1,54 +1,73 @@
-/*    */ package tyRuBa.tests;
-/*    */ 
-/*    */ import tyRuBa.modes.TypeModeError;
-/*    */ 
-/*    */ public class FindAllTest extends TyrubaTest
-/*    */ {
-/*    */   public FindAllTest(String arg0)
-/*    */   {
-/*  9 */     super(arg0);
-/*    */   }
-/*    */   
-/*    */   public void setUp() throws Exception {
-/* 13 */     TyrubaTest.initfile = true;
-/* 14 */     super.setUp();
-/*    */   }
-/*    */   
-/*    */   public void testFindAll() throws tyRuBa.parser.ParseException, TypeModeError {
-/* 18 */     this.frontend.parse("testje :: [[Integer]]\nMODES (F) IS DET END");
-/*    */     
-/* 20 */     this.frontend.parse("testje(?re) :- FINDALL(append(?x,?,[1,2,3]),?x,?re).");
-/*    */     
-/* 22 */     test_must_succeed("testje([[],[1],[1,2],[1,2,3]])");
-/* 23 */     test_must_equal("FINDALL((EXISTS ?y : append(?x,?y,[1,2,3])),?x,?re)", 
-/* 24 */       "?re", "[[],[1],[1,2],[1,2,3]]");
-/* 25 */     test_must_succeed("member([1],?re), FINDALL(append(?x,?,[1,2,3]),?x,?re)");
-/* 26 */     test_must_succeed("FINDALL(append(?x,?,?lst),?x,?re), append([1],[2,3],?lst)");
-/*    */     try
-/*    */     {
-/* 29 */       test_must_fail("FINDALL(append(?x,?y,[1,2,3]),?x,?re)");
-/* 30 */       fail("Should have thrown a TypeModeError because ?y is not bound.");
-/*    */     }
-/*    */     catch (TypeModeError localTypeModeError) {}
-/*    */   }
-/*    */   
-/*    */   public void testCountAll() throws tyRuBa.parser.ParseException, TypeModeError
-/*    */   {
-/* 37 */     test_must_succeed("COUNTALL((EXISTS ?y:append(?x,?y,[1,2,3])),?x,4).");
-/* 38 */     test_must_fail("COUNTALL((EXISTS ?y:append(?x,?y,[1,2,3])),?x,2).");
-/* 39 */     test_must_equal("COUNTALL((EXISTS ?y: append(?x,?y,[1,2,3])),?x,?n)", 
-/* 40 */       "?n", "4");
-/*    */     try
-/*    */     {
-/* 43 */       test_must_fail("COUNTALL(append(?x,?y,[1,2,3]),?x,?re)");
-/* 44 */       fail("Should have thrown a TypeModeError because ?y is not bound.");
-/*    */     }
-/*    */     catch (TypeModeError localTypeModeError) {}
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.tests;
 
+import tyRuBa.engine.FrontEnd;
+import tyRuBa.modes.TypeModeError;
+import tyRuBa.parser.ParseException;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/tyRuBa/tests/FindAllTest.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class FindAllTest
+  extends TyrubaTest
+{
+  public FindAllTest(String arg0)
+  {
+    super(arg0);
+  }
+  
+  public void setUp()
+    throws Exception
+  {
+    TyrubaTest.initfile = true;
+    super.setUp();
+  }
+  
+  public void testFindAll()
+    throws ParseException, TypeModeError
+  {
+    this.frontend.parse("testje :: [[Integer]]\nMODES (F) IS DET END");
+    
+    this.frontend.parse("testje(?re) :- FINDALL(append(?x,?,[1,2,3]),?x,?re).");
+    
+    test_must_succeed("testje([[],[1],[1,2],[1,2,3]])");
+    test_must_equal("FINDALL((EXISTS ?y : append(?x,?y,[1,2,3])),?x,?re)", 
+      "?re", "[[],[1],[1,2],[1,2,3]]");
+    test_must_succeed("member([1],?re), FINDALL(append(?x,?,[1,2,3]),?x,?re)");
+    test_must_succeed("FINDALL(append(?x,?,?lst),?x,?re), append([1],[2,3],?lst)");
+    try
+    {
+      test_must_fail("FINDALL(append(?x,?y,[1,2,3]),?x,?re)");
+      fail("Should have thrown a TypeModeError because ?y is not bound.");
+    }
+    catch (TypeModeError localTypeModeError) {}
+  }
+  
+  public void testCountAll()
+    throws ParseException, TypeModeError
+  {
+    test_must_succeed("COUNTALL((EXISTS ?y:append(?x,?y,[1,2,3])),?x,4).");
+    test_must_fail("COUNTALL((EXISTS ?y:append(?x,?y,[1,2,3])),?x,2).");
+    test_must_equal("COUNTALL((EXISTS ?y: append(?x,?y,[1,2,3])),?x,?n)", 
+      "?n", "4");
+    try
+    {
+      test_must_fail("COUNTALL(append(?x,?y,[1,2,3]),?x,?re)");
+      fail("Should have thrown a TypeModeError because ?y is not bound.");
+    }
+    catch (TypeModeError localTypeModeError) {}
+  }
+}

@@ -1,92 +1,113 @@
-/*    */ package tyRuBa.tests;
-/*    */ 
-/*    */ import tyRuBa.engine.FrontEnd;
-/*    */ import tyRuBa.engine.ProgressMonitor;
-/*    */ import tyRuBa.engine.SimpleRuleBaseBucket;
-/*    */ import tyRuBa.parser.ParseException;
-/*    */ 
-/*    */ public class ProgressMonitorTest extends TyrubaTest
-/*    */ {
-/*    */   SimpleRuleBaseBucket bucket;
-/*    */   SimpleRuleBaseBucket otherBucket;
-/*    */   
-/*    */   public void setUp() throws Exception
-/*    */   {
-/* 15 */     super.setUp(this.mon);
-/* 16 */     this.bucket = new SimpleRuleBaseBucket(this.frontend);
-/* 17 */     this.otherBucket = new SimpleRuleBaseBucket(this.frontend);
-/*    */   }
-/*    */   
-/* 20 */   MyProgressMonitor mon = new MyProgressMonitor();
-/*    */   
-/*    */   static class MyProgressMonitor implements ProgressMonitor
-/*    */   {
-/* 24 */     private boolean isDone = true;
-/*    */     
-/* 26 */     int updates = -99;
-/*    */     int expectedWork;
-/*    */     
-/*    */     public void beginTask(String name, int totalWork) {
-/* 30 */       this.updates = 0;
-/* 31 */       this.expectedWork = totalWork;
-/* 32 */       if (!this.isDone)
-/* 33 */         ProgressMonitorTest.fail("No multi tasking/progressing!");
-/* 34 */       this.isDone = false;
-/* 35 */       ProgressMonitorTest.assertTrue(totalWork > 0);
-/*    */     }
-/*    */     
-/*    */     public void worked(int units) {
-/* 39 */       this.updates += units;
-/*    */     }
-/*    */     
-/*    */     public void done() {
-/* 43 */       this.isDone = true;
-/*    */     }
-/*    */     
-/*    */     public int workDone() {
-/* 47 */       if (!this.isDone)
-/* 48 */         ProgressMonitorTest.fail("Hey... the work is not done!");
-/* 49 */       return this.updates;
-/*    */     }
-/*    */   }
-/*    */   
-/*    */   public ProgressMonitorTest(String arg0)
-/*    */   {
-/* 55 */     super(arg0);
-/*    */   }
-/*    */   
-/*    */   public void testProgressMonitor() throws ParseException, tyRuBa.modes.TypeModeError
-/*    */   {
-/* 60 */     tyRuBa.engine.RuleBase.autoUpdate = true;
-/*    */     
-/* 62 */     this.frontend.parse("foo :: String");
-/*    */     
-/* 64 */     this.frontend.parse("foo(frontend).");
-/* 65 */     this.otherBucket.addStuff("foo(otherBucket).");
-/* 66 */     this.bucket.addStuff("foo(bucket).");
-/*    */     
-/* 68 */     test_must_succeed("foo(frontend)");
-/*    */     
-/* 70 */     assertEquals(this.mon.expectedWork, this.mon.workDone());
-/*    */     
-/* 72 */     test_must_succeed("foo(frontend)", this.otherBucket);
-/*    */     
-/* 74 */     this.otherBucket.clearStuff();
-/*    */     
-/* 76 */     test_must_succeed("foo(frontend)");
-/*    */     
-/* 78 */     assertEquals(this.mon.expectedWork, this.mon.workDone());
-/*    */     
-/* 80 */     this.mon.updates = 64537;
-/*    */     
-/* 82 */     test_must_succeed("foo(frontend)", this.otherBucket);
-/*    */     
-/* 84 */     assertEquals(64537, this.mon.workDone());
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.tests;
 
+import tyRuBa.engine.FrontEnd;
+import tyRuBa.engine.ProgressMonitor;
+import tyRuBa.engine.SimpleRuleBaseBucket;
+import tyRuBa.modes.TypeModeError;
+import tyRuBa.parser.ParseException;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/tyRuBa/tests/ProgressMonitorTest.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class ProgressMonitorTest
+  extends TyrubaTest
+{
+  SimpleRuleBaseBucket bucket;
+  SimpleRuleBaseBucket otherBucket;
+  
+  public void setUp()
+    throws Exception
+  {
+    super.setUp(this.mon);
+    this.bucket = new SimpleRuleBaseBucket(this.frontend);
+    this.otherBucket = new SimpleRuleBaseBucket(this.frontend);
+  }
+  
+  MyProgressMonitor mon = new MyProgressMonitor();
+  
+  static class MyProgressMonitor
+    implements ProgressMonitor
+  {
+    private boolean isDone = true;
+    int updates = -99;
+    int expectedWork;
+    
+    public void beginTask(String name, int totalWork)
+    {
+      this.updates = 0;
+      this.expectedWork = totalWork;
+      if (!this.isDone) {
+        ProgressMonitorTest.fail("No multi tasking/progressing!");
+      }
+      this.isDone = false;
+      ProgressMonitorTest.assertTrue(totalWork > 0);
+    }
+    
+    public void worked(int units)
+    {
+      this.updates += units;
+    }
+    
+    public void done()
+    {
+      this.isDone = true;
+    }
+    
+    public int workDone()
+    {
+      if (!this.isDone) {
+        ProgressMonitorTest.fail("Hey... the work is not done!");
+      }
+      return this.updates;
+    }
+  }
+  
+  public ProgressMonitorTest(String arg0)
+  {
+    super(arg0);
+  }
+  
+  public void testProgressMonitor()
+    throws ParseException, TypeModeError
+  {
+    tyRuBa.engine.RuleBase.autoUpdate = true;
+    
+    this.frontend.parse("foo :: String");
+    
+    this.frontend.parse("foo(frontend).");
+    this.otherBucket.addStuff("foo(otherBucket).");
+    this.bucket.addStuff("foo(bucket).");
+    
+    test_must_succeed("foo(frontend)");
+    
+    assertEquals(this.mon.expectedWork, this.mon.workDone());
+    
+    test_must_succeed("foo(frontend)", this.otherBucket);
+    
+    this.otherBucket.clearStuff();
+    
+    test_must_succeed("foo(frontend)");
+    
+    assertEquals(this.mon.expectedWork, this.mon.workDone());
+    
+    this.mon.updates = 64537;
+    
+    test_must_succeed("foo(frontend)", this.otherBucket);
+    
+    assertEquals(64537, this.mon.workDone());
+  }
+}

@@ -1,80 +1,78 @@
-/*    */ package tyRuBa.util;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class FlattenElementSource
-/*    */   extends ElementSource
-/*    */ {
-/* 16 */   Object e = null;
-/*    */   
-/*    */ 
-/* 19 */   private ElementCollector sources = new ElementDuplicatesCollector();
-/*    */   
-/*    */   public FlattenElementSource(ElementSource metaSource)
-/*    */   {
-/* 23 */     this.sources.setSource(metaSource);
-/*    */   }
-/*    */   
-/*    */   public int status() {
-/* 27 */     if (this.e != null) {
-/* 28 */       return 1;
-/*    */     }
-/* 30 */     RemovableElementSource remainingSources = this.sources.elements();
-/*    */     
-/* 32 */     while ((stat = remainingSources.status()) == 1) {
-/* 33 */       ElementSource firstSource = 
-/* 34 */         (ElementSource)remainingSources.peekNextElement();
-/* 35 */       int stat = firstSource.status();
-/* 36 */       switch (stat) {
-/*    */       case 1: 
-/* 38 */         this.e = firstSource.nextElement();
-/* 39 */         return 1;
-/*    */       case -1: 
-/* 41 */         remainingSources.removeNextElement();
-/*    */         
-/*    */ 
-/* 44 */         break;
-/*    */       case 0: 
-/* 46 */         remainingSources.nextElement();
-/*    */       }
-/*    */       
-/*    */     }
-/*    */     
-/* 51 */     int stat = this.sources.elements().status();
-/* 52 */     if (stat == -1) {
-/* 53 */       return -1;
-/*    */     }
-/* 55 */     return 0;
-/*    */   }
-/*    */   
-/*    */   public Object nextElement()
-/*    */   {
-/* 60 */     status();
-/* 61 */     Object result = this.e;
-/* 62 */     this.e = null;
-/* 63 */     return result;
-/*    */   }
-/*    */   
-/*    */   public void print(PrintingState p)
-/*    */   {
-/* 68 */     p.print("Flatten(");
-/* 69 */     p.indent();p.newline();
-/* 70 */     this.sources.print(p);
-/* 71 */     p.outdent();
-/* 72 */     p.print(")");
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.util;
 
-
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/tyRuBa/util/FlattenElementSource.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class FlattenElementSource
+  extends ElementSource
+{
+  Object e = null;
+  private ElementCollector sources = new ElementDuplicatesCollector();
+  
+  public FlattenElementSource(ElementSource metaSource)
+  {
+    this.sources.setSource(metaSource);
+  }
+  
+  public int status()
+  {
+    if (this.e != null) {
+      return 1;
+    }
+    RemovableElementSource remainingSources = this.sources.elements();
+    while ((stat = remainingSources.status()) == 1)
+    {
+      ElementSource firstSource = 
+        (ElementSource)remainingSources.peekNextElement();
+      int stat = firstSource.status();
+      switch (stat)
+      {
+      case 1: 
+        this.e = firstSource.nextElement();
+        return 1;
+      case -1: 
+        remainingSources.removeNextElement();
+        
+        break;
+      case 0: 
+        remainingSources.nextElement();
+      }
+    }
+    int stat = this.sources.elements().status();
+    if (stat == -1) {
+      return -1;
+    }
+    return 0;
+  }
+  
+  public Object nextElement()
+  {
+    status();
+    Object result = this.e;
+    this.e = null;
+    return result;
+  }
+  
+  public void print(PrintingState p)
+  {
+    p.print("Flatten(");
+    p.indent();p.newline();
+    this.sources.print(p);
+    p.outdent();
+    p.print(")");
+  }
+}

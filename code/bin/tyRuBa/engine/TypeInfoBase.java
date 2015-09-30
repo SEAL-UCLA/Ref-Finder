@@ -1,181 +1,189 @@
-/*     */ package tyRuBa.engine;
-/*     */ 
-/*     */ import java.util.Collection;
-/*     */ import java.util.HashMap;
-/*     */ import java.util.Iterator;
-/*     */ import tyRuBa.modes.CompositeType;
-/*     */ import tyRuBa.modes.ConstructorType;
-/*     */ import tyRuBa.modes.Factory;
-/*     */ import tyRuBa.modes.PredInfo;
-/*     */ import tyRuBa.modes.PredInfoProvider;
-/*     */ import tyRuBa.modes.Type;
-/*     */ import tyRuBa.modes.TypeConstructor;
-/*     */ import tyRuBa.modes.TypeMapping;
-/*     */ import tyRuBa.modes.TypeModeError;
-/*     */ import tyRuBa.modes.UserDefinedTypeConstructor;
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ public class TypeInfoBase
-/*     */   implements PredInfoProvider
-/*     */ {
-/*     */   MetaBase metaBase;
-/*  31 */   HashMap predicateMap = new HashMap();
-/*  32 */   HashMap typeConstructorMap = new HashMap();
-/*  33 */   HashMap functorMap = new HashMap();
-/*  34 */   HashMap toTyRuBaMappingMap = new HashMap();
-/*     */   
-/*     */   public TypeInfoBase(String identifier)
-/*     */   {
-/*  38 */     addTypeConst(TypeConstructor.theAny);
-/*  39 */     this.metaBase = null;
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   public void enableMetaData(QueryEngine qe)
-/*     */   {
-/*  49 */     this.metaBase = new MetaBase(qe);
-/*     */     
-/*     */ 
-/*  52 */     for (Iterator iter = this.typeConstructorMap.values().iterator(); iter.hasNext();) {
-/*  53 */       this.metaBase.assertTypeConstructor((TypeConstructor)iter.next());
-/*     */     }
-/*     */   }
-/*     */   
-/*     */   public void insert(PredInfo pInfo) throws TypeModeError {
-/*  58 */     PredInfo result = (PredInfo)this.predicateMap.get(pInfo.getPredId());
-/*  59 */     if (result != null)
-/*  60 */       throw new TypeModeError("Duplicate mode/type entries for predicate " + 
-/*  61 */         pInfo.getPredId());
-/*  62 */     this.predicateMap.put(pInfo.getPredId(), pInfo);
-/*     */   }
-/*     */   
-/*     */   public PredInfo getPredInfo(PredicateIdentifier predId) throws TypeModeError {
-/*  66 */     PredInfo result = maybeGetPredInfo(predId);
-/*  67 */     if (result == null) {
-/*  68 */       throw new TypeModeError("Unknown predicate " + predId);
-/*     */     }
-/*  70 */     return result;
-/*     */   }
-/*     */   
-/*     */   public PredInfo maybeGetPredInfo(PredicateIdentifier predId)
-/*     */   {
-/*  75 */     return (PredInfo)this.predicateMap.get(predId);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */   public void addTypeConst(TypeConstructor t)
-/*     */   {
-/*  82 */     this.typeConstructorMap.put(t.getName() + "/" + t.getTypeArity(), t);
-/*  83 */     if (this.metaBase != null) this.metaBase.assertTypeConstructor(t);
-/*     */   }
-/*     */   
-/*     */   public void addFunctorConst(Type repAs, CompositeType type) {
-/*  87 */     TypeConstructor tc = type.getTypeConstructor();
-/*  88 */     FunctorIdentifier functorId = tc.getFunctorId();
-/*     */     
-/*  90 */     ConstructorType constrType = ConstructorType.makeUserDefined(functorId, repAs, type);
-/*  91 */     this.functorMap.put(functorId, constrType);
-/*  92 */     tc.setConstructorType(constrType);
-/*     */   }
-/*     */   
-/*     */   public void addTypeMapping(FunctorIdentifier id, TypeMapping mapping) throws TypeModeError {
-/*  96 */     TypeConstructor tc = findTypeConst(id.getName(), id.getArity());
-/*  97 */     tc.getConstructorType();
-/*  98 */     if ((tc instanceof UserDefinedTypeConstructor)) {
-/*  99 */       ((UserDefinedTypeConstructor)tc).setMapping(mapping);
-/*     */     } else {
-/* 101 */       throw new Error("The tyRuBa type " + id + " is not a mappable type. Only Userdefined types can be mapped.");
-/*     */     }
-/*     */     
-/* 104 */     if (tc.hasRepresentation()) {
-/* 105 */       ConstructorType ct = tc.getConstructorType();
-/* 106 */       mapping.setFunctor(ct);
-/*     */     }
-/* 108 */     this.toTyRuBaMappingMap.put(mapping.getMappedClass(), mapping);
-/*     */   }
-/*     */   
-/*     */   public String toString() {
-/* 112 */     StringBuffer result = new StringBuffer(
-/* 113 */       "/******** predicate info ********/\n");
-/* 114 */     Iterator itr = this.predicateMap.values().iterator();
-/* 115 */     while (itr.hasNext()) {
-/* 116 */       PredInfo element = (PredInfo)itr.next();
-/* 117 */       result.append(element.toString());
-/*     */     }
-/* 119 */     result.append("/******** user defined types ****/\n");
-/* 120 */     itr = this.typeConstructorMap.values().iterator();
-/* 121 */     while (itr.hasNext()) {
-/* 122 */       result.append(itr.next() + "\n");
-/*     */     }
-/* 124 */     result.append("/********************************/\n");
-/* 125 */     return result.toString();
-/*     */   }
-/*     */   
-/*     */   public TypeConstructor findType(String typeName) {
-/* 129 */     if ((typeName.equals("String")) || 
-/* 130 */       (typeName.equals("Integer")) || 
-/* 131 */       (typeName.equals("Number")) || 
-/* 132 */       (typeName.equals("Float")))
-/*     */     {
-/* 134 */       typeName = "java.lang." + typeName; }
-/* 135 */     if (typeName.equals("RegExp"))
-/* 136 */       typeName = "org.apache.regexp.RE";
-/* 137 */     TypeConstructor result = (TypeConstructor)this.typeConstructorMap.get(typeName + "/0");
-/* 138 */     if ((result == null) && 
-/* 139 */       (typeName.indexOf('.') >= 0)) {
-/*     */       try {
-/* 141 */         Class cl = Class.forName(typeName);
-/* 142 */         result = Factory.makeTypeConstructor(cl);
-/* 143 */         addTypeConst(result);
-/*     */       }
-/*     */       catch (ClassNotFoundException localClassNotFoundException) {}
-/*     */     }
-/*     */     
-/*     */ 
-/*     */ 
-/*     */ 
-/* 151 */     return result;
-/*     */   }
-/*     */   
-/*     */   public TypeConstructor findTypeConst(String typeName, int arity) {
-/* 155 */     TypeConstructor result = (TypeConstructor)this.typeConstructorMap.get(typeName + "/" + arity);
-/* 156 */     if (result == null) {
-/* 157 */       result = Factory.makeTypeConstructor(typeName, arity);
-/* 158 */       addTypeConst(result);
-/*     */     }
-/* 160 */     return result;
-/*     */   }
-/*     */   
-/*     */   public ConstructorType findConstructorType(FunctorIdentifier id) {
-/* 164 */     return (ConstructorType)this.functorMap.get(id);
-/*     */   }
-/*     */   
-/*     */   public TypeMapping findTypeMapping(Class cls) {
-/* 168 */     return (TypeMapping)this.toTyRuBaMappingMap.get(cls);
-/*     */   }
-/*     */   
-/*     */   public void clear() {
-/* 172 */     this.predicateMap = new HashMap();
-/* 173 */     this.typeConstructorMap = new HashMap();
-/*     */   }
-/*     */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.engine;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import tyRuBa.modes.CompositeType;
+import tyRuBa.modes.ConstructorType;
+import tyRuBa.modes.Factory;
+import tyRuBa.modes.PredInfo;
+import tyRuBa.modes.PredInfoProvider;
+import tyRuBa.modes.Type;
+import tyRuBa.modes.TypeConstructor;
+import tyRuBa.modes.TypeMapping;
+import tyRuBa.modes.TypeModeError;
+import tyRuBa.modes.UserDefinedTypeConstructor;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/engine/TypeInfoBase.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class TypeInfoBase
+  implements PredInfoProvider
+{
+  MetaBase metaBase;
+  HashMap predicateMap = new HashMap();
+  HashMap typeConstructorMap = new HashMap();
+  HashMap functorMap = new HashMap();
+  HashMap toTyRuBaMappingMap = new HashMap();
+  
+  public TypeInfoBase(String identifier)
+  {
+    addTypeConst(TypeConstructor.theAny);
+    this.metaBase = null;
+  }
+  
+  public void enableMetaData(QueryEngine qe)
+  {
+    this.metaBase = new MetaBase(qe);
+    for (Iterator iter = this.typeConstructorMap.values().iterator(); iter.hasNext();) {
+      this.metaBase.assertTypeConstructor((TypeConstructor)iter.next());
+    }
+  }
+  
+  public void insert(PredInfo pInfo)
+    throws TypeModeError
+  {
+    PredInfo result = (PredInfo)this.predicateMap.get(pInfo.getPredId());
+    if (result != null) {
+      throw new TypeModeError("Duplicate mode/type entries for predicate " + 
+        pInfo.getPredId());
+    }
+    this.predicateMap.put(pInfo.getPredId(), pInfo);
+  }
+  
+  public PredInfo getPredInfo(PredicateIdentifier predId)
+    throws TypeModeError
+  {
+    PredInfo result = maybeGetPredInfo(predId);
+    if (result == null) {
+      throw new TypeModeError("Unknown predicate " + predId);
+    }
+    return result;
+  }
+  
+  public PredInfo maybeGetPredInfo(PredicateIdentifier predId)
+  {
+    return (PredInfo)this.predicateMap.get(predId);
+  }
+  
+  public void addTypeConst(TypeConstructor t)
+  {
+    this.typeConstructorMap.put(t.getName() + "/" + t.getTypeArity(), t);
+    if (this.metaBase != null) {
+      this.metaBase.assertTypeConstructor(t);
+    }
+  }
+  
+  public void addFunctorConst(Type repAs, CompositeType type)
+  {
+    TypeConstructor tc = type.getTypeConstructor();
+    FunctorIdentifier functorId = tc.getFunctorId();
+    
+    ConstructorType constrType = ConstructorType.makeUserDefined(functorId, repAs, type);
+    this.functorMap.put(functorId, constrType);
+    tc.setConstructorType(constrType);
+  }
+  
+  public void addTypeMapping(FunctorIdentifier id, TypeMapping mapping)
+    throws TypeModeError
+  {
+    TypeConstructor tc = findTypeConst(id.getName(), id.getArity());
+    tc.getConstructorType();
+    if ((tc instanceof UserDefinedTypeConstructor)) {
+      ((UserDefinedTypeConstructor)tc).setMapping(mapping);
+    } else {
+      throw new Error("The tyRuBa type " + id + " is not a mappable type. Only Userdefined types can be mapped.");
+    }
+    if (tc.hasRepresentation())
+    {
+      ConstructorType ct = tc.getConstructorType();
+      mapping.setFunctor(ct);
+    }
+    this.toTyRuBaMappingMap.put(mapping.getMappedClass(), mapping);
+  }
+  
+  public String toString()
+  {
+    StringBuffer result = new StringBuffer(
+      "/******** predicate info ********/\n");
+    Iterator itr = this.predicateMap.values().iterator();
+    while (itr.hasNext())
+    {
+      PredInfo element = (PredInfo)itr.next();
+      result.append(element.toString());
+    }
+    result.append("/******** user defined types ****/\n");
+    itr = this.typeConstructorMap.values().iterator();
+    while (itr.hasNext()) {
+      result.append(itr.next() + "\n");
+    }
+    result.append("/********************************/\n");
+    return result.toString();
+  }
+  
+  public TypeConstructor findType(String typeName)
+  {
+    if ((typeName.equals("String")) || 
+      (typeName.equals("Integer")) || 
+      (typeName.equals("Number")) || 
+      (typeName.equals("Float"))) {
+      typeName = "java.lang." + typeName;
+    }
+    if (typeName.equals("RegExp")) {
+      typeName = "org.apache.regexp.RE";
+    }
+    TypeConstructor result = (TypeConstructor)this.typeConstructorMap.get(typeName + "/0");
+    if ((result == null) && 
+      (typeName.indexOf('.') >= 0)) {
+      try
+      {
+        Class cl = Class.forName(typeName);
+        result = Factory.makeTypeConstructor(cl);
+        addTypeConst(result);
+      }
+      catch (ClassNotFoundException localClassNotFoundException) {}
+    }
+    return result;
+  }
+  
+  public TypeConstructor findTypeConst(String typeName, int arity)
+  {
+    TypeConstructor result = (TypeConstructor)this.typeConstructorMap.get(typeName + "/" + arity);
+    if (result == null)
+    {
+      result = Factory.makeTypeConstructor(typeName, arity);
+      addTypeConst(result);
+    }
+    return result;
+  }
+  
+  public ConstructorType findConstructorType(FunctorIdentifier id)
+  {
+    return (ConstructorType)this.functorMap.get(id);
+  }
+  
+  public TypeMapping findTypeMapping(Class cls)
+  {
+    return (TypeMapping)this.toTyRuBaMappingMap.get(cls);
+  }
+  
+  public void clear()
+  {
+    this.predicateMap = new HashMap();
+    this.typeConstructorMap = new HashMap();
+  }
+}

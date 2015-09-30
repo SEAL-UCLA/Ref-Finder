@@ -1,69 +1,91 @@
-/*    */ package lsd.rule;
-/*    */ 
-/*    */ 
-/*    */ public class LSDVariable
-/*    */ {
-/*    */   private char type;
-/*    */   private String variableName;
-/*    */   
-/*    */   public static boolean isValidType(char type)
-/*    */   {
-/* 11 */     return "hieptmfabc".contains(Character.toString(type));
-/*    */   }
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public LSDVariable(String variableName, char type)
-/*    */   {
-/* 20 */     this.variableName = variableName;
-/* 21 */     this.type = type;
-/*    */   }
-/*    */   
-/* 24 */   public String getName() { return this.variableName; }
-/*    */   
-/*    */   public boolean typeChecks(char type) {
-/* 27 */     return this.type == type;
-/*    */   }
-/*    */   
-/* 30 */   public boolean typeChecks(LSDVariable match) { return this.type == match.type; }
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/* 35 */   public boolean typeConflicts(LSDVariable toBeMatched) { return (this.variableName.equals(toBeMatched.variableName)) && (!typeChecks(toBeMatched)); }
-/*    */   
-/* 37 */   public String toString() { return "?" + this.variableName; }
-/*    */   
-/* 39 */   public boolean equals(LSDVariable other) { return (this.variableName.equals(other.variableName)) && (this.type == other.type); }
-/*    */   
-/* 41 */   public boolean equals(Object other) { if ((other instanceof LSDVariable)) {
-/* 42 */       return equals((LSDVariable)other);
-/*    */     }
-/* 44 */     return false;
-/*    */   }
-/*    */   
-/*    */   public int hashCode() {
-/* 48 */     String identity = this.variableName + this.type;
-/* 49 */     return identity.hashCode();
-/*    */   }
-/*    */   
-/*    */   public int compareTo(Object o) {
-/* 53 */     return o.hashCode() - hashCode();
-/*    */   }
-/*    */   
-/*    */ 
-/*    */   public static void main(String[] args) {}
-/*    */   
-/*    */   public char getType()
-/*    */   {
-/* 61 */     return this.type;
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package lsd.rule;
 
-
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/lsd/rule/LSDVariable.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class LSDVariable
+{
+  private char type;
+  private String variableName;
+  
+  public static boolean isValidType(char type)
+  {
+    return "hieptmfabc".contains(Character.toString(type));
+  }
+  
+  public LSDVariable(String variableName, char type)
+  {
+    this.variableName = variableName;
+    this.type = type;
+  }
+  
+  public String getName()
+  {
+    return this.variableName;
+  }
+  
+  public boolean typeChecks(char type)
+  {
+    return this.type == type;
+  }
+  
+  public boolean typeChecks(LSDVariable match)
+  {
+    return this.type == match.type;
+  }
+  
+  public boolean typeConflicts(LSDVariable toBeMatched)
+  {
+    return (this.variableName.equals(toBeMatched.variableName)) && (!typeChecks(toBeMatched));
+  }
+  
+  public String toString()
+  {
+    return "?" + this.variableName;
+  }
+  
+  public boolean equals(LSDVariable other)
+  {
+    return (this.variableName.equals(other.variableName)) && (this.type == other.type);
+  }
+  
+  public boolean equals(Object other)
+  {
+    if ((other instanceof LSDVariable)) {
+      return equals((LSDVariable)other);
+    }
+    return false;
+  }
+  
+  public int hashCode()
+  {
+    String identity = this.variableName + this.type;
+    return identity.hashCode();
+  }
+  
+  public int compareTo(Object o)
+  {
+    return o.hashCode() - hashCode();
+  }
+  
+  public static void main(String[] args) {}
+  
+  public char getType()
+  {
+    return this.type;
+  }
+}

@@ -1,77 +1,84 @@
-/*    */ package tyRuBa.tests;
-/*    */ 
-/*    */ import junit.framework.TestCase;
-/*    */ import junit.framework.TestSuite;
-/*    */ import tyRuBa.modes.Mode;
-/*    */ import tyRuBa.modes.Multiplicity;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class ModeTest
-/*    */   extends TestCase
-/*    */ {
-/*    */   public ModeTest(String arg0)
-/*    */   {
-/* 21 */     super(arg0);
-/*    */   }
-/*    */   
-/*    */ 
-/*    */   protected void setUp()
-/*    */     throws Exception
-/*    */   {
-/* 28 */     super.setUp();
-/*    */   }
-/*    */   
-/*    */   public void testMultiply() {
-/* 32 */     for (int ilo = 0; ilo <= 1; ilo++) {
-/* 33 */       Multiplicity ilom = Multiplicity.fromInt(ilo);
-/* 34 */       for (int ihi = ilo; ihi <= 2; ihi++) {
-/* 35 */         Multiplicity ihim = Multiplicity.fromInt(ihi);
-/*    */         
-/* 37 */         Mode imode = new Mode(ilom, ihim);
-/*    */         
-/* 39 */         for (int jlo = 0; jlo <= 1; jlo++) {
-/* 40 */           Multiplicity jlom = Multiplicity.fromInt(jlo);
-/* 41 */           for (int jhi = jlo; jhi <= 2; jhi++) {
-/* 42 */             Multiplicity jhim = Multiplicity.fromInt(jhi);
-/* 43 */             Mode jmode = new Mode(jlom, jhim);
-/* 44 */             Mode result = imode.multiply(jmode);
-/* 45 */             assertEquals(
-/* 46 */               imode + " * " + jmode, 
-/* 47 */               result, 
-/* 48 */               new Mode(
-/* 49 */               Multiplicity.fromInt(ilo * jlo), 
-/* 50 */               Multiplicity.fromInt(ihi * jhi)));
-/* 51 */             assertTrue(
-/* 52 */               "Ordercheck for " + 
-/* 53 */               imode + 
-/* 54 */               " * " + 
-/* 55 */               jmode + 
-/* 56 */               " = " + 
-/* 57 */               result, 
-/* 58 */               result.lo.compareTo(result.hi) <= 0);
-/*    */           }
-/*    */         }
-/*    */       }
-/*    */     }
-/*    */   }
-/*    */   
-/*    */   public static TestSuite suite() {
-/* 66 */     TestSuite suite = new TestSuite();
-/* 67 */     suite.addTestSuite(MultiplicityTest.class);
-/* 68 */     suite.addTestSuite(ModeTest.class);
-/* 69 */     return suite;
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.tests;
 
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import tyRuBa.modes.Mode;
+import tyRuBa.modes.Multiplicity;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/tests/ModeTest.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class ModeTest
+  extends TestCase
+{
+  public ModeTest(String arg0)
+  {
+    super(arg0);
+  }
+  
+  protected void setUp()
+    throws Exception
+  {
+    super.setUp();
+  }
+  
+  public void testMultiply()
+  {
+    for (int ilo = 0; ilo <= 1; ilo++)
+    {
+      Multiplicity ilom = Multiplicity.fromInt(ilo);
+      for (int ihi = ilo; ihi <= 2; ihi++)
+      {
+        Multiplicity ihim = Multiplicity.fromInt(ihi);
+        
+        Mode imode = new Mode(ilom, ihim);
+        for (int jlo = 0; jlo <= 1; jlo++)
+        {
+          Multiplicity jlom = Multiplicity.fromInt(jlo);
+          for (int jhi = jlo; jhi <= 2; jhi++)
+          {
+            Multiplicity jhim = Multiplicity.fromInt(jhi);
+            Mode jmode = new Mode(jlom, jhim);
+            Mode result = imode.multiply(jmode);
+            assertEquals(
+              imode + " * " + jmode, 
+              result, 
+              new Mode(
+              Multiplicity.fromInt(ilo * jlo), 
+              Multiplicity.fromInt(ihi * jhi)));
+            assertTrue(
+              "Ordercheck for " + 
+              imode + 
+              " * " + 
+              jmode + 
+              " = " + 
+              result, 
+              result.lo.compareTo(result.hi) <= 0);
+          }
+        }
+      }
+    }
+  }
+  
+  public static TestSuite suite()
+  {
+    TestSuite suite = new TestSuite();
+    suite.addTestSuite(MultiplicityTest.class);
+    suite.addTestSuite(ModeTest.class);
+    return suite;
+  }
+}

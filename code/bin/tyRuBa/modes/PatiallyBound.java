@@ -1,37 +1,54 @@
-/*    */ package tyRuBa.modes;
-/*    */ 
-/*    */ public class PatiallyBound extends BindingMode
-/*    */ {
-/*  5 */   public static PatiallyBound the = new PatiallyBound();
-/*    */   
-/*    */ 
-/*    */   public int hashCode()
-/*    */   {
-/* 10 */     return getClass().hashCode();
-/*    */   }
-/*    */   
-/*    */   public boolean equals(Object other) {
-/* 14 */     return other instanceof PatiallyBound;
-/*    */   }
-/*    */   
-/*    */   public String toString() {
-/* 18 */     return "BF";
-/*    */   }
-/*    */   
-/*    */   public boolean satisfyBinding(BindingMode mode)
-/*    */   {
-/* 23 */     return mode instanceof Free;
-/*    */   }
-/*    */   
-/*    */   public boolean isBound() {
-/* 27 */     return false;
-/*    */   }
-/*    */   
-/* 30 */   public boolean isFree() { return false; }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.modes;
 
-
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/modes/PatiallyBound.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class PatiallyBound
+  extends BindingMode
+{
+  public static PatiallyBound the = new PatiallyBound();
+  
+  public int hashCode()
+  {
+    return getClass().hashCode();
+  }
+  
+  public boolean equals(Object other)
+  {
+    return other instanceof PatiallyBound;
+  }
+  
+  public String toString()
+  {
+    return "BF";
+  }
+  
+  public boolean satisfyBinding(BindingMode mode)
+  {
+    return mode instanceof Free;
+  }
+  
+  public boolean isBound()
+  {
+    return false;
+  }
+  
+  public boolean isFree()
+  {
+    return false;
+  }
+}

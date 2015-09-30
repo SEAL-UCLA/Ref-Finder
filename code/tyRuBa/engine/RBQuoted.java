@@ -1,60 +1,76 @@
-/*    */ package tyRuBa.engine;
-/*    */ 
-/*    */ import tyRuBa.engine.visitor.TermVisitor;
-/*    */ import tyRuBa.modes.Factory;
-/*    */ import tyRuBa.modes.Type;
-/*    */ import tyRuBa.modes.TypeEnv;
-/*    */ import tyRuBa.modes.TypeModeError;
-/*    */ 
-/*    */ public class RBQuoted extends RBAbstractPair
-/*    */ {
-/* 11 */   private static final RBTerm quotedName = FrontEnd.makeName("{}");
-/*    */   
-/*    */   public RBQuoted(RBTerm listOfParts) {
-/* 14 */     super(quotedName, listOfParts);
-/*    */   }
-/*    */   
-/*    */   public Object up() {
-/* 18 */     return quotedToString();
-/*    */   }
-/*    */   
-/*    */   public String toString() {
-/* 22 */     return "{" + getQuotedParts().quotedToString() + "}";
-/*    */   }
-/*    */   
-/*    */   public String quotedToString() {
-/* 26 */     return getQuotedParts().quotedToString();
-/*    */   }
-/*    */   
-/*    */   public RBTerm getQuotedParts() {
-/* 30 */     return getCdr();
-/*    */   }
-/*    */   
-/*    */   protected Type getType(TypeEnv env) throws TypeModeError {
-/* 34 */     return Factory.makeSubAtomicType(Factory.makeTypeConstructor(String.class));
-/*    */   }
-/*    */   
-/*    */   public Object accept(TermVisitor v) {
-/* 38 */     return v.visit(this);
-/*    */   }
-/*    */   
-/*    */ 
-/*    */ 
-/*    */   public String getFirst()
-/*    */   {
-/* 45 */     return getCdr().getFirst();
-/*    */   }
-/*    */   
-/*    */ 
-/*    */ 
-/*    */   public Object getSecond()
-/*    */   {
-/* 52 */     return getCdr().getSecond();
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.engine;
 
+import tyRuBa.engine.visitor.TermVisitor;
+import tyRuBa.modes.Factory;
+import tyRuBa.modes.Type;
+import tyRuBa.modes.TypeEnv;
+import tyRuBa.modes.TypeModeError;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/tyRuBa/engine/RBQuoted.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class RBQuoted
+  extends RBAbstractPair
+{
+  private static final RBTerm quotedName = FrontEnd.makeName("{}");
+  
+  public RBQuoted(RBTerm listOfParts)
+  {
+    super(quotedName, listOfParts);
+  }
+  
+  public Object up()
+  {
+    return quotedToString();
+  }
+  
+  public String toString()
+  {
+    return "{" + getQuotedParts().quotedToString() + "}";
+  }
+  
+  public String quotedToString()
+  {
+    return getQuotedParts().quotedToString();
+  }
+  
+  public RBTerm getQuotedParts()
+  {
+    return getCdr();
+  }
+  
+  protected Type getType(TypeEnv env)
+    throws TypeModeError
+  {
+    return Factory.makeSubAtomicType(Factory.makeTypeConstructor(String.class));
+  }
+  
+  public Object accept(TermVisitor v)
+  {
+    return v.visit(this);
+  }
+  
+  public String getFirst()
+  {
+    return getCdr().getFirst();
+  }
+  
+  public Object getSecond()
+  {
+    return getCdr().getSecond();
+  }
+}

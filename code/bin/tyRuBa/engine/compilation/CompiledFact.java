@@ -1,48 +1,58 @@
-/*    */ package tyRuBa.engine.compilation;
-/*    */ 
-/*    */ import tyRuBa.engine.Frame;
-/*    */ import tyRuBa.engine.RBContext;
-/*    */ import tyRuBa.engine.RBTerm;
-/*    */ import tyRuBa.engine.RBTuple;
-/*    */ 
-/*    */ public class CompiledFact extends SemiDetCompiled
-/*    */ {
-/*    */   RBTuple args;
-/*    */   
-/*    */   public CompiledFact(RBTuple args)
-/*    */   {
-/* 14 */     super(tyRuBa.modes.Mode.makeSemidet());
-/* 15 */     this.args = args;
-/*    */   }
-/*    */   
-/*    */   public Frame runSemiDet(Object input, RBContext context) {
-/* 19 */     RBTerm goal = (RBTerm)input;
-/*    */     
-/*    */ 
-/* 22 */     Frame callFrame = new Frame();
-/*    */     
-/* 24 */     goal = (RBTuple)goal.instantiate(callFrame);
-/*    */     
-/*    */ 
-/* 27 */     Frame fc = goal.unify(this.args, new Frame());
-/* 28 */     if (fc == null) {
-/* 29 */       return null;
-/*    */     }
-/*    */     
-/* 32 */     Frame result = callFrame.callResult(fc);
-/*    */     
-/*    */ 
-/* 35 */     return result;
-/*    */   }
-/*    */   
-/*    */   public String toString()
-/*    */   {
-/* 40 */     return "FACT(" + this.args + ")";
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.engine.compilation;
 
+import tyRuBa.engine.Frame;
+import tyRuBa.engine.RBContext;
+import tyRuBa.engine.RBTerm;
+import tyRuBa.engine.RBTuple;
+import tyRuBa.modes.Mode;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/engine/compilation/CompiledFact.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class CompiledFact
+  extends SemiDetCompiled
+{
+  RBTuple args;
+  
+  public CompiledFact(RBTuple args)
+  {
+    super(Mode.makeSemidet());
+    this.args = args;
+  }
+  
+  public Frame runSemiDet(Object input, RBContext context)
+  {
+    RBTerm goal = (RBTerm)input;
+    
+    Frame callFrame = new Frame();
+    
+    goal = (RBTuple)goal.instantiate(callFrame);
+    
+    Frame fc = goal.unify(this.args, new Frame());
+    if (fc == null) {
+      return null;
+    }
+    Frame result = callFrame.callResult(fc);
+    
+    return result;
+  }
+  
+  public String toString()
+  {
+    return "FACT(" + this.args + ")";
+  }
+}

@@ -1,40 +1,40 @@
-/*    */ package tyRuBa.util;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class LinkedList
-/*    */ {
-/* 14 */   private LinkedList.Bucket head = new LinkedList.Bucket(this, "dummy");
-/*    */   
-/* 16 */   private LinkedList.Bucket tail = this.head;
-/*    */   
-/*    */   public void addElement(Object e)
-/*    */   {
-/* 20 */     this.tail.next = new LinkedList.Bucket(this, e);
-/* 21 */     this.tail = this.tail.next;
-/*    */   }
-/*    */   
-/*    */   public boolean isEmpty()
-/*    */   {
-/* 26 */     return this.head.next == null;
-/*    */   }
-/*    */   
-/*    */ 
-/*    */   public RemovableElementSource elements()
-/*    */   {
-/* 32 */     return new LinkedList.1(this);
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.util;
 
-
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/util/LinkedList.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class LinkedList
+{
+  private LinkedList.Bucket head = new LinkedList.Bucket(this, "dummy");
+  private LinkedList.Bucket tail = this.head;
+  
+  public void addElement(Object e)
+  {
+    this.tail.next = new LinkedList.Bucket(this, e);
+    this.tail = this.tail.next;
+  }
+  
+  public boolean isEmpty()
+  {
+    return this.head.next == null;
+  }
+  
+  public RemovableElementSource elements()
+  {
+    return new LinkedList.1(this);
+  }
+}

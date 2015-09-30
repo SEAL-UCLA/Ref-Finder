@@ -1,106 +1,127 @@
-/*    */ package tyRuBa.engine;
-/*    */ 
-/*    */ import tyRuBa.engine.visitor.TermVisitor;
-/*    */ import tyRuBa.modes.Factory;
-/*    */ import tyRuBa.modes.Type;
-/*    */ import tyRuBa.modes.TypeEnv;
-/*    */ import tyRuBa.modes.TypeModeError;
-/*    */ import tyRuBa.util.ObjectTuple;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class RBPair
-/*    */   extends RBAbstractPair
-/*    */ {
-/*    */   public RBPair(RBTerm aCar)
-/*    */   {
-/* 19 */     super(aCar, null);
-/*    */   }
-/*    */   
-/*    */ 
-/*    */ 
-/*    */   public RBPair(RBTerm aCar, RBTerm aCdr)
-/*    */   {
-/* 26 */     super(aCar, aCdr);
-/*    */   }
-/*    */   
-/*    */   public static RBTerm make(RBTerm[] terms) {
-/* 30 */     RBTerm t = FrontEnd.theEmptyList;
-/* 31 */     for (int i = terms.length - 1; i >= 0; i--) {
-/* 32 */       t = new RBPair(terms[i], t);
-/*    */     }
-/* 34 */     return t;
-/*    */   }
-/*    */   
-/*    */   public Object up()
-/*    */   {
-/*    */     try
-/*    */     {
-/* 41 */       int size = getNumSubterms();
-/* 42 */       Object[] array = new Object[size];
-/* 43 */       for (int i = 0; i < size; i++) {
-/* 44 */         array[i] = getSubterm(i).up();
-/*    */       }
-/* 46 */       return array;
-/*    */     } catch (ImproperListException e) {}
-/* 48 */     return super.up();
-/*    */   }
-/*    */   
-/*    */   public String toString()
-/*    */   {
-/* 53 */     return "[" + cdrToString(true, this) + "]";
-/*    */   }
-/*    */   
-/*    */   public String quotedToString() {
-/* 57 */     return getCar().quotedToString() + getCdr().quotedToString();
-/*    */   }
-/*    */   
-/*    */   protected Type getType(TypeEnv env) throws TypeModeError
-/*    */   {
-/*    */     try {
-/* 63 */       car = getCar().getType(env);
-/*    */     } catch (TypeModeError e) { Type car;
-/* 65 */       throw new TypeModeError(e, getCar());
-/*    */     }
-/*    */     Type car;
-/* 68 */     try { cdr = getCdr().getType(env);
-/*    */     } catch (TypeModeError e) { Type cdr;
-/* 70 */       throw new TypeModeError(e, getCdr());
-/*    */     }
-/*    */     try { Type cdr;
-/* 73 */       result = Factory.makeListType(car).union(cdr);
-/*    */     } catch (TypeModeError e) { Type result;
-/* 75 */       throw new TypeModeError(e, this); }
-/*    */     Type result;
-/* 77 */     return result;
-/*    */   }
-/*    */   
-/*    */   public Object accept(TermVisitor v) {
-/* 81 */     return v.visit(this);
-/*    */   }
-/*    */   
-/*    */ 
-/*    */ 
-/*    */   public String getFirst()
-/*    */   {
-/* 88 */     return getCar().getFirst();
-/*    */   }
-/*    */   
-/*    */ 
-/*    */ 
-/*    */   public Object getSecond()
-/*    */   {
-/* 95 */     Object[] result = new Object[2];
-/* 96 */     result[0] = getCar().getSecond();
-/* 97 */     result[1] = getCdr();
-/* 98 */     return ObjectTuple.make(result);
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.engine;
 
+import tyRuBa.engine.visitor.TermVisitor;
+import tyRuBa.modes.Factory;
+import tyRuBa.modes.Type;
+import tyRuBa.modes.TypeEnv;
+import tyRuBa.modes.TypeModeError;
+import tyRuBa.util.ObjectTuple;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/engine/RBPair.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class RBPair
+  extends RBAbstractPair
+{
+  public RBPair(RBTerm aCar)
+  {
+    super(aCar, null);
+  }
+  
+  public RBPair(RBTerm aCar, RBTerm aCdr)
+  {
+    super(aCar, aCdr);
+  }
+  
+  public static RBTerm make(RBTerm[] terms)
+  {
+    RBTerm t = FrontEnd.theEmptyList;
+    for (int i = terms.length - 1; i >= 0; i--) {
+      t = new RBPair(terms[i], t);
+    }
+    return t;
+  }
+  
+  public Object up()
+  {
+    try
+    {
+      int size = getNumSubterms();
+      Object[] array = new Object[size];
+      for (int i = 0; i < size; i++) {
+        array[i] = getSubterm(i).up();
+      }
+      return array;
+    }
+    catch (ImproperListException e) {}
+    return super.up();
+  }
+  
+  public String toString()
+  {
+    return "[" + cdrToString(true, this) + "]";
+  }
+  
+  public String quotedToString()
+  {
+    return getCar().quotedToString() + getCdr().quotedToString();
+  }
+  
+  protected Type getType(TypeEnv env)
+    throws TypeModeError
+  {
+    try
+    {
+      car = getCar().getType(env);
+    }
+    catch (TypeModeError e)
+    {
+      Type car;
+      throw new TypeModeError(e, getCar());
+    }
+    Type car;
+    try
+    {
+      cdr = getCdr().getType(env);
+    }
+    catch (TypeModeError e)
+    {
+      Type cdr;
+      throw new TypeModeError(e, getCdr());
+    }
+    try
+    {
+      Type cdr;
+      result = Factory.makeListType(car).union(cdr);
+    }
+    catch (TypeModeError e)
+    {
+      Type result;
+      throw new TypeModeError(e, this);
+    }
+    Type result;
+    return result;
+  }
+  
+  public Object accept(TermVisitor v)
+  {
+    return v.visit(this);
+  }
+  
+  public String getFirst()
+  {
+    return getCar().getFirst();
+  }
+  
+  public Object getSecond()
+  {
+    Object[] result = new Object[2];
+    result[0] = getCar().getSecond();
+    result[1] = getCdr();
+    return ObjectTuple.make(result);
+  }
+}

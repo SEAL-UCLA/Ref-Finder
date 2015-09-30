@@ -1,186 +1,210 @@
-/*     */ package tyRuBa.engine;
-/*     */ 
-/*     */ import java.io.IOException;
-/*     */ import java.io.ObjectInputStream;
-/*     */ import tyRuBa.engine.visitor.TermVisitor;
-/*     */ import tyRuBa.modes.BindingMode;
-/*     */ import tyRuBa.modes.ConstructorType;
-/*     */ import tyRuBa.modes.Factory;
-/*     */ import tyRuBa.modes.ModeCheckContext;
-/*     */ import tyRuBa.modes.RepAsJavaConstructorType;
-/*     */ import tyRuBa.modes.Type;
-/*     */ import tyRuBa.modes.TypeConstructor;
-/*     */ import tyRuBa.modes.TypeEnv;
-/*     */ import tyRuBa.modes.TypeModeError;
-/*     */ import tyRuBa.util.TwoLevelKey;
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ public class RBRepAsJavaObjectCompoundTerm
-/*     */   extends RBCompoundTerm
-/*     */ {
-/*     */   Object javaObject;
-/*     */   RepAsJavaConstructorType typeTag;
-/*     */   
-/*     */   public RBRepAsJavaObjectCompoundTerm(RepAsJavaConstructorType type, Object obj)
-/*     */   {
-/*  29 */     this.typeTag = type;
-/*  30 */     this.javaObject = obj;
-/*     */   }
-/*     */   
-/*     */   public RBTerm getArg() {
-/*  34 */     return RBCompoundTerm.makeJava(this.javaObject);
-/*     */   }
-/*     */   
-/*     */   public RBTerm getArg(int i) {
-/*  38 */     if (i == 0) {
-/*  39 */       return this;
-/*     */     }
-/*  41 */     throw new Error("Argument not found " + i);
-/*     */   }
-/*     */   
-/*     */   public int getNumArgs() {
-/*  45 */     return 1;
-/*     */   }
-/*     */   
-/*     */   boolean freefor(RBVariable v) {
-/*  49 */     return true;
-/*     */   }
-/*     */   
-/*     */   public boolean isGround() {
-/*  53 */     return true;
-/*     */   }
-/*     */   
-/*     */   protected boolean sameForm(RBTerm other, Frame lr, Frame rl) {
-/*  57 */     return equals(other);
-/*     */   }
-/*     */   
-/*     */   protected Type getType(TypeEnv env) throws TypeModeError {
-/*  61 */     return this.typeTag.apply(Factory.makeSubAtomicType(this.typeTag.getTypeConst()));
-/*     */   }
-/*     */   
-/*     */   public int formHashCode() {
-/*  65 */     return 17 * this.typeTag.hashCode() + this.javaObject.hashCode();
-/*     */   }
-/*     */   
-/*  68 */   public int hashCode() { return 17 * this.typeTag.hashCode() + this.javaObject.hashCode(); }
-/*     */   
-/*     */   public BindingMode getBindingMode(ModeCheckContext context)
-/*     */   {
-/*  72 */     return Factory.makeBound();
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public void makeAllBound(ModeCheckContext context) {}
-/*     */   
-/*     */   public boolean equals(Object x)
-/*     */   {
-/*  80 */     if (x.getClass().equals(getClass())) {
-/*  81 */       RBRepAsJavaObjectCompoundTerm cx = (RBRepAsJavaObjectCompoundTerm)x;
-/*  82 */       return (this.javaObject.equals(cx.javaObject)) && (this.typeTag.equals(cx.typeTag));
-/*     */     }
-/*  84 */     return false;
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public Object accept(TermVisitor v)
-/*     */   {
-/*  90 */     return this;
-/*     */   }
-/*     */   
-/*     */   public boolean isOfType(TypeConstructor t) {
-/*  94 */     return t.isSuperTypeOf(getTypeConstructor());
-/*     */   }
-/*     */   
-/*     */   public Frame unify(RBTerm other, Frame f) {
-/*  98 */     if (((other instanceof RBVariable)) || ((other instanceof RBGenericCompoundTerm)))
-/*  99 */       return other.unify(this, f);
-/* 100 */     if (equals(other)) {
-/* 101 */       return f;
-/*     */     }
-/* 103 */     return null;
-/*     */   }
-/*     */   
-/*     */   public ConstructorType getConstructorType() {
-/* 107 */     return this.typeTag;
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */   public String getFirst()
-/*     */   {
-/* 114 */     if ((this.javaObject instanceof String)) {
-/* 115 */       String str = (String)this.javaObject;
-/* 116 */       int firstindexofhash = str.indexOf('#');
-/* 117 */       if (firstindexofhash == -1) {
-/* 118 */         return " ";
-/*     */       }
-/* 120 */       return str.substring(0, firstindexofhash).intern();
-/*     */     }
-/* 122 */     if ((this.javaObject instanceof Number))
-/* 123 */       return ((Number)this.javaObject).toString();
-/* 124 */     if ((this.javaObject instanceof TwoLevelKey)) {
-/* 125 */       return ((TwoLevelKey)this.javaObject).getFirst();
-/*     */     }
-/* 127 */     throw new Error("This object does not support TwoLevelKey indexing: " + this.javaObject);
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   public Object getSecond()
-/*     */   {
-/* 135 */     if ((this.javaObject instanceof String)) {
-/* 136 */       String str = (String)this.javaObject;
-/* 137 */       int firstindexofhash = str.indexOf('#');
-/* 138 */       if (firstindexofhash == -1) {
-/* 139 */         return this.typeTag.getFunctorId().toString() + str;
-/*     */       }
-/* 141 */       return this.typeTag.getFunctorId().toString() + str.substring(firstindexofhash).intern();
-/*     */     }
-/* 143 */     if ((this.javaObject instanceof Number))
-/* 144 */       return ((Number)this.javaObject).toString();
-/* 145 */     if ((this.javaObject instanceof TwoLevelKey)) {
-/* 146 */       return ((TwoLevelKey)this.javaObject).getSecond();
-/*     */     }
-/* 148 */     throw new Error("This object does not support TwoLevelKey indexing: " + this.javaObject);
-/*     */   }
-/*     */   
-/*     */   public String toString()
-/*     */   {
-/* 153 */     if ((this.javaObject instanceof String)) {
-/* 154 */       String javaString = (String)this.javaObject;
-/* 155 */       return "\"" + javaString + "\"" + 
-/* 156 */         "::" + this.typeTag.getFunctorId().getName();
-/*     */     }
-/*     */     
-/* 159 */     return this.javaObject.toString() + "::" + this.typeTag.getFunctorId().getName();
-/*     */   }
-/*     */   
-/*     */   private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-/* 163 */     in.defaultReadObject();
-/* 164 */     if ((this.javaObject instanceof String)) {
-/* 165 */       this.javaObject = ((String)this.javaObject).intern();
-/*     */     }
-/*     */   }
-/*     */   
-/*     */   public int intValue() {
-/* 170 */     if ((this.javaObject instanceof Integer)) {
-/* 171 */       return ((Integer)this.javaObject).intValue();
-/*     */     }
-/* 173 */     return super.intValue();
-/*     */   }
-/*     */   
-/*     */   public Object getValue()
-/*     */   {
-/* 178 */     return this.javaObject;
-/*     */   }
-/*     */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.engine;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import tyRuBa.engine.visitor.TermVisitor;
+import tyRuBa.modes.BindingMode;
+import tyRuBa.modes.ConstructorType;
+import tyRuBa.modes.Factory;
+import tyRuBa.modes.ModeCheckContext;
+import tyRuBa.modes.RepAsJavaConstructorType;
+import tyRuBa.modes.Type;
+import tyRuBa.modes.TypeConstructor;
+import tyRuBa.modes.TypeEnv;
+import tyRuBa.modes.TypeModeError;
+import tyRuBa.util.TwoLevelKey;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/engine/RBRepAsJavaObjectCompoundTerm.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class RBRepAsJavaObjectCompoundTerm
+  extends RBCompoundTerm
+{
+  Object javaObject;
+  RepAsJavaConstructorType typeTag;
+  
+  public RBRepAsJavaObjectCompoundTerm(RepAsJavaConstructorType type, Object obj)
+  {
+    this.typeTag = type;
+    this.javaObject = obj;
+  }
+  
+  public RBTerm getArg()
+  {
+    return RBCompoundTerm.makeJava(this.javaObject);
+  }
+  
+  public RBTerm getArg(int i)
+  {
+    if (i == 0) {
+      return this;
+    }
+    throw new Error("Argument not found " + i);
+  }
+  
+  public int getNumArgs()
+  {
+    return 1;
+  }
+  
+  boolean freefor(RBVariable v)
+  {
+    return true;
+  }
+  
+  public boolean isGround()
+  {
+    return true;
+  }
+  
+  protected boolean sameForm(RBTerm other, Frame lr, Frame rl)
+  {
+    return equals(other);
+  }
+  
+  protected Type getType(TypeEnv env)
+    throws TypeModeError
+  {
+    return this.typeTag.apply(Factory.makeSubAtomicType(this.typeTag.getTypeConst()));
+  }
+  
+  public int formHashCode()
+  {
+    return 17 * this.typeTag.hashCode() + this.javaObject.hashCode();
+  }
+  
+  public int hashCode()
+  {
+    return 17 * this.typeTag.hashCode() + this.javaObject.hashCode();
+  }
+  
+  public BindingMode getBindingMode(ModeCheckContext context)
+  {
+    return Factory.makeBound();
+  }
+  
+  public void makeAllBound(ModeCheckContext context) {}
+  
+  public boolean equals(Object x)
+  {
+    if (x.getClass().equals(getClass()))
+    {
+      RBRepAsJavaObjectCompoundTerm cx = (RBRepAsJavaObjectCompoundTerm)x;
+      return (this.javaObject.equals(cx.javaObject)) && (this.typeTag.equals(cx.typeTag));
+    }
+    return false;
+  }
+  
+  public Object accept(TermVisitor v)
+  {
+    return this;
+  }
+  
+  public boolean isOfType(TypeConstructor t)
+  {
+    return t.isSuperTypeOf(getTypeConstructor());
+  }
+  
+  public Frame unify(RBTerm other, Frame f)
+  {
+    if (((other instanceof RBVariable)) || ((other instanceof RBGenericCompoundTerm))) {
+      return other.unify(this, f);
+    }
+    if (equals(other)) {
+      return f;
+    }
+    return null;
+  }
+  
+  public ConstructorType getConstructorType()
+  {
+    return this.typeTag;
+  }
+  
+  public String getFirst()
+  {
+    if ((this.javaObject instanceof String))
+    {
+      String str = (String)this.javaObject;
+      int firstindexofhash = str.indexOf('#');
+      if (firstindexofhash == -1) {
+        return " ";
+      }
+      return str.substring(0, firstindexofhash).intern();
+    }
+    if ((this.javaObject instanceof Number)) {
+      return ((Number)this.javaObject).toString();
+    }
+    if ((this.javaObject instanceof TwoLevelKey)) {
+      return ((TwoLevelKey)this.javaObject).getFirst();
+    }
+    throw new Error("This object does not support TwoLevelKey indexing: " + this.javaObject);
+  }
+  
+  public Object getSecond()
+  {
+    if ((this.javaObject instanceof String))
+    {
+      String str = (String)this.javaObject;
+      int firstindexofhash = str.indexOf('#');
+      if (firstindexofhash == -1) {
+        return this.typeTag.getFunctorId().toString() + str;
+      }
+      return this.typeTag.getFunctorId().toString() + str.substring(firstindexofhash).intern();
+    }
+    if ((this.javaObject instanceof Number)) {
+      return ((Number)this.javaObject).toString();
+    }
+    if ((this.javaObject instanceof TwoLevelKey)) {
+      return ((TwoLevelKey)this.javaObject).getSecond();
+    }
+    throw new Error("This object does not support TwoLevelKey indexing: " + this.javaObject);
+  }
+  
+  public String toString()
+  {
+    if ((this.javaObject instanceof String))
+    {
+      String javaString = (String)this.javaObject;
+      return "\"" + javaString + "\"" + 
+        "::" + this.typeTag.getFunctorId().getName();
+    }
+    return this.javaObject.toString() + "::" + this.typeTag.getFunctorId().getName();
+  }
+  
+  private void readObject(ObjectInputStream in)
+    throws IOException, ClassNotFoundException
+  {
+    in.defaultReadObject();
+    if ((this.javaObject instanceof String)) {
+      this.javaObject = ((String)this.javaObject).intern();
+    }
+  }
+  
+  public int intValue()
+  {
+    if ((this.javaObject instanceof Integer)) {
+      return ((Integer)this.javaObject).intValue();
+    }
+    return super.intValue();
+  }
+  
+  public Object getValue()
+  {
+    return this.javaObject;
+  }
+}

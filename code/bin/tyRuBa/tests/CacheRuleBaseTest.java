@@ -1,52 +1,69 @@
-/*    */ package tyRuBa.tests;
-/*    */ 
-/*    */ import tyRuBa.engine.FrontEnd;
-/*    */ import tyRuBa.parser.ParseException;
-/*    */ 
-/*    */ public class CacheRuleBaseTest extends TyrubaTest
-/*    */ {
-/*    */   public void setUp() throws Exception
-/*    */   {
-/* 10 */     tyRuBa.engine.RuleBase.useCache = true;
-/* 11 */     TyrubaTest.initfile = false;
-/* 12 */     super.setUp();
-/*    */   }
-/*    */   
-/*    */   public CacheRuleBaseTest(String arg0) {
-/* 16 */     super(arg0);
-/*    */   }
-/*    */   
-/*    */   public void test() throws ParseException, tyRuBa.modes.TypeModeError {
-/* 20 */     this.frontend.parse("foo, bar, goo :: String\nMODES (F) IS NONDET END");
-/*    */     
-/*    */ 
-/* 23 */     test_must_fail("foo(?x)");
-/* 24 */     this.frontend.parse("foo(?x) :- bar(?x).");
-/* 25 */     test_must_fail("foo(?x)");
-/* 26 */     this.frontend.parse("bar(bar).");
-/* 27 */     test_must_succeed("foo(bar)");
-/*    */     
-/* 29 */     this.frontend.parse("goo(goo).");
-/* 30 */     this.frontend.parse("bar(?x) :- goo(?x).");
-/* 31 */     test_must_succeed("foo(goo)");
-/* 32 */     test_resultcount("foo(?x)", 2);
-/*    */   }
-/*    */   
-/*    */   public void testMinnieBug() throws ParseException, tyRuBa.modes.TypeModeError {
-/* 36 */     this.frontend.parse("married :: String, String\nMODES (F,F) IS NONDET END\n");
-/*    */     
-/*    */ 
-/* 39 */     this.frontend.parse("married(Minnie,Mickey).");
-/* 40 */     this.frontend.parse("married(?x,?y) :- married(?y,?x).");
-/*    */     
-/* 42 */     test_resultcount("married(?a,?b)", 2);
-/* 43 */     test_must_succeed("married(Minnie,Mickey)");
-/* 44 */     test_must_equal("married(Minnie,?x)", "?x", "Mickey");
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.tests;
 
+import tyRuBa.engine.FrontEnd;
+import tyRuBa.modes.TypeModeError;
+import tyRuBa.parser.ParseException;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/tests/CacheRuleBaseTest.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class CacheRuleBaseTest
+  extends TyrubaTest
+{
+  public void setUp()
+    throws Exception
+  {
+    tyRuBa.engine.RuleBase.useCache = true;
+    TyrubaTest.initfile = false;
+    super.setUp();
+  }
+  
+  public CacheRuleBaseTest(String arg0)
+  {
+    super(arg0);
+  }
+  
+  public void test()
+    throws ParseException, TypeModeError
+  {
+    this.frontend.parse("foo, bar, goo :: String\nMODES (F) IS NONDET END");
+    
+    test_must_fail("foo(?x)");
+    this.frontend.parse("foo(?x) :- bar(?x).");
+    test_must_fail("foo(?x)");
+    this.frontend.parse("bar(bar).");
+    test_must_succeed("foo(bar)");
+    
+    this.frontend.parse("goo(goo).");
+    this.frontend.parse("bar(?x) :- goo(?x).");
+    test_must_succeed("foo(goo)");
+    test_resultcount("foo(?x)", 2);
+  }
+  
+  public void testMinnieBug()
+    throws ParseException, TypeModeError
+  {
+    this.frontend.parse("married :: String, String\nMODES (F,F) IS NONDET END\n");
+    
+    this.frontend.parse("married(Minnie,Mickey).");
+    this.frontend.parse("married(?x,?y) :- married(?y,?x).");
+    
+    test_resultcount("married(?a,?b)", 2);
+    test_must_succeed("married(Minnie,Mickey)");
+    test_must_equal("married(Minnie,?x)", "?x", "Mickey");
+  }
+}

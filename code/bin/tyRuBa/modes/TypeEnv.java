@@ -1,79 +1,101 @@
-/*    */ package tyRuBa.modes;
-/*    */ 
-/*    */ import java.util.Enumeration;
-/*    */ import java.util.HashMap;
-/*    */ import java.util.Hashtable;
-/*    */ import java.util.Iterator;
-/*    */ import java.util.Set;
-/*    */ import tyRuBa.engine.RBSubstitutable;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class TypeEnv
-/*    */   extends Hashtable
-/*    */ {
-/*    */   public Type basicGet(RBSubstitutable v)
-/*    */   {
-/* 18 */     return (Type)super.get(v);
-/*    */   }
-/*    */   
-/*    */   public Type get(RBSubstitutable v) {
-/* 22 */     Type result = (Type)super.get(v);
-/* 23 */     if (result == null) {
-/* 24 */       result = Factory.makeTVar(v.name().substring(1));
-/* 25 */       put(v, result);
-/*    */     }
-/* 27 */     return result;
-/*    */   }
-/*    */   
-/*    */   public Object clone() {
-/* 31 */     TypeEnv cl = new TypeEnv();
-/* 32 */     HashMap varRenamings = new HashMap();
-/* 33 */     for (Iterator iter = keySet().iterator(); iter.hasNext();) {
-/* 34 */       RBSubstitutable element = (RBSubstitutable)iter.next();
-/* 35 */       cl.put(element, get(element).clone(varRenamings));
-/*    */     }
-/* 37 */     return cl;
-/*    */   }
-/*    */   
-/*    */   public String toString() {
-/* 41 */     StringBuffer result = new StringBuffer("TypeEnv(");
-/* 42 */     Enumeration keys = keys();
-/* 43 */     while (keys.hasMoreElements()) {
-/* 44 */       RBSubstitutable key = (RBSubstitutable)keys.nextElement();
-/* 45 */       result.append(" " + key + "= " + get(key));
-/*    */     }
-/* 47 */     result.append(" )");
-/* 48 */     return result.toString();
-/*    */   }
-/*    */   
-/*    */   public TypeEnv union(TypeEnv other) throws TypeModeError {
-/* 52 */     TypeEnv result = new TypeEnv();
-/* 53 */     for (Iterator iter = other.keySet().iterator(); iter.hasNext();) {
-/* 54 */       RBSubstitutable var = (RBSubstitutable)iter.next();
-/* 55 */       if (containsKey(var))
-/* 56 */         result.put(var, get(var).union(other.get(var)));
-/*    */     }
-/* 58 */     return result;
-/*    */   }
-/*    */   
-/*    */   public TypeEnv intersect(TypeEnv other) throws TypeModeError {
-/* 62 */     TypeEnv result = (TypeEnv)clone();
-/* 63 */     other = (TypeEnv)other.clone();
-/* 64 */     for (Iterator iter = other.keySet().iterator(); iter.hasNext();) {
-/* 65 */       RBSubstitutable var = (RBSubstitutable)iter.next();
-/* 66 */       if (result.containsKey(var)) {
-/* 67 */         result.put(var, result.get(var).intersect(other.get(var)));
-/*    */       } else
-/* 69 */         result.put(var, other.get(var));
-/*    */     }
-/* 71 */     return result;
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.modes;
 
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Set;
+import tyRuBa.engine.RBSubstitutable;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/modes/TypeEnv.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class TypeEnv
+  extends Hashtable
+{
+  public Type basicGet(RBSubstitutable v)
+  {
+    return (Type)super.get(v);
+  }
+  
+  public Type get(RBSubstitutable v)
+  {
+    Type result = (Type)super.get(v);
+    if (result == null)
+    {
+      result = Factory.makeTVar(v.name().substring(1));
+      put(v, result);
+    }
+    return result;
+  }
+  
+  public Object clone()
+  {
+    TypeEnv cl = new TypeEnv();
+    HashMap varRenamings = new HashMap();
+    for (Iterator iter = keySet().iterator(); iter.hasNext();)
+    {
+      RBSubstitutable element = (RBSubstitutable)iter.next();
+      cl.put(element, get(element).clone(varRenamings));
+    }
+    return cl;
+  }
+  
+  public String toString()
+  {
+    StringBuffer result = new StringBuffer("TypeEnv(");
+    Enumeration keys = keys();
+    while (keys.hasMoreElements())
+    {
+      RBSubstitutable key = (RBSubstitutable)keys.nextElement();
+      result.append(" " + key + "= " + get(key));
+    }
+    result.append(" )");
+    return result.toString();
+  }
+  
+  public TypeEnv union(TypeEnv other)
+    throws TypeModeError
+  {
+    TypeEnv result = new TypeEnv();
+    for (Iterator iter = other.keySet().iterator(); iter.hasNext();)
+    {
+      RBSubstitutable var = (RBSubstitutable)iter.next();
+      if (containsKey(var)) {
+        result.put(var, get(var).union(other.get(var)));
+      }
+    }
+    return result;
+  }
+  
+  public TypeEnv intersect(TypeEnv other)
+    throws TypeModeError
+  {
+    TypeEnv result = (TypeEnv)clone();
+    other = (TypeEnv)other.clone();
+    for (Iterator iter = other.keySet().iterator(); iter.hasNext();)
+    {
+      RBSubstitutable var = (RBSubstitutable)iter.next();
+      if (result.containsKey(var)) {
+        result.put(var, result.get(var).intersect(other.get(var)));
+      } else {
+        result.put(var, other.get(var));
+      }
+    }
+    return result;
+  }
+}

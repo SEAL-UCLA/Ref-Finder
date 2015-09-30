@@ -1,33 +1,43 @@
-/*    */ package tyRuBa.engine;
-/*    */ 
-/*    */ import tyRuBa.modes.ConstructorType;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class RBGenericCompoundTerm
-/*    */   extends RBCompoundTerm
-/*    */ {
-/*    */   ConstructorType typeTag;
-/*    */   RBTerm args;
-/*    */   
-/* 17 */   public RBTerm getArg() { return this.args; }
-/*    */   
-/*    */   public RBGenericCompoundTerm(ConstructorType constructorType, RBTerm args) {
-/* 20 */     this.typeTag = constructorType;
-/* 21 */     this.args = args;
-/*    */   }
-/*    */   
-/*    */   public ConstructorType getConstructorType() {
-/* 25 */     return this.typeTag;
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.engine;
 
+import tyRuBa.modes.ConstructorType;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/engine/RBGenericCompoundTerm.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class RBGenericCompoundTerm
+  extends RBCompoundTerm
+{
+  ConstructorType typeTag;
+  RBTerm args;
+  
+  public RBTerm getArg()
+  {
+    return this.args;
+  }
+  
+  public RBGenericCompoundTerm(ConstructorType constructorType, RBTerm args)
+  {
+    this.typeTag = constructorType;
+    this.args = args;
+  }
+  
+  public ConstructorType getConstructorType()
+  {
+    return this.typeTag;
+  }
+}

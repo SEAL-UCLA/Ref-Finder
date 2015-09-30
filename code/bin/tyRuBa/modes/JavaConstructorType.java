@@ -1,89 +1,109 @@
-/*    */ package tyRuBa.modes;
-/*    */ 
-/*    */ import java.lang.reflect.Constructor;
-/*    */ import java.util.ArrayList;
-/*    */ import tyRuBa.engine.FunctorIdentifier;
-/*    */ import tyRuBa.engine.RBCompoundTerm;
-/*    */ import tyRuBa.engine.RBJavaObjectCompoundTerm;
-/*    */ import tyRuBa.engine.RBTerm;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class JavaConstructorType
-/*    */   extends ConstructorType
-/*    */ {
-/*    */   Class javaClass;
-/*    */   
-/*    */   public JavaConstructorType(Class javaClass)
-/*    */   {
-/* 22 */     this.javaClass = javaClass;
-/*    */   }
-/*    */   
-/*    */   public RBTerm apply(ArrayList terms) {
-/* 26 */     throw new Error("Java Constructors can only be applied a single term");
-/*    */   }
-/*    */   
-/*    */   public RBTerm apply(RBTerm term) {
-/* 30 */     if ((term instanceof RBJavaObjectCompoundTerm)) {
-/* 31 */       RBJavaObjectCompoundTerm java_term = (RBJavaObjectCompoundTerm)term;
-/* 32 */       if (getTypeConst().isSuperTypeOf(java_term.getTypeConstructor())) {
-/* 33 */         return java_term;
-/*    */       }
-/* 35 */       Object obj = java_term.getObject();
-/*    */       try {
-/* 37 */         Constructor ctor = this.javaClass.getConstructor(new Class[] { obj.getClass() });
-/* 38 */         return RBCompoundTerm.makeJava(ctor.newInstance(new Object[] { obj }));
-/*    */       } catch (Exception e) {
-/* 40 */         throw new Error("Illegal TyRuBa to Java Type Cast: " + java_term + "::" + this);
-/*    */       }
-/*    */     }
-/*    */     
-/*    */ 
-/* 45 */     return RBCompoundTerm.make(this, term);
-/*    */   }
-/*    */   
-/*    */   public Type apply(Type argType) throws TypeModeError {
-/* 49 */     Type iresult = getType();
-/* 50 */     argType.checkEqualTypes(iresult);
-/* 51 */     return iresult;
-/*    */   }
-/*    */   
-/*    */   public Type getType() {
-/* 55 */     return Factory.makeSubAtomicType(getTypeConst());
-/*    */   }
-/*    */   
-/*    */   public boolean equals(Object other) {
-/* 59 */     if (getClass() != other.getClass()) {
-/* 60 */       return false;
-/*    */     }
-/* 62 */     return this.javaClass.equals(((JavaConstructorType)other).javaClass);
-/*    */   }
-/*    */   
-/*    */   public int hashCode() {
-/* 66 */     return this.javaClass.hashCode();
-/*    */   }
-/*    */   
-/*    */   public int getArity() {
-/* 70 */     return 1;
-/*    */   }
-/*    */   
-/*    */   public FunctorIdentifier getFunctorId() {
-/* 74 */     return new FunctorIdentifier(this.javaClass.getName(), 1);
-/*    */   }
-/*    */   
-/* 77 */   public TypeConstructor getTypeConst() { return Factory.makeTypeConstructor(this.javaClass); }
-/*    */   
-/*    */   public String toString()
-/*    */   {
-/* 81 */     return "JavaConstructorType(" + this.javaClass + ")";
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.modes;
 
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import tyRuBa.engine.FunctorIdentifier;
+import tyRuBa.engine.RBCompoundTerm;
+import tyRuBa.engine.RBJavaObjectCompoundTerm;
+import tyRuBa.engine.RBTerm;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/modes/JavaConstructorType.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class JavaConstructorType
+  extends ConstructorType
+{
+  Class javaClass;
+  
+  public JavaConstructorType(Class javaClass)
+  {
+    this.javaClass = javaClass;
+  }
+  
+  public RBTerm apply(ArrayList terms)
+  {
+    throw new Error("Java Constructors can only be applied a single term");
+  }
+  
+  public RBTerm apply(RBTerm term)
+  {
+    if ((term instanceof RBJavaObjectCompoundTerm))
+    {
+      RBJavaObjectCompoundTerm java_term = (RBJavaObjectCompoundTerm)term;
+      if (getTypeConst().isSuperTypeOf(java_term.getTypeConstructor())) {
+        return java_term;
+      }
+      Object obj = java_term.getObject();
+      try
+      {
+        Constructor ctor = this.javaClass.getConstructor(new Class[] { obj.getClass() });
+        return RBCompoundTerm.makeJava(ctor.newInstance(new Object[] { obj }));
+      }
+      catch (Exception e)
+      {
+        throw new Error("Illegal TyRuBa to Java Type Cast: " + java_term + "::" + this);
+      }
+    }
+    return RBCompoundTerm.make(this, term);
+  }
+  
+  public Type apply(Type argType)
+    throws TypeModeError
+  {
+    Type iresult = getType();
+    argType.checkEqualTypes(iresult);
+    return iresult;
+  }
+  
+  public Type getType()
+  {
+    return Factory.makeSubAtomicType(getTypeConst());
+  }
+  
+  public boolean equals(Object other)
+  {
+    if (getClass() != other.getClass()) {
+      return false;
+    }
+    return this.javaClass.equals(((JavaConstructorType)other).javaClass);
+  }
+  
+  public int hashCode()
+  {
+    return this.javaClass.hashCode();
+  }
+  
+  public int getArity()
+  {
+    return 1;
+  }
+  
+  public FunctorIdentifier getFunctorId()
+  {
+    return new FunctorIdentifier(this.javaClass.getName(), 1);
+  }
+  
+  public TypeConstructor getTypeConst()
+  {
+    return Factory.makeTypeConstructor(this.javaClass);
+  }
+  
+  public String toString()
+  {
+    return "JavaConstructorType(" + this.javaClass + ")";
+  }
+}

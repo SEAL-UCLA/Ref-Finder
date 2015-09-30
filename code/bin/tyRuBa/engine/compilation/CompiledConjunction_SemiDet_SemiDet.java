@@ -1,34 +1,50 @@
-/*    */ package tyRuBa.engine.compilation;
-/*    */ 
-/*    */ import tyRuBa.engine.RBContext;
-/*    */ 
-/*    */ public class CompiledConjunction_SemiDet_SemiDet extends SemiDetCompiled
-/*    */ {
-/*    */   private final SemiDetCompiled left;
-/*    */   private final SemiDetCompiled right;
-/*    */   
-/*    */   public CompiledConjunction_SemiDet_SemiDet(SemiDetCompiled left, SemiDetCompiled right)
-/*    */   {
-/* 12 */     super(left.getMode().multiply(right.getMode()));
-/* 13 */     this.left = left;
-/* 14 */     this.right = right;
-/*    */   }
-/*    */   
-/*    */   public tyRuBa.engine.Frame runSemiDet(Object input, RBContext context) {
-/* 18 */     tyRuBa.engine.Frame leftResult = this.left.runSemiDet(input, context);
-/* 19 */     if (leftResult == null) {
-/* 20 */       return null;
-/*    */     }
-/* 22 */     return this.right.runSemiDet(leftResult, context);
-/*    */   }
-/*    */   
-/*    */   public String toString() {
-/* 26 */     return "(" + this.right + " ==> " + this.left + ")";
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.engine.compilation;
 
+import tyRuBa.engine.Frame;
+import tyRuBa.engine.RBContext;
+import tyRuBa.modes.Mode;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/engine/compilation/CompiledConjunction_SemiDet_SemiDet.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class CompiledConjunction_SemiDet_SemiDet
+  extends SemiDetCompiled
+{
+  private final SemiDetCompiled left;
+  private final SemiDetCompiled right;
+  
+  public CompiledConjunction_SemiDet_SemiDet(SemiDetCompiled left, SemiDetCompiled right)
+  {
+    super(left.getMode().multiply(right.getMode()));
+    this.left = left;
+    this.right = right;
+  }
+  
+  public Frame runSemiDet(Object input, RBContext context)
+  {
+    Frame leftResult = this.left.runSemiDet(input, context);
+    if (leftResult == null) {
+      return null;
+    }
+    return this.right.runSemiDet(leftResult, context);
+  }
+  
+  public String toString()
+  {
+    return "(" + this.right + " ==> " + this.left + ")";
+  }
+}

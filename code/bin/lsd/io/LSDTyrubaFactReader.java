@@ -1,103 +1,127 @@
-/*    */ package lsd.io;
-/*    */ 
-/*    */ import java.io.BufferedReader;
-/*    */ import java.io.File;
-/*    */ import java.io.IOException;
-/*    */ import java.io.PrintStream;
-/*    */ import java.util.ArrayList;
-/*    */ import java.util.List;
-/*    */ import lsd.rule.LSDFact;
-/*    */ import lsd.rule.LSDPredicate;
-/*    */ 
-/*    */ public class LSDTyrubaFactReader
-/*    */ {
-/* 14 */   private ArrayList<LSDFact> facts = null;
-/*    */   
-/*    */   public LSDTyrubaFactReader(File inputFile) {
-/* 17 */     ArrayList<LSDFact> fs = new ArrayList();
-/*    */     try {
-/* 19 */       if (inputFile.exists()) {
-/* 20 */         BufferedReader in = new BufferedReader(
-/* 21 */           new java.io.FileReader(inputFile));
-/* 22 */         String line = null;
-/* 23 */         while ((line = in.readLine()) != null)
-/* 24 */           if ((!line.trim().equals("")) && (line.trim().charAt(0) != '#') && 
-/* 25 */             (!line.trim().startsWith("//")))
-/*    */           {
-/* 27 */             LSDFact fact = parseTyrubaFact(line);
-/* 28 */             fs.add(fact);
-/*    */           }
-/* 30 */         in.close();
-/*    */       }
-/* 32 */       this.facts = fs;
-/*    */     } catch (IOException e) {
-/* 34 */       e.printStackTrace();
-/*    */     }
-/*    */   }
-/*    */   
-/*    */ 
-/*    */ 
-/*    */   public static ArrayList<LSDFact> convertToClassLevel(ArrayList<LSDFact> readDeltaFacts)
-/*    */   {
-/* 42 */     ArrayList<LSDFact> facts = new ArrayList();
-/* 43 */     for (LSDFact fact : readDeltaFacts)
-/* 44 */       if (fact.getPredicate().isMethodLevel()) {
-/* 45 */         LSDFact tempFact = fact.convertToClassLevel();
-/* 46 */         if (tempFact != null)
-/*    */         {
-/*    */ 
-/* 49 */           facts.add(tempFact); }
-/*    */       } else {
-/* 51 */         facts.add(fact);
-/*    */       }
-/* 53 */     return facts;
-/*    */   }
-/*    */   
-/*    */   public ArrayList<LSDFact> getFacts() {
-/* 57 */     return this.facts;
-/*    */   }
-/*    */   
-/*    */   public static LSDFact parseTyrubaFact(String line)
-/*    */   {
-/* 62 */     String factString = line.trim();
-/*    */     
-/* 64 */     String predicateName = factString.substring(0, factString.indexOf('('))
-/* 65 */       .trim();
-/* 66 */     LSDPredicate predicate = LSDPredicate.getPredicate(predicateName);
-/* 67 */     factString = factString.substring(factString.indexOf('(') + 1).trim();
-/* 68 */     int endOfArgs = factString.lastIndexOf(')');
-/* 69 */     String arguments = factString.substring(0, endOfArgs).trim();
-/* 70 */     factString = factString.substring(endOfArgs + 1).trim();
-/* 71 */     if (!factString.equals("."))
-/*    */     {
-/* 73 */       System.err.println("Facts must be in the form 'predicate(const, const, ...).'");
-/* 74 */       System.err.println("Line: " + line);
-/* 75 */       System.exit(-3);
-/*    */     }
-/*    */     
-/* 78 */     if (predicate == null) {
-/* 79 */       System.err.println("Predicate " + predicateName + 
-/* 80 */         " is not defined.");
-/* 81 */       System.err.println("Line: " + line);
-/* 82 */       System.exit(-1);
-/*    */     }
-/* 84 */     String[] params = arguments.split("\", \"");
-/* 85 */     List<String> binds = new ArrayList();
-/* 86 */     String[] arrayOfString1; int j = (arrayOfString1 = params).length; for (int i = 0; i < j; i++) { String p = arrayOfString1[i];
-/* 87 */       if (p.startsWith("\"")) {
-/* 88 */         binds.add(p.substring(1));
-/* 89 */       } else if (p.endsWith("\"")) {
-/* 90 */         binds.add(p.substring(0, p.length() - 2));
-/*    */       } else {
-/* 92 */         binds.add(p);
-/*    */       }
-/*    */     }
-/* 95 */     return LSDFact.createLSDFact(predicate, binds, true);
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package lsd.io;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
+import lsd.rule.LSDFact;
+import lsd.rule.LSDPredicate;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/lsd/io/LSDTyrubaFactReader.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class LSDTyrubaFactReader
+{
+  private ArrayList<LSDFact> facts = null;
+  
+  public LSDTyrubaFactReader(File inputFile)
+  {
+    ArrayList<LSDFact> fs = new ArrayList();
+    try
+    {
+      if (inputFile.exists())
+      {
+        BufferedReader in = new BufferedReader(
+          new FileReader(inputFile));
+        String line = null;
+        while ((line = in.readLine()) != null) {
+          if ((!line.trim().equals("")) && (line.trim().charAt(0) != '#') && 
+            (!line.trim().startsWith("//")))
+          {
+            LSDFact fact = parseTyrubaFact(line);
+            fs.add(fact);
+          }
+        }
+        in.close();
+      }
+      this.facts = fs;
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
+  }
+  
+  public static ArrayList<LSDFact> convertToClassLevel(ArrayList<LSDFact> readDeltaFacts)
+  {
+    ArrayList<LSDFact> facts = new ArrayList();
+    for (LSDFact fact : readDeltaFacts) {
+      if (fact.getPredicate().isMethodLevel())
+      {
+        LSDFact tempFact = fact.convertToClassLevel();
+        if (tempFact != null) {
+          facts.add(tempFact);
+        }
+      }
+      else
+      {
+        facts.add(fact);
+      }
+    }
+    return facts;
+  }
+  
+  public ArrayList<LSDFact> getFacts()
+  {
+    return this.facts;
+  }
+  
+  public static LSDFact parseTyrubaFact(String line)
+  {
+    String factString = line.trim();
+    
+    String predicateName = factString.substring(0, factString.indexOf('('))
+      .trim();
+    LSDPredicate predicate = LSDPredicate.getPredicate(predicateName);
+    factString = factString.substring(factString.indexOf('(') + 1).trim();
+    int endOfArgs = factString.lastIndexOf(')');
+    String arguments = factString.substring(0, endOfArgs).trim();
+    factString = factString.substring(endOfArgs + 1).trim();
+    if (!factString.equals("."))
+    {
+      System.err.println("Facts must be in the form 'predicate(const, const, ...).'");
+      System.err.println("Line: " + line);
+      System.exit(-3);
+    }
+    if (predicate == null)
+    {
+      System.err.println("Predicate " + predicateName + 
+        " is not defined.");
+      System.err.println("Line: " + line);
+      System.exit(-1);
+    }
+    String[] params = arguments.split("\", \"");
+    List<String> binds = new ArrayList();
+    String[] arrayOfString1;
+    int j = (arrayOfString1 = params).length;
+    for (int i = 0; i < j; i++)
+    {
+      String p = arrayOfString1[i];
+      if (p.startsWith("\"")) {
+        binds.add(p.substring(1));
+      } else if (p.endsWith("\"")) {
+        binds.add(p.substring(0, p.length() - 2));
+      } else {
+        binds.add(p);
+      }
+    }
+    return LSDFact.createLSDFact(predicate, binds, true);
+  }
+}

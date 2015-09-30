@@ -1,57 +1,61 @@
-/*    */ package tyRuBa.util;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class First
-/*    */   extends ElementSource
-/*    */ {
-/*    */   private ElementSource source;
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public First(ElementSource from)
-/*    */   {
-/* 20 */     this.source = from;
-/*    */   }
-/*    */   
-/*    */   public void print(PrintingState p) {
-/* 24 */     p.print("First(");
-/* 25 */     this.source.print(p);
-/* 26 */     p.outdent();
-/* 27 */     p.print(")");
-/*    */   }
-/*    */   
-/*    */   public int status() {
-/* 31 */     if (this.source == null) {
-/* 32 */       return -1;
-/*    */     }
-/* 34 */     int stat = this.source.status();
-/* 35 */     if (this.source.status() == -1) {
-/* 36 */       this.source = null;
-/*    */     }
-/* 38 */     return stat;
-/*    */   }
-/*    */   
-/*    */   public Object nextElement()
-/*    */   {
-/* 43 */     ElementSource it = this.source;
-/* 44 */     this.source = null;
-/* 45 */     return it.nextElement();
-/*    */   }
-/*    */   
-/*    */   public ElementSource first() {
-/* 49 */     return this;
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.util;
 
-
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/tyRuBa/util/First.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class First
+  extends ElementSource
+{
+  private ElementSource source;
+  
+  public First(ElementSource from)
+  {
+    this.source = from;
+  }
+  
+  public void print(PrintingState p)
+  {
+    p.print("First(");
+    this.source.print(p);
+    p.outdent();
+    p.print(")");
+  }
+  
+  public int status()
+  {
+    if (this.source == null) {
+      return -1;
+    }
+    int stat = this.source.status();
+    if (this.source.status() == -1) {
+      this.source = null;
+    }
+    return stat;
+  }
+  
+  public Object nextElement()
+  {
+    ElementSource it = this.source;
+    this.source = null;
+    return it.nextElement();
+  }
+  
+  public ElementSource first()
+  {
+    return this;
+  }
+}

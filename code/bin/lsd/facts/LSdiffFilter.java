@@ -1,24 +1,36 @@
-/*    */ package lsd.facts;
-/*    */ 
-/*    */ public class LSdiffFilter
-/*    */ {
-/*    */   final boolean packageLevel;
-/*    */   final boolean typeLevel;
-/*    */   final boolean methodLevel;
-/*    */   final boolean fieldLevel;
-/*    */   final boolean bodyLevel;
-/*    */   
-/*    */   public LSdiffFilter(boolean packageL, boolean classL, boolean methodL, boolean fieldL, boolean bodyL) {
-/* 12 */     this.packageLevel = packageL;
-/* 13 */     this.typeLevel = classL;
-/* 14 */     this.methodLevel = methodL;
-/* 15 */     this.fieldLevel = fieldL;
-/* 16 */     this.bodyLevel = bodyL;
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package lsd.facts;
 
-
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/lsd/facts/LSdiffFilter.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class LSdiffFilter
+{
+  final boolean packageLevel;
+  final boolean typeLevel;
+  final boolean methodLevel;
+  final boolean fieldLevel;
+  final boolean bodyLevel;
+  
+  public LSdiffFilter(boolean packageL, boolean classL, boolean methodL, boolean fieldL, boolean bodyL)
+  {
+    this.packageLevel = packageL;
+    this.typeLevel = classL;
+    this.methodLevel = methodL;
+    this.fieldLevel = fieldL;
+    this.bodyLevel = bodyL;
+  }
+}

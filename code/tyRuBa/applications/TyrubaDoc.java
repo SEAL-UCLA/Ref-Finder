@@ -1,242 +1,230 @@
-/*     */ package tyRuBa.applications;
-/*     */ 
-/*     */ import java.io.File;
-/*     */ import java.io.FileNotFoundException;
-/*     */ import java.io.FileOutputStream;
-/*     */ import java.io.FileReader;
-/*     */ import java.io.IOException;
-/*     */ import java.io.LineNumberReader;
-/*     */ import java.io.PrintStream;
-/*     */ import java.io.PrintWriter;
-/*     */ import java.util.Iterator;
-/*     */ import java.util.Map;
-/*     */ import java.util.Set;
-/*     */ import java.util.TreeMap;
-/*     */ import java.util.TreeSet;
-/*     */ import tyRuBa.engine.FrontEnd;
-/*     */ import tyRuBa.modes.TypeModeError;
-/*     */ import tyRuBa.parser.ParseException;
-/*     */ import tyRuBa.tdbc.Connection;
-/*     */ import tyRuBa.tdbc.PreparedQuery;
-/*     */ import tyRuBa.tdbc.ResultSet;
-/*     */ import tyRuBa.tdbc.TyrubaException;
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ public class TyrubaDoc
-/*     */ {
-/*     */   private static PrintWriter out;
-/*  36 */   private static Set groups = new TreeSet();
-/*  37 */   private static File header = null;
-/*  38 */   private static File footer = null;
-/*     */   
-/*     */   public static void main(String[] args)
-/*     */   {
-/*  42 */     if (args.length < 2) {
-/*  43 */       usage();
-/*  44 */       System.exit(1);
-/*     */     }
-/*     */     
-/*     */ 
-/*  48 */     if (args.length > 2) {
-/*  49 */       header = new File(args[2]);
-/*     */     }
-/*     */     
-/*  52 */     if (args.length > 3) {
-/*  53 */       footer = new File(args[3]);
-/*     */     }
-/*     */     
-/*     */ 
-/*     */     try
-/*     */     {
-/*  59 */       File fout = new File(args[1]);
-/*     */       
-/*  61 */       out = new PrintWriter(new FileOutputStream(fout));
-/*     */       
-/*     */ 
-/*  64 */       FrontEnd frontEnd = new FrontEnd(true);
-/*  65 */       File fin = new File(args[0]);
-/*  66 */       frontEnd.load(fin.toString());
-/*  67 */       Connection con = new Connection(frontEnd);
-/*     */       
-/*     */ 
-/*  70 */       PreparedQuery query = con.prepareQuery("tyrubadocGroup(?Order, ?ID, ?Label, ?Description)");
-/*  71 */       ResultSet rs = query.executeQuery();
-/*     */       
-/*  73 */       while (rs.next()) {
-/*  74 */         String id = rs.getString("?ID");
-/*  75 */         Integer order = new Integer(rs.getInt("?Order"));
-/*  76 */         String label = rs.getString("?Label");
-/*  77 */         String description = rs.getString("?Description");
-/*  78 */         Group g = new Group(id, order, label, description);
-/*  79 */         groups.add(g);
-/*     */       }
-/*     */       
-/*     */ 
-/*  83 */       query = con.prepareQuery("tyrubadoc(?Group, ?Pred, ?Description)");
-/*  84 */       rs = query.executeQuery();
-/*     */       
-/*     */ 
-/*     */ 
-/*  88 */       printHeader();
-/*     */       
-/*     */ 
-/*     */ 
-/*     */ 
-/*  93 */       Map groupRules = new TreeMap();
-/*     */       
-/*  95 */       while (rs.next()) {
-/*  96 */         String group = rs.getString("?Group");
-/*  97 */         String rule = rs.getString("?Pred");
-/*  98 */         String doc = rs.getString("?Description");
-/*  99 */         Map rules = (Map)groupRules.get(group);
-/* 100 */         if (rules == null) {
-/* 101 */           rules = new TreeMap();
-/* 102 */           groupRules.put(group, rules);
-/*     */         }
-/* 104 */         rules.put(rule, doc);
-/*     */       }
-/*     */       
-/*     */ 
-/*     */ 
-/* 109 */       Iterator iter = groups.iterator();
-/* 110 */       while (iter.hasNext()) {
-/* 111 */         Group group = (Group)iter.next();
-/* 112 */         Map rules = (Map)groupRules.remove(group.id);
-/* 113 */         if (rules == null) {
-/* 114 */           rules = new TreeMap();
-/*     */         }
-/* 116 */         printGroup(group, rules);
-/*     */       }
-/*     */       
-/*     */ 
-/*     */ 
-/* 121 */       iter = groupRules.keySet().iterator();
-/* 122 */       while (iter.hasNext()) {
-/* 123 */         String id = (String)iter.next();
-/* 124 */         Map rules = (Map)groupRules.get(id);
-/* 125 */         Group g = new Group(id, new Integer(0), id, "");
-/* 126 */         printGroup(g, rules);
-/*     */       }
-/*     */       
-/* 129 */       printFooter();
-/*     */       
-/* 131 */       out.close();
-/*     */     }
-/*     */     catch (FileNotFoundException e) {
-/* 134 */       e.printStackTrace();
-/*     */     } catch (ParseException e) {
-/* 136 */       e.printStackTrace();
-/*     */     } catch (IOException e) {
-/* 138 */       e.printStackTrace();
-/*     */     } catch (TypeModeError e) {
-/* 140 */       e.printStackTrace();
-/*     */     } catch (TyrubaException e) {
-/* 142 */       e.printStackTrace();
-/*     */     }
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   private static void printGroup(Group group, Map rules)
-/*     */   {
-/* 152 */     out.println("<h2><a name=\"" + group.id + "\">" + group.label + "</a></h2>");
-/*     */     
-/* 154 */     out.println("<p>" + group.description + "</p>");
-/*     */     
-/* 156 */     out.println("<table cellspacing=\"0\" cellpadding=\"3\" border=\"1\">");
-/* 157 */     out.println("<tr>");
-/* 158 */     out.println("<td class=\"TyrubaDocHeading\">Predicate</td><td class=\"TyrubaDocHeading\">Description</td>");
-/* 159 */     out.println("</tr>");
-/*     */     
-/* 161 */     Iterator iter = rules.keySet().iterator();
-/* 162 */     while (iter.hasNext()) {
-/* 163 */       String rule = (String)iter.next();
-/* 164 */       String doc = (String)rules.get(rule);
-/* 165 */       printDoc(rule, doc);
-/*     */     }
-/*     */     
-/* 168 */     out.println("</table>");
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */   private static void printHeader()
-/*     */     throws IOException
-/*     */   {
-/* 176 */     if ((header != null) && (header.exists())) {
-/* 177 */       copyfile(header);
-/*     */     }
-/*     */     else {
-/* 180 */       out.println("<html>");
-/* 181 */       out.println("<head>");
-/* 182 */       out.println("<title>TyRuBa Documentation</title>");
-/* 183 */       out.println("<style>");
-/* 184 */       out.println(".TyrubaDocHeading { background-color: #CCCCCC; font-weight: bold; }");
-/* 185 */       out.println("</style>");
-/* 186 */       out.println("</head>");
-/* 187 */       out.println("<body>");
-/*     */     }
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   private static void printDoc(String rule, String doc)
-/*     */   {
-/* 197 */     out.println("<tr>");
-/* 198 */     out.println("<td class=\"TyrubaDocPredicate\">" + rule + "</td>");
-/* 199 */     out.println("<td class=\"TyrubaDocDescription\">" + doc + "</td>");
-/* 200 */     out.println("</tr>");
-/*     */   }
-/*     */   
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   private static void printFooter()
-/*     */     throws IOException
-/*     */   {
-/* 209 */     if ((footer != null) && (footer.exists())) {
-/* 210 */       copyfile(footer);
-/*     */     }
-/*     */     else {
-/* 213 */       out.println("</body>");
-/* 214 */       out.println("</html>");
-/*     */     }
-/*     */   }
-/*     */   
-/*     */   private static void copyfile(File f) throws IOException {
-/* 219 */     LineNumberReader reader = new LineNumberReader(new FileReader(f));
-/* 220 */     String line = reader.readLine();
-/* 221 */     while (line != null) {
-/* 222 */       out.println(line);
-/* 223 */       line = reader.readLine();
-/*     */     }
-/* 225 */     reader.close();
-/*     */   }
-/*     */   
-/*     */   private static void usage()
-/*     */   {
-/* 230 */     System.out.println("usage: TyrubaDoc <input file> <output file> [header] [footer]");
-/* 231 */     System.out.println("\t<input file> = the tyruba rules file containing documentation");
-/* 232 */     System.out.println("\t<output file> = the file to which the html is to be written");
-/* 233 */     System.out.println("\t[header] = optional arg indicating file to use as the header for the output");
-/* 234 */     System.out.println("\t[footer] = optional arg indicating file to use as the footer for the output");
-/*     */   }
-/*     */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.applications;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import tyRuBa.engine.FrontEnd;
+import tyRuBa.modes.TypeModeError;
+import tyRuBa.parser.ParseException;
+import tyRuBa.tdbc.Connection;
+import tyRuBa.tdbc.PreparedQuery;
+import tyRuBa.tdbc.ResultSet;
+import tyRuBa.tdbc.TyrubaException;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/tyRuBa/applications/TyrubaDoc.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class TyrubaDoc
+{
+  private static PrintWriter out;
+  private static Set groups = new TreeSet();
+  private static File header = null;
+  private static File footer = null;
+  
+  public static void main(String[] args)
+  {
+    if (args.length < 2)
+    {
+      usage();
+      System.exit(1);
+    }
+    if (args.length > 2) {
+      header = new File(args[2]);
+    }
+    if (args.length > 3) {
+      footer = new File(args[3]);
+    }
+    try
+    {
+      File fout = new File(args[1]);
+      
+      out = new PrintWriter(new FileOutputStream(fout));
+      
+      FrontEnd frontEnd = new FrontEnd(true);
+      File fin = new File(args[0]);
+      frontEnd.load(fin.toString());
+      Connection con = new Connection(frontEnd);
+      
+      PreparedQuery query = con.prepareQuery("tyrubadocGroup(?Order, ?ID, ?Label, ?Description)");
+      ResultSet rs = query.executeQuery();
+      while (rs.next())
+      {
+        String id = rs.getString("?ID");
+        Integer order = new Integer(rs.getInt("?Order"));
+        String label = rs.getString("?Label");
+        String description = rs.getString("?Description");
+        Group g = new Group(id, order, label, description);
+        groups.add(g);
+      }
+      query = con.prepareQuery("tyrubadoc(?Group, ?Pred, ?Description)");
+      rs = query.executeQuery();
+      
+      printHeader();
+      
+      Map groupRules = new TreeMap();
+      while (rs.next())
+      {
+        String group = rs.getString("?Group");
+        String rule = rs.getString("?Pred");
+        String doc = rs.getString("?Description");
+        Map rules = (Map)groupRules.get(group);
+        if (rules == null)
+        {
+          rules = new TreeMap();
+          groupRules.put(group, rules);
+        }
+        rules.put(rule, doc);
+      }
+      Iterator iter = groups.iterator();
+      while (iter.hasNext())
+      {
+        Group group = (Group)iter.next();
+        Map rules = (Map)groupRules.remove(group.id);
+        if (rules == null) {
+          rules = new TreeMap();
+        }
+        printGroup(group, rules);
+      }
+      iter = groupRules.keySet().iterator();
+      while (iter.hasNext())
+      {
+        String id = (String)iter.next();
+        Map rules = (Map)groupRules.get(id);
+        Group g = new Group(id, new Integer(0), id, "");
+        printGroup(g, rules);
+      }
+      printFooter();
+      
+      out.close();
+    }
+    catch (FileNotFoundException e)
+    {
+      e.printStackTrace();
+    }
+    catch (ParseException e)
+    {
+      e.printStackTrace();
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
+    catch (TypeModeError e)
+    {
+      e.printStackTrace();
+    }
+    catch (TyrubaException e)
+    {
+      e.printStackTrace();
+    }
+  }
+  
+  private static void printGroup(Group group, Map rules)
+  {
+    out.println("<h2><a name=\"" + group.id + "\">" + group.label + "</a></h2>");
+    
+    out.println("<p>" + group.description + "</p>");
+    
+    out.println("<table cellspacing=\"0\" cellpadding=\"3\" border=\"1\">");
+    out.println("<tr>");
+    out.println("<td class=\"TyrubaDocHeading\">Predicate</td><td class=\"TyrubaDocHeading\">Description</td>");
+    out.println("</tr>");
+    
+    Iterator iter = rules.keySet().iterator();
+    while (iter.hasNext())
+    {
+      String rule = (String)iter.next();
+      String doc = (String)rules.get(rule);
+      printDoc(rule, doc);
+    }
+    out.println("</table>");
+  }
+  
+  private static void printHeader()
+    throws IOException
+  {
+    if ((header != null) && (header.exists()))
+    {
+      copyfile(header);
+    }
+    else
+    {
+      out.println("<html>");
+      out.println("<head>");
+      out.println("<title>TyRuBa Documentation</title>");
+      out.println("<style>");
+      out.println(".TyrubaDocHeading { background-color: #CCCCCC; font-weight: bold; }");
+      out.println("</style>");
+      out.println("</head>");
+      out.println("<body>");
+    }
+  }
+  
+  private static void printDoc(String rule, String doc)
+  {
+    out.println("<tr>");
+    out.println("<td class=\"TyrubaDocPredicate\">" + rule + "</td>");
+    out.println("<td class=\"TyrubaDocDescription\">" + doc + "</td>");
+    out.println("</tr>");
+  }
+  
+  private static void printFooter()
+    throws IOException
+  {
+    if ((footer != null) && (footer.exists()))
+    {
+      copyfile(footer);
+    }
+    else
+    {
+      out.println("</body>");
+      out.println("</html>");
+    }
+  }
+  
+  private static void copyfile(File f)
+    throws IOException
+  {
+    LineNumberReader reader = new LineNumberReader(new FileReader(f));
+    String line = reader.readLine();
+    while (line != null)
+    {
+      out.println(line);
+      line = reader.readLine();
+    }
+    reader.close();
+  }
+  
+  private static void usage()
+  {
+    System.out.println("usage: TyrubaDoc <input file> <output file> [header] [footer]");
+    System.out.println("\t<input file> = the tyruba rules file containing documentation");
+    System.out.println("\t<output file> = the file to which the html is to be written");
+    System.out.println("\t[header] = optional arg indicating file to use as the header for the output");
+    System.out.println("\t[footer] = optional arg indicating file to use as the footer for the output");
+  }
+}

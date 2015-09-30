@@ -1,79 +1,110 @@
-/*    */ package tyRuBa.tests;
-/*    */ 
-/*    */ import tyRuBa.parser.ParseException;
-/*    */ 
-/*    */ public class TyniNativePredicateTest extends TyrubaTest
-/*    */ {
-/*    */   public TyniNativePredicateTest(String arg0)
-/*    */   {
-/*  9 */     super(arg0);
-/*    */   }
-/*    */   
-/*    */   public void setUp() throws Exception {
-/* 13 */     TyrubaTest.initfile = true;
-/* 14 */     super.setUp();
-/*    */   }
-/*    */   
-/*    */   public void testString() throws ParseException, tyRuBa.modes.TypeModeError {
-/* 18 */     test_must_succeed("String(abcd)");
-/* 19 */     test_must_fail("equals([?x|?],[1,a]), String(?x)");
-/* 20 */     test_resultcount("member(?x,[1,a,2,b]), String(?x)", 2);
-/*    */   }
-/*    */   
-/*    */   public void testInteger()
-/*    */     throws ParseException, tyRuBa.modes.TypeModeError
-/*    */   {
-/* 26 */     test_must_succeed("Integer(123)");
-/* 27 */     test_must_fail("equals([?x|?],[a,1]), Integer(?x)");
-/* 28 */     test_resultcount("member(?x,[1,a,2,b]), Integer(?x)", 2);
-/*    */   }
-/*    */   
-/*    */   public void testRange()
-/*    */     throws ParseException, tyRuBa.modes.TypeModeError
-/*    */   {
-/* 34 */     test_must_findall("range(23,27,?x)", "?x", 
-/* 35 */       new String[] { "23", "24", "25", "26" });
-/*    */   }
-/*    */   
-/*    */   public void testGreater() throws ParseException, tyRuBa.modes.TypeModeError {
-/* 39 */     test_must_succeed("greater(10,5)");
-/* 40 */     test_must_fail("greater(5,10)");
-/*    */   }
-/*    */   
-/*    */   public void testSum() throws ParseException, tyRuBa.modes.TypeModeError {
-/* 44 */     test_must_succeed("sum(1,2,3)");
-/* 45 */     test_must_equal("sum(1,2,?x)", "?x", "3");
-/* 46 */     test_must_equal("sum(1,?x,3)", "?x", "2");
-/* 47 */     test_must_equal("sum(?x,2,3)", "?x", "1");
-/*    */   }
-/*    */   
-/*    */   public void testMul() throws ParseException, tyRuBa.modes.TypeModeError {
-/* 51 */     test_must_succeed("mul(2,3,6)");
-/* 52 */     test_must_fail("mul(2,3,7)");
-/* 53 */     test_must_equal("mul(2,3,?x)", "?x", "6");
-/*    */   }
-/*    */   
-/*    */   public void testHashValue() throws ParseException, tyRuBa.modes.TypeModeError {
-/* 57 */     test_must_succeed("hash_value(foobar,?v)");
-/*    */   }
-/*    */   
-/*    */   public void testLength() throws ParseException, tyRuBa.modes.TypeModeError {
-/* 61 */     test_must_equal("length([a,b,c],?x)", "?x", "3");
-/* 62 */     test_must_succeed("length([a,b,c],3)");
-/* 63 */     test_must_fail("length([a,b,c],2)");
-/*    */   }
-/*    */   
-/*    */   public void testDebugPrint() throws ParseException, tyRuBa.modes.TypeModeError {
-/* 67 */     test_must_succeed("equals(?x,partner), debug_print({Howdy ?x, how ya doin??})");
-/*    */   }
-/*    */   
-/*    */   public void testWriteOutput() throws ParseException, tyRuBa.modes.TypeModeError {
-/* 71 */     test_must_succeed("equals(?x,partner), write_output({Howdy ?x, how ya doin??})");
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.tests;
 
+import tyRuBa.modes.TypeModeError;
+import tyRuBa.parser.ParseException;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/bin/tyRuBa/tests/TyniNativePredicateTest.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public class TyniNativePredicateTest
+  extends TyrubaTest
+{
+  public TyniNativePredicateTest(String arg0)
+  {
+    super(arg0);
+  }
+  
+  public void setUp()
+    throws Exception
+  {
+    TyrubaTest.initfile = true;
+    super.setUp();
+  }
+  
+  public void testString()
+    throws ParseException, TypeModeError
+  {
+    test_must_succeed("String(abcd)");
+    test_must_fail("equals([?x|?],[1,a]), String(?x)");
+    test_resultcount("member(?x,[1,a,2,b]), String(?x)", 2);
+  }
+  
+  public void testInteger()
+    throws ParseException, TypeModeError
+  {
+    test_must_succeed("Integer(123)");
+    test_must_fail("equals([?x|?],[a,1]), Integer(?x)");
+    test_resultcount("member(?x,[1,a,2,b]), Integer(?x)", 2);
+  }
+  
+  public void testRange()
+    throws ParseException, TypeModeError
+  {
+    test_must_findall("range(23,27,?x)", "?x", 
+      new String[] { "23", "24", "25", "26" });
+  }
+  
+  public void testGreater()
+    throws ParseException, TypeModeError
+  {
+    test_must_succeed("greater(10,5)");
+    test_must_fail("greater(5,10)");
+  }
+  
+  public void testSum()
+    throws ParseException, TypeModeError
+  {
+    test_must_succeed("sum(1,2,3)");
+    test_must_equal("sum(1,2,?x)", "?x", "3");
+    test_must_equal("sum(1,?x,3)", "?x", "2");
+    test_must_equal("sum(?x,2,3)", "?x", "1");
+  }
+  
+  public void testMul()
+    throws ParseException, TypeModeError
+  {
+    test_must_succeed("mul(2,3,6)");
+    test_must_fail("mul(2,3,7)");
+    test_must_equal("mul(2,3,?x)", "?x", "6");
+  }
+  
+  public void testHashValue()
+    throws ParseException, TypeModeError
+  {
+    test_must_succeed("hash_value(foobar,?v)");
+  }
+  
+  public void testLength()
+    throws ParseException, TypeModeError
+  {
+    test_must_equal("length([a,b,c],?x)", "?x", "3");
+    test_must_succeed("length([a,b,c],3)");
+    test_must_fail("length([a,b,c],2)");
+  }
+  
+  public void testDebugPrint()
+    throws ParseException, TypeModeError
+  {
+    test_must_succeed("equals(?x,partner), debug_print({Howdy ?x, how ya doin??})");
+  }
+  
+  public void testWriteOutput()
+    throws ParseException, TypeModeError
+  {
+    test_must_succeed("equals(?x,partner), write_output({Howdy ?x, how ya doin??})");
+  }
+}

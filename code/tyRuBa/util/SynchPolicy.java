@@ -1,105 +1,128 @@
-/*    */ package tyRuBa.util;
-/*    */ 
-/*    */ import junit.framework.Assert;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public final class SynchPolicy
-/*    */ {
-/*    */   SynchResource resource;
-/*    */   
-/*    */   public SynchPolicy(SynchResource res)
-/*    */   {
-/* 14 */     this.resource = res;
-/*    */   }
-/*    */   
-/*    */ 
-/* 18 */   int stopSources = 0;
-/* 19 */   int busySources = 0;
-/*    */   
-/*    */   public void sourceDone() {
-/* 22 */     synchronized (this.resource) {
-/* 23 */       this.busySources -= 1;
-/* 24 */       debug_message("--");
-/* 25 */       Assert.assertTrue(this.busySources >= 0);
-/*    */       
-/*    */ 
-/* 28 */       if (this.busySources == 0)
-/* 29 */         this.resource.notifyAll();
-/*    */     }
-/*    */   }
-/*    */   
-/*    */   public void newSource() {
-/* 34 */     while (this.stopSources > 0)
-/*    */       try {
-/* 36 */         this.resource.wait();
-/*    */       } catch (InterruptedException e) {
-/* 38 */         e.printStackTrace();
-/*    */       }
-/* 40 */     this.busySources += 1;
-/* 41 */     debug_message("++");
-/*    */   }
-/*    */   
-/*    */   public void stopSources()
-/*    */   {
-/* 46 */     long waitTime = 100L;
-/* 47 */     if (Aurelizer.debug_sounds != null)
-/* 48 */       Aurelizer.debug_sounds.enter_loop("temporizing");
-/*    */     try {
-/* 50 */       synchronized (this.resource) {
-/* 51 */         this.stopSources += 1;
-/* 52 */         debug_message("stop");
-/* 53 */         while (this.busySources > 0) {
-/*    */           try {
-/* 55 */             this.resource.wait(waitTime);
-/* 56 */             if (waitTime > 100L) {
-/* 57 */               System.gc();
-/*    */             }
-/* 59 */             waitTime *= 2L;
-/*    */           } catch (InterruptedException e) {
-/* 61 */             e.printStackTrace();
-/*    */           }
-/* 63 */           if ((this.busySources > 0) && (waitTime > 33000L)) {
-/* 64 */             this.stopSources -= 1;
-/* 65 */             if (Aurelizer.debug_sounds != null)
-/* 66 */               Aurelizer.debug_sounds.enter("error");
-/* 67 */             throw new Error("I've lost my patience waiting for all queries to be released");
-/*    */           }
-/*    */         }
-/*    */       }
-/*    */     }
-/*    */     finally {
-/* 73 */       if (Aurelizer.debug_sounds != null) {
-/* 74 */         Aurelizer.debug_sounds.exit("temporizing");
-/*    */       }
-/*    */     }
-/* 73 */     if (Aurelizer.debug_sounds != null) {
-/* 74 */       Aurelizer.debug_sounds.exit("temporizing");
-/*    */     }
-/*    */   }
-/*    */   
-/*    */ 
-/*    */   private void debug_message(String msg) {}
-/*    */   
-/*    */ 
-/*    */   public String toString()
-/*    */   {
-/* 84 */     return "SynchPolicy(busy=" + this.busySources + ",stop=" + this.stopSources + ")";
-/*    */   }
-/*    */   
-/*    */   public void allowSources() {
-/* 88 */     synchronized (this.resource) {
-/* 89 */       Assert.assertTrue(this.stopSources > 0);
-/* 90 */       this.stopSources -= 1;
-/* 91 */       debug_message("allow");
-/* 92 */       this.resource.notifyAll();
-/*    */     }
-/*    */   }
-/*    */ }
+/* 
+*    Ref-Finder
+*    Copyright (C) <2015>  <PLSE_UCLA>
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package tyRuBa.util;
 
+import junit.framework.Assert;
 
-/* Location:              /Users/UCLAPLSE/Downloads/LSclipse_1.0.4.jar!/tyRuBa/util/SynchPolicy.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */
+public final class SynchPolicy
+{
+  SynchResource resource;
+  
+  public SynchPolicy(SynchResource res)
+  {
+    this.resource = res;
+  }
+  
+  int stopSources = 0;
+  int busySources = 0;
+  
+  public void sourceDone()
+  {
+    synchronized (this.resource)
+    {
+      this.busySources -= 1;
+      debug_message("--");
+      Assert.assertTrue(this.busySources >= 0);
+      if (this.busySources == 0) {
+        this.resource.notifyAll();
+      }
+    }
+  }
+  
+  public void newSource()
+  {
+    while (this.stopSources > 0) {
+      try
+      {
+        this.resource.wait();
+      }
+      catch (InterruptedException e)
+      {
+        e.printStackTrace();
+      }
+    }
+    this.busySources += 1;
+    debug_message("++");
+  }
+  
+  public void stopSources()
+  {
+    long waitTime = 100L;
+    if (Aurelizer.debug_sounds != null) {
+      Aurelizer.debug_sounds.enter_loop("temporizing");
+    }
+    try
+    {
+      synchronized (this.resource)
+      {
+        this.stopSources += 1;
+        debug_message("stop");
+        while (this.busySources > 0)
+        {
+          try
+          {
+            this.resource.wait(waitTime);
+            if (waitTime > 100L) {
+              System.gc();
+            }
+            waitTime *= 2L;
+          }
+          catch (InterruptedException e)
+          {
+            e.printStackTrace();
+          }
+          if ((this.busySources > 0) && (waitTime > 33000L))
+          {
+            this.stopSources -= 1;
+            if (Aurelizer.debug_sounds != null) {
+              Aurelizer.debug_sounds.enter("error");
+            }
+            throw new Error("I've lost my patience waiting for all queries to be released");
+          }
+        }
+      }
+    }
+    finally
+    {
+      if (Aurelizer.debug_sounds != null) {
+        Aurelizer.debug_sounds.exit("temporizing");
+      }
+    }
+    if (Aurelizer.debug_sounds != null) {
+      Aurelizer.debug_sounds.exit("temporizing");
+    }
+  }
+  
+  private void debug_message(String msg) {}
+  
+  public String toString()
+  {
+    return "SynchPolicy(busy=" + this.busySources + ",stop=" + this.stopSources + ")";
+  }
+  
+  public void allowSources()
+  {
+    synchronized (this.resource)
+    {
+      Assert.assertTrue(this.stopSources > 0);
+      this.stopSources -= 1;
+      debug_message("allow");
+      this.resource.notifyAll();
+    }
+  }
+}
