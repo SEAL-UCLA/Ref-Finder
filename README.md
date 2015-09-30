@@ -9,7 +9,7 @@ Research Paper: [Template-based Reconstruction of Complex Refactorings, Kyle Pre
 
 Tool Demo: [Ref-Finder: a Refactoring Reconstruction Tool based on Logic Query Templates, Miryung Kim, Matthew Gee, Alex Loh, and Napol Rachatasumrit, FSE' 10](http://web.cs.ucla.edu/~miryung/Publications/fse10-reffindertool.pdf)
 
-We no longer maintain Ref-Finder. Here is an example on how to use Ref-Finder jar file to identify refactorings. 
+Here is an example on how to use Ref-Finder jar file to identify refactorings. 
 
 ```
 import edu.utexas.seal.reffinder.Application; ...
