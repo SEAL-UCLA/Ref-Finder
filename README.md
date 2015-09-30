@@ -33,6 +33,13 @@ Step 2: Create a Viewer and invoke myStart(IProject projectA, IProject projectB,
 
 Step 3: Parse the XML output from Ref-Finder.
 
+## Extend Ref-Finder
+
+You may want to start exploring from lsclipse/RefactoringQuery.java. Please check docs folder for syntax guide, etc.
+
+## Dataset for ICSM'10
+
+Please check inspect_dataset.
 
 ## Ref-Distiller
 A extension of Ref-Finder that we are actively working on.
