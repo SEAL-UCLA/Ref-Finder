@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Results>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.transforms.implementations</package>
+        <class>TransformEnvelopedSignature</class>
+        <secondClass>TransformXPath2Filter04</secondClass>
+        <field>cat</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.transforms.implementations</package>
+        <class>TransformXSLT</class>
+        <secondClass>TransformXPath2Filter04</secondClass>
+        <field>cat</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.transforms.implementations</package>
+        <class>TransformC14N</class>
+        <secondClass>TransformXPath2Filter04</secondClass>
+        <field>cat</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.transforms.implementations</package>
+        <class>TransformC14NWithComments</class>
+        <secondClass>TransformXPath2Filter04</secondClass>
+        <field>cat</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.xml.security.c14n</package>
+        <class>Canonicalizer</class>
+        <oldMethod>canonicalize</oldMethod>
+        <newMethod>canonicalizeSubtree</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.xml.security.c14n</package>
+        <class>Canonicalizer</class>
+        <oldMethod>canonicalize</oldMethod>
+        <newMethod>canonicalizeSubtree</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.xml.security.utils</package>
+        <class>I18n</class>
+        <oldMethod>getExceptionMessage</oldMethod>
+        <field>NOT_INITIALIZED_MSG</field>
+        <check>INCORRECT</check>
+        <comment>actually, it is inline temp</comment>
+    </Refactoring>
+    <Refactoring type="Replace Nested Cond Guard Clauses">
+        <package>org.apache.xml.security.keys.keyresolver.implementations</package>
+        <class>DSAKeyValueResolver</class>
+        <oldMethod>engineCanResolve</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315WithoutXPathSupport</class>
+        <oldMethod>removeExtraNamespaces</oldMethod>
+        <field>definesArbitraryNS</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.helper</package>
+        <class>NamespaceSearcher</class>
+        <oldMethod>visibleAncestorsContainAnyNS</oldMethod>
+        <field>definesDefaultNS</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <oldMethod>processNamespaces</oldMethod>
+        <field>definesArbitraryNS</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <oldMethod>processNamespaces</oldMethod>
+        <field>attrValueEmpty</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <oldMethod>processXmlAttributes</oldMethod>
+        <field>deleteOriginalAttribute</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315WithoutXPathSupport</class>
+        <oldMethod>removeExtraNamespaces</oldMethod>
+        <field>found</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.helper</package>
+        <class>NamespaceSearcher</class>
+        <oldMethod>invisibleAncestorsContainAnyNS</oldMethod>
+        <field>definesDefaultNS</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.helper</package>
+        <class>NamespaceSearcher</class>
+        <oldMethod>invisibleAncestorsContainAnyNS</oldMethod>
+        <field>definesNonDefaultNS</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315WithoutXPathSupport</class>
+        <oldMethod>removeExtraNamespaces</oldMethod>
+        <field>definesDefaultNS</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.helper</package>
+        <class>NamespaceSearcher</class>
+        <oldMethod>nodeContainsNSdefs</oldMethod>
+        <field>definesArbitraryNS</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.helper</package>
+        <class>AttrCompare</class>
+        <oldMethod>compare</oldMethod>
+        <field>definesNS0</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.helper</package>
+        <class>AttrCompare</class>
+        <oldMethod>compare</oldMethod>
+        <field>definesNS1</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.helper</package>
+        <class>NamespaceSearcher</class>
+        <oldMethod>visibleAncestorsContainAnyNS</oldMethod>
+        <field>definesNonDefaultNS</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <oldMethod>processNamespaces</oldMethod>
+        <field>definesDefaultNS</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.helper</package>
+        <class>NamespaceSearcher</class>
+        <oldMethod>nodeContainsNSdefs</oldMethod>
+        <field>definesDefaultNS</field>
+        <check>INCORRECT</check>
+        <comment>the class is deleted</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.xml.security.signature</package>
+        <class>XMLSignatureInput</class>
+        <oldMethod>getNodeSet</oldMethod>
+        <field>noDocument</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.xml.security.utils</package>
+        <class>I18n</class>
+        <oldMethod>getExceptionMessage</oldMethod>
+        <field>s</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.xml.security.utils</package>
+        <class>I18n</class>
+        <oldMethod>getExceptionMessage</oldMethod>
+        <field>s</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.xml.security.signature</package>
+        <class>SignedInfo</class>
+        <parameter>Document:doc</parameter>
+        <oldMethod>SignedInfo&lt;init&gt;</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.xml.security.signature</package>
+        <class>XMLSignatureInput</class>
+        <parameter>InputStream:inputOctetStream</parameter>
+        <oldMethod>XMLSignatureInput&lt;init&gt;</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.xml.security.encryption</package>
+        <class>CipherReference</class>
+        <parameter>Transforms:transforms</parameter>
+        <oldMethod>CipherReference&lt;init&gt;</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.signature</package>
+        <class>XMLSignatureInput</class>
+        <oldMethod>XMLSignatureInput&lt;init&gt;</oldMethod>
+        <parameter>CachedXPathAPI:usedXPathAPI</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.signature</package>
+        <class>XMLSignatureInput</class>
+        <oldMethod>XMLSignatureInput&lt;init&gt;</oldMethod>
+        <parameter>Set:inputNodeSet</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.signature</package>
+        <class>XMLSignatureInput</class>
+        <oldMethod>XMLSignatureInput&lt;init&gt;</oldMethod>
+        <parameter>Node:rootNode</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptedData</class>
+        <oldMethod>encryptContentAndReplace</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.xml.security.utils</package>
+        <class>ElementProxy</class>
+        <oldMethod>createElementForFamily</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.xml.security.utils</package>
+        <class>XMLUtils</class>
+        <oldMethod>createElementInSignatureSpace</oldMethod>
+        <check>INCORRECT</check>
+        <comment>the method called from this method is changed
+</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptedData</class>
+        <oldMethod>encryptContentAndReplace_old</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.xml.security.utils</package>
+        <class>XMLUtils</class>
+        <oldMethod>createElementInEncryptionSpace</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.xml.security.utils</package>
+        <class>XMLUtils</class>
+        <oldMethod>getOwnerDocument</oldMethod>
+        <check>INCORRECT</check>
+        <comment>Try-catch was added</comment>
+    </Refactoring>
+    <Refactoring type="Inline Method">
+        <package>org.apache.xml.security.c14n</package>
+        <class>CanonicalizerSpi</class>
+        <oldMethod>engineCanonicalize</oldMethod>
+        <newMethod>engineGetNamespaceAware</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Method">
+        <package>org.apache.xml.security.c14n</package>
+        <class>CanonicalizerSpi</class>
+        <oldMethod>engineCanonicalize</oldMethod>
+        <newMethod>engineGetValidating</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.signature</package>
+        <class>XMLSignatureInput</class>
+        <parameter>NodeList:inputNodeSet</parameter>
+        <oldMethod>XMLSignatureInput&lt;init&gt;</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.signature</package>
+        <class>XMLSignatureInput</class>
+        <parameter>Node:node</parameter>
+        <oldMethod>XMLSignatureInput&lt;init&gt;</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.signature</package>
+        <class>XMLSignatureInput</class>
+        <parameter>CachedXPathAPI:usedXPathAPI</parameter>
+        <oldMethod>XMLSignatureInput&lt;init&gt;</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.xml.security.signature</package>
+        <class>Manifest</class>
+        <oldMethod>Manifest&lt;init&gt;</oldMethod>
+        <field>le</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.xml.security.utils.resolver.implementations</package>
+        <class>ResolverXPointer</class>
+        <oldMethod>engineResolve</oldMethod>
+        <field>exArgs</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.xml.security.transforms.implementations</package>
+        <class>TransformEnvelopedSignature</class>
+        <oldMethod>enginePerformTransform</oldMethod>
+        <field>transformElement</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.xml.security.signature</package>
+        <class>Manifest</class>
+        <oldMethod>verifyReferences</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.xml.security.utils.resolver.implementations</package>
+        <class>ResolverXPointer</class>
+        <oldMethod>engineResolve</oldMethod>
+        <check>CORRECT</check>
+        <comment>somewhat ambiguous cuz 2 try-catch are meged together. and if is added to completethe difference.</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.xml.security</package>
+        <class>Init</class>
+        <oldMethod>init</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.xml.security</package>
+        <class>Init</class>
+        <oldMethod>init</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.xml.security.transforms.implementations</package>
+        <class>TransformEnvelopedSignature</class>
+        <oldMethod>enginePerformTransform</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.xml.security.transforms.implementations</package>
+        <class>TransformEnvelopedSignature</class>
+        <oldMethod>enginePerformTransform</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.xml.security.transforms.implementations</package>
+        <class>TransformEnvelopedSignature</class>
+        <oldMethod>enginePerformTransform</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.xml.security.transforms.implementations</package>
+        <class>TransformEnvelopedSignature</class>
+        <oldMethod>enginePerformTransform</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.xml.security.transforms.implementations</package>
+        <class>TransformEnvelopedSignature</class>
+        <oldMethod>enginePerformTransform</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.xml.security.transforms.implementations</package>
+        <class>TransformEnvelopedSignature</class>
+        <oldMethod>enginePerformTransform</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.xml.security.signature</package>
+        <class>Manifest</class>
+        <oldMethod>verifyReferences</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+</Results>

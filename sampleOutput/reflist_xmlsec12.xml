@@ -1,0 +1,1149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Results>
+    <Refactoring type="Extract Method">
+        <package>org.apache.xml.security.signature</package>
+        <class>Reference</class>
+        <oldMethod>dereferenceURIandPerformTransforms</oldMethod>
+        <newMethod>getContentsAfterTransformation</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.xml.security.signature</package>
+        <class>Reference</class>
+        <oldMethod>dereferenceURIandPerformTransforms</oldMethod>
+        <newMethod>getContentsBeforeTransformation</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Cond Expression">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <oldMethod>canonicalizeXPathNodeSet</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>outputPItoWriter</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>outputCommentToWriter</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>outputPItoWriter</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>canonicalizeSubTree</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>outputCommentToWriter</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>outputTextToWriter</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>getPositionRelativeToDocumentElement</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>outputTextToWriter</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>outputAttrToWriter</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>outputAttrToWriter</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>canonicalizeXPathNodeSet</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>getPositionRelativeToDocumentElement</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureDSA</class>
+        <oldMethod>engineInitVerify</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.xml.security</package>
+        <class>Init</class>
+        <oldMethod>init</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>IntegrityHmac</class>
+        <oldMethod>engineInitVerify</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>outputCommentToWriter</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>outputPItoWriter</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>outputTextToWriter</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>getPositionRelativeToDocumentElement</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>outputAttrToWriter</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>outputPItoWriter</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>canonicalizeSubTree</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>outputCommentToWriter</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>outputTextToWriter</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>outputAttrToWriter</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>canonicalizeXPathNodeSet</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Method">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <oldMethod>getPositionRelativeToDocumentElement</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_documentElement</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>NODE_NOT_BEFORE_OR_AFTER_DOCUMENT_ELEMENT</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_xpathNodeSet</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_includeComments</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_documentElement</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_doc</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>NODE_AFTER_DOCUMENT_ELEMENT</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>NODE_NOT_BEFORE_OR_AFTER_DOCUMENT_ELEMENT</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>NODE_AFTER_DOCUMENT_ELEMENT</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_xpathNodeSet</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_writer</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_rootNodeOfC14n</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_doc</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>NODE_BEFORE_DOCUMENT_ELEMENT</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_writer</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_includeComments</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_inclusiveNSSet</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>NODE_BEFORE_DOCUMENT_ELEMENT</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_rootNodeOfC14n</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_documentElement</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_xpathNodeSet</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_includeComments</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_doc</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>NODE_AFTER_DOCUMENT_ELEMENT</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>NODE_NOT_BEFORE_OR_AFTER_DOCUMENT_ELEMENT</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_writer</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_inclusiveNSSet</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>NODE_BEFORE_DOCUMENT_ELEMENT</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_rootNodeOfC14n</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>NODE_NOT_BEFORE_OR_AFTER_DOCUMENT_ELEMENT</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_documentElement</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>NODE_AFTER_DOCUMENT_ELEMENT</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_xpathNodeSet</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_rootNodeOfC14n</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_doc</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>NODE_BEFORE_DOCUMENT_ELEMENT</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_writer</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <field>_includeComments</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Superclass">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Superclass">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <secondClass>CanonicalizerBase</secondClass>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.xml.security.utils</package>
+        <class>XMLUtils</class>
+        <oldMethod>circumventBug2650recurse</oldMethod>
+        <field>value</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithm</class>
+        <oldMethod>initSign</oldMethod>
+        <parameter>AlgorithmParameterSpec:algorithmParameterSpec</parameter>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithm</class>
+        <oldMethod>initSign</oldMethod>
+        <parameter>Key:signingKey</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithmSpi</class>
+        <oldMethod>engineInitSign</oldMethod>
+        <parameter>SecureRandom:secureRandom</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithmSpi</class>
+        <oldMethod>engineInitSign</oldMethod>
+        <parameter>Key:signingKey</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.signature</package>
+        <class>XMLSignature</class>
+        <oldMethod>XMLSignature&lt;init&gt;</oldMethod>
+        <parameter>int:HMACOutputLength</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.signature</package>
+        <class>XMLSignature</class>
+        <oldMethod>XMLSignature&lt;init&gt;</oldMethod>
+        <parameter>String:SignatureMethodURI</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithmSpi</class>
+        <oldMethod>engineInitSign</oldMethod>
+        <parameter>AlgorithmParameterSpec:algorithmParameterSpec</parameter>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureDSA</class>
+        <oldMethod>engineInitVerify</oldMethod>
+        <parameter>Key:publicKey</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureDSA</class>
+        <oldMethod>engineInitSign</oldMethod>
+        <parameter>SecureRandom:secureRandom</parameter>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureDSA</class>
+        <oldMethod>engineInitSign</oldMethod>
+        <parameter>Key:privateKey</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.signature</package>
+        <class>XMLSignature</class>
+        <oldMethod>XMLSignature&lt;init&gt;</oldMethod>
+        <parameter>String:CanonicalizationMethodURI</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithm</class>
+        <oldMethod>initSign</oldMethod>
+        <parameter>SecureRandom:secureRandom</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureBaseRSA</class>
+        <oldMethod>engineInitSign</oldMethod>
+        <parameter>Key:privateKey</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>IntegrityHmac</class>
+        <oldMethod>engineInitVerify</oldMethod>
+        <parameter>Key:secretKey</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureBaseRSA</class>
+        <oldMethod>engineInitSign</oldMethod>
+        <parameter>SecureRandom:secureRandom</parameter>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureBaseRSA</class>
+        <oldMethod>engineInitSign</oldMethod>
+        <parameter>AlgorithmParameterSpec:algorithmParameterSpec</parameter>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureBaseRSA</class>
+        <oldMethod>engineInitSign</oldMethod>
+        <parameter>Key:signingKey</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>IntegrityHmac</class>
+        <oldMethod>engineInitSign</oldMethod>
+        <parameter>SecureRandom:secureRandom</parameter>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>IntegrityHmac</class>
+        <oldMethod>engineInitSign</oldMethod>
+        <parameter>Key:secretKey</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithm</class>
+        <oldMethod>initVerify</oldMethod>
+        <parameter>Key:verificationKey</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithmSpi</class>
+        <oldMethod>engineInitVerify</oldMethod>
+        <parameter>Key:verificationKey</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureBaseRSA</class>
+        <oldMethod>engineInitVerify</oldMethod>
+        <parameter>Key:publicKey</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.signature</package>
+        <class>XMLSignature</class>
+        <oldMethod>sign</oldMethod>
+        <parameter>Key:signingKey</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.signature</package>
+        <class>SignedInfo</class>
+        <oldMethod>SignedInfo&lt;init&gt;</oldMethod>
+        <parameter>int:HMACOutputLength</parameter>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureDSA</class>
+        <oldMethod>engineInitSign</oldMethod>
+        <parameter>AlgorithmParameterSpec:algorithmParameterSpec</parameter>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureDSA</class>
+        <oldMethod>engineInitSign</oldMethod>
+        <parameter>Key:signingKey</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithm</class>
+        <parameter>SecureRandom:secureRandom</parameter>
+        <oldMethod>initSign</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithm</class>
+        <parameter>PrivateKey:privateKey</parameter>
+        <oldMethod>initSign</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithm</class>
+        <parameter>Key:secretKey</parameter>
+        <oldMethod>initSign</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithmSpi</class>
+        <parameter>AlgorithmParameterSpec:algorithmParameterSpec</parameter>
+        <oldMethod>engineInitSign</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithmSpi</class>
+        <parameter>Key:secretKey</parameter>
+        <oldMethod>engineInitSign</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithmSpi</class>
+        <parameter>PrivateKey:privateKey</parameter>
+        <oldMethod>engineInitSign</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.signature</package>
+        <class>XMLSignature</class>
+        <parameter>String:signatureAlgorithmURI</parameter>
+        <oldMethod>XMLSignature&lt;init&gt;</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithmSpi</class>
+        <parameter>SecureRandom:secureRandom</parameter>
+        <oldMethod>engineInitSign</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureDSA</class>
+        <parameter>Key:secretkey</parameter>
+        <oldMethod>engineInitVerify</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureDSA</class>
+        <parameter>PublicKey:publickey</parameter>
+        <oldMethod>engineInitVerify</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureDSA</class>
+        <parameter>AlgorithmParameterSpec:algorithmParameterSpec</parameter>
+        <oldMethod>engineInitSign</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureDSA</class>
+        <parameter>Key:secretKey</parameter>
+        <oldMethod>engineInitSign</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureDSA</class>
+        <parameter>PrivateKey:privateKey</parameter>
+        <oldMethod>engineInitSign</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithm</class>
+        <parameter>AlgorithmParameterSpec:algorithmParameterSpec</parameter>
+        <oldMethod>initSign</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <parameter>EC14nCtx:ctx</parameter>
+        <oldMethod>canonicalizeXPathNodeSet</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <parameter>boolean:parentIsVisible</parameter>
+        <oldMethod>canonicalizeXPathNodeSet</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureBaseRSA</class>
+        <parameter>SecureRandom:secureRandom</parameter>
+        <oldMethod>engineInitSign</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureBaseRSA</class>
+        <parameter>PrivateKey:privateKey</parameter>
+        <oldMethod>engineInitSign</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureBaseRSA</class>
+        <parameter>AlgorithmParameterSpec:algorithmParameterSpec</parameter>
+        <oldMethod>engineInitSign</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureBaseRSA</class>
+        <parameter>Key:secretKey</parameter>
+        <oldMethod>engineInitSign</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>IntegrityHmac</class>
+        <parameter>PublicKey:publicKey</parameter>
+        <oldMethod>engineInitVerify</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>IntegrityHmac</class>
+        <parameter>Key:publickey</parameter>
+        <oldMethod>engineInitVerify</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureDSA</class>
+        <parameter>SecureRandom:secureRandom</parameter>
+        <oldMethod>engineInitSign</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>IntegrityHmac</class>
+        <parameter>PrivateKey:privateKey</parameter>
+        <oldMethod>engineInitSign</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithm</class>
+        <parameter>Key:secretkey</parameter>
+        <oldMethod>initVerify</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithm</class>
+        <parameter>PublicKey:publickey</parameter>
+        <oldMethod>initVerify</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithmSpi</class>
+        <parameter>Key:secretkey</parameter>
+        <oldMethod>engineInitVerify</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithmSpi</class>
+        <parameter>PublicKey:publickey</parameter>
+        <oldMethod>engineInitVerify</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureBaseRSA</class>
+        <parameter>Key:secretkey</parameter>
+        <oldMethod>engineInitVerify</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.algorithms.implementations</package>
+        <class>SignatureBaseRSA</class>
+        <parameter>PublicKey:publickey</parameter>
+        <oldMethod>engineInitVerify</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.signature</package>
+        <class>XMLSignature</class>
+        <parameter>SecretKey:secretKey</parameter>
+        <oldMethod>sign</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.signature</package>
+        <class>XMLSignature</class>
+        <parameter>PrivateKey:privateKey</parameter>
+        <oldMethod>sign</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.utils</package>
+        <class>ElementProxy</class>
+        <parameter>String:localname</parameter>
+        <oldMethod>guaranteeThatElementInCorrectSpace</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.xml.security.utils</package>
+        <class>ElementProxy</class>
+        <oldMethod>guaranteeThatElementInCorrectSpace</oldMethod>
+        <field>namespaceSHOULDBE</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.xml.security.utils</package>
+        <class>ElementProxy</class>
+        <oldMethod>guaranteeThatElementInCorrectSpace</oldMethod>
+        <field>localnameIS</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.xml.security.utils</package>
+        <class>ElementProxy</class>
+        <oldMethod>guaranteeThatElementInCorrectSpace</oldMethod>
+        <field>namespaceIS</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Method with Method Object">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <oldMethod>engineCanonicalizeXPathNodeSet</oldMethod>
+        <secondClass>CanonicalizerBase</secondClass>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <parameter>boolean:includeComments</parameter>
+        <oldMethod>Canonicalizer20010315&lt;init&gt;</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <parameter>boolean:includeComments</parameter>
+        <oldMethod>Canonicalizer20010315Excl&lt;init&gt;</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <parameter>Set:xpathNodeSet</parameter>
+        <oldMethod>engineCanonicalizeXPathNodeSet</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <oldMethod>getAttrs</oldMethod>
+        <field>nameAlreadyVisible</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <oldMethod>updateinscopeNamespacesAndReturnVisibleAttrs</oldMethod>
+        <field>isOrphanNode</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <oldMethod>getAttrs</oldMethod>
+        <field>visibleButNotEqual</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <oldMethod>getAttrs</oldMethod>
+        <field>utilizedOrIncluded</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <oldMethod>canonicalizeXPathNodeSet</oldMethod>
+        <field>currentNodeIsVisible</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315Excl</class>
+        <oldMethod>getAttrs</oldMethod>
+        <field>currentElementIsInNodeset</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.xml.security.c14n.implementations</package>
+        <class>Canonicalizer20010315</class>
+        <oldMethod>getAttrs</oldMethod>
+        <field>currentElementIsInNodeset</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+</Results>

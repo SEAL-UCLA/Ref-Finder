@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Results>
+    <Refactoring type="Move Method">
+        <package>org.apache.jmeter.gui.util</package>
+        <class>TextAreaTableCellEditor</class>
+        <secondClass>TextAreaTableCellEditor</secondClass>
+        <oldMethod>focusLost</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.jmeter.threads</package>
+        <class>JMeterVariables</class>
+        <oldMethod>get</oldMethod>
+        <field>val</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.jmeter.threads.gui</package>
+        <class>ThreadGroupGui</class>
+        <oldMethod>init</oldMethod>
+        <newMethod>createStartTimePanel</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.jmeter.threads.gui</package>
+        <class>ThreadGroupGui</class>
+        <oldMethod>init</oldMethod>
+        <newMethod>createEndTimePanel</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Proxy</class>
+        <oldMethod>run</oldMethod>
+        <newMethod>writeErrorToClient</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.jmeter.engine</package>
+        <class>StandardJMeterEngine</class>
+        <oldMethod>run</oldMethod>
+        <newMethod>scheduleThread</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.jmeter.threads</package>
+        <class>JMeterThread</class>
+        <oldMethod>run</oldMethod>
+        <newMethod>startScheduler</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.jmeter.threads</package>
+        <class>JMeterThread</class>
+        <oldMethod>run</oldMethod>
+        <newMethod>stopScheduler</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Class">
+        <package>org.apache.jmeter.gui.util</package>
+        <class>TextAreaTableCellEditor</class>
+        <secondClass>TextAreaTableCellEditor</secondClass>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Proxy</class>
+        <oldMethod>run</oldMethod>
+        <field>TakenFromCache</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Cache</class>
+        <oldMethod>clean</oldMethod>
+        <field>result</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Cache</class>
+        <oldMethod>MakeFreeSpace</oldMethod>
+        <field>result</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Proxy</class>
+        <oldMethod>run</oldMethod>
+        <field>isCachable</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter</package>
+        <class>JMeter</class>
+        <oldMethod>initializeProperties</oldMethod>
+        <field>JMETER_PROPERTY</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Daemon</class>
+        <oldMethod>main</oldMethod>
+        <field>MAX_DAEMON_PORT</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Daemon</class>
+        <oldMethod>main</oldMethod>
+        <field>DEFAULT_DAEMON_PORT</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter</package>
+        <class>JMeter</class>
+        <oldMethod>initializeProperties</oldMethod>
+        <field>SYSTEM_PROPERTY</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter</package>
+        <class>JMeter</class>
+        <oldMethod>start</oldMethod>
+        <field>REMOTE_OPT</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter</package>
+        <class>JMeter</class>
+        <oldMethod>initializeProperties</oldMethod>
+        <field>LOGLEVEL</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter.functions</package>
+        <class>MachineName</class>
+        <oldMethod>setParameters</oldMethod>
+        <field>PARAMETER_COUNT</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Daemon</class>
+        <oldMethod>run</oldMethod>
+        <field>ACCEPT_TIMEOUT</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Method">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Proxy</class>
+        <oldMethod>Proxy&lt;init&gt;</oldMethod>
+        <newMethod>configure</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jorphan.logging</package>
+        <class>LoggingManager</class>
+        <oldMethod>setLoggingLevels</oldMethod>
+        <parameter>Properties:appProperties</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>HttpReplyHdr</class>
+        <oldMethod>formErrorBody</oldMethod>
+        <parameter>String:description</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>HttpReplyHdr</class>
+        <oldMethod>formErrorBody</oldMethod>
+        <parameter>String:error</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jorphan.logging</package>
+        <class>LoggingManager</class>
+        <oldMethod>initializeLogging</oldMethod>
+        <parameter>Properties:properties</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter</package>
+        <class>JMeter</class>
+        <oldMethod>run</oldMethod>
+        <parameter>boolean:remoteStart</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter.gui.util</package>
+        <class>TextAreaTableCellEditor</class>
+        <oldMethod>shouldSelectCell</oldMethod>
+        <parameter>EventObject:anEvent</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>HttpReplyHdr</class>
+        <oldMethod>formError</oldMethod>
+        <parameter>String:description</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>HttpReplyHdr</class>
+        <oldMethod>formError</oldMethod>
+        <parameter>String:error</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter</package>
+        <class>JMeter</class>
+        <oldMethod>startNonGui</oldMethod>
+        <parameter>CLOption:remoteStart</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>HttpReplyHdr</class>
+        <oldMethod>formOk</oldMethod>
+        <parameter>long:contentLength</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>HttpReplyHdr</class>
+        <oldMethod>formOk</oldMethod>
+        <parameter>String:contentType</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jorphan.logging</package>
+        <class>LoggingManager</class>
+        <parameter>String:logFile</parameter>
+        <oldMethod>setLoggingLevels</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jorphan.logging</package>
+        <class>LoggingManager</class>
+        <parameter>Map:appProperties</parameter>
+        <oldMethod>setLoggingLevels</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>HttpReplyHdr</class>
+        <parameter>String:Error</parameter>
+        <oldMethod>formErrorBody</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>HttpReplyHdr</class>
+        <parameter>String:Description</parameter>
+        <oldMethod>formErrorBody</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jorphan.logging</package>
+        <class>LoggingManager</class>
+        <parameter>Map:properties</parameter>
+        <oldMethod>initializeLogging</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Proxy</class>
+        <parameter>CookieManager:cookieManager</parameter>
+        <oldMethod>Proxy&lt;init&gt;</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Proxy</class>
+        <parameter>Cache:CacheManager</parameter>
+        <oldMethod>Proxy&lt;init&gt;</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Proxy</class>
+        <parameter>Config:configObject</parameter>
+        <oldMethod>Proxy&lt;init&gt;</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter.functions</package>
+        <class>StringFromFile</class>
+        <parameter>String:fileName</parameter>
+        <oldMethod>openFile</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter.gui.util</package>
+        <class>TextAreaTableCellEditor</class>
+        <parameter>EventObject:eo</parameter>
+        <oldMethod>shouldSelectCell</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Proxy</class>
+        <parameter>CookieManager:cookieManager</parameter>
+        <oldMethod>configure</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Proxy</class>
+        <parameter>Cache:CacheManager</parameter>
+        <oldMethod>configure</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Proxy</class>
+        <parameter>Config:configObject</parameter>
+        <oldMethod>configure</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>HttpReplyHdr</class>
+        <parameter>String:Error</parameter>
+        <oldMethod>formError</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>HttpReplyHdr</class>
+        <parameter>String:Description</parameter>
+        <oldMethod>formError</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>HttpReplyHdr</class>
+        <parameter>long:ContentLength</parameter>
+        <oldMethod>formOk</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>HttpReplyHdr</class>
+        <parameter>String:ContentType</parameter>
+        <oldMethod>formOk</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Nested Cond Guard Clauses">
+        <package>org.apache.jmeter.gui.action</package>
+        <class>ExitCommand</class>
+        <oldMethod>doAction</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Nested Cond Guard Clauses">
+        <package>org.apache.jmeter.engine.util</package>
+        <class>ReplaceStringWithFunctions</class>
+        <oldMethod>transformValue</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.jmeter.gui.action</package>
+        <class>Load</class>
+        <oldMethod>doAction</oldMethod>
+        <field>msg</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.jmeter.modifiers.gui</package>
+        <class>UserParametersGui</class>
+        <oldMethod>makeParameterPanel</oldMethod>
+        <field>scroll</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Cond Expression">
+        <package>org.apache.jmeter.engine</package>
+        <class>StandardJMeterEngine</class>
+        <oldMethod>threadFinished</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Cond Expression">
+        <package>org.apache.jmeter.testelement.property</package>
+        <class>FunctionProperty</class>
+        <oldMethod>getStringValue</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Cond Expression">
+        <package>org.apache.jmeter.control</package>
+        <class>ModuleController</class>
+        <oldMethod>restoreSelected</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Cond Expression">
+        <package>org.apache.jmeter.protocol.http.sampler</package>
+        <class>HTTPSampler</class>
+        <oldMethod>getUrl</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Rename Method">
+        <package>org.apache.jmeter.engine.util</package>
+        <class>CompoundVariable</class>
+        <oldMethod>getStaticSubstitution</oldMethod>
+        <newMethod>unescape</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Rename Method">
+        <package>org.apache.jmeter.gui.util</package>
+        <class>TextAreaTableCellEditor</class>
+        <oldMethod>getColumn</oldMethod>
+        <newMethod>getTreeCellEditorComponent</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Rename Method">
+        <package>org.apache.jmeter.engine.util</package>
+        <class>CompoundVariable</class>
+        <oldMethod>hasStatics</oldMethod>
+        <newMethod>unescape</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Rename Method">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Proxy</class>
+        <oldMethod>sendAppletWebPage</oldMethod>
+        <newMethod>configure</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Rename Method">
+        <package>org.apache.jmeter.gui.util</package>
+        <class>TextAreaTableCellEditor</class>
+        <oldMethod>getRow</oldMethod>
+        <newMethod>getTreeCellEditorComponent</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Rename Method">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Proxy</class>
+        <oldMethod>sendAppletClass</oldMethod>
+        <newMethod>configure</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.jmeter</package>
+        <class>JMeter</class>
+        <oldMethod>start</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.jmeter.engine.util</package>
+        <class>CompoundVariable</class>
+        <oldMethod>execute</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.jmeter.gui.tree</package>
+        <class>JMeterTreeModel</class>
+        <oldMethod>addSubTree</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.jmeter</package>
+        <class>JMeter</class>
+        <oldMethod>startNonGui</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Data Value with Object">
+        <package>org.apache.jmeter.gui.util</package>
+        <class>TextAreaTableCellEditor</class>
+        <oldMethod>editor</oldMethod>
+        <newMethod>EditorDelegate</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Method with Method Object">
+        <package>org.apache.jmeter.gui.util</package>
+        <class>TextAreaTableCellEditor</class>
+        <oldMethod>isCellEditable</oldMethod>
+        <secondClass>TextAreaTableCellEditor</secondClass>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Method with Method Object">
+        <package>org.apache.jmeter.gui.util</package>
+        <class>TextAreaTableCellEditor</class>
+        <oldMethod>shouldSelectCell</oldMethod>
+        <secondClass>TextAreaTableCellEditor</secondClass>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Method with Method Object">
+        <package>org.apache.jmeter.gui.util</package>
+        <class>TextAreaTableCellEditor</class>
+        <oldMethod>stopCellEditing</oldMethod>
+        <secondClass>TextAreaTableCellEditor</secondClass>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Method with Method Object">
+        <package>org.apache.jmeter.gui.util</package>
+        <class>TextAreaTableCellEditor</class>
+        <oldMethod>cancelCellEditing</oldMethod>
+        <secondClass>TextAreaTableCellEditor</secondClass>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Method with Method Object">
+        <package>org.apache.jmeter.gui.util</package>
+        <class>TextAreaTableCellEditor</class>
+        <oldMethod>getTableCellEditorComponent</oldMethod>
+        <secondClass>TextAreaTableCellEditor</secondClass>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Null Object">
+        <package>org.apache.jmeter.functions</package>
+        <class>AbstractFunction</class>
+        <secondClass>Random</secondClass>
+        <check>AMBIGUOUS</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.jmeter.gui.action</package>
+        <class>Load</class>
+        <parameter>HashTree:tree</parameter>
+        <oldMethod>insertLoadedTree</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.jmeter.engine.util</package>
+        <class>CompoundVariable</class>
+        <parameter>SampleResult:previousResult</parameter>
+        <oldMethod>execute</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Daemon</class>
+        <parameter>Class:proxyClass</parameter>
+        <oldMethod>Daemon&lt;init&gt;</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.jmeter.gui.util</package>
+        <class>TextAreaTableCellEditor</class>
+        <parameter>int:row</parameter>
+        <oldMethod>getTableCellEditorComponent</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+</Results>

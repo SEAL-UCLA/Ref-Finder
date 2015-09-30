@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Results>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.tools.ant</package>
+        <class>Target</class>
+        <oldMethod>setDepends</oldMethod>
+        <field>token</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.tools.ant.taskdefs.optional.depend</package>
+        <class>Depend</class>
+        <oldMethod>execute</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Jar</class>
+        <oldMethod>initZipOutputStream</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>SQLExec</class>
+        <oldMethod>runStatements</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Ant</class>
+        <parameter>boolean:inherit</parameter>
+        <oldMethod>setInheritAll</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Zip</class>
+        <oldMethod>addZipEntries</oldMethod>
+        <parameter>String:fullpath</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Ant</class>
+        <oldMethod>setInheritAll</oldMethod>
+        <parameter>boolean:value</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Jar</class>
+        <parameter>InputStream:is</parameter>
+        <oldMethod>zipFile</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+</Results>

@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Results>
+    <Refactoring type="Extract Method">
+        <package>org.apache.xml.security.signature</package>
+        <class>Reference</class>
+        <oldMethod>verify</oldMethod>
+        <newMethod>getDigestValue</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.xml.security.utils.resolver.implementations</package>
+        <class>ResolverDirectHTTP</class>
+        <oldMethod>engineResolve</oldMethod>
+        <newMethod>getNewURI</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptedData</class>
+        <secondClass>XMLCipher#Factory</secondClass>
+        <oldMethod>getCipherData</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.encryption</package>
+        <class>Transforms</class>
+        <secondClass>XMLCipher#Factory</secondClass>
+        <oldMethod>addTransform</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptedKey</class>
+        <secondClass>XMLCipher#Factory</secondClass>
+        <oldMethod>getEncryptionMethod</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptedData</class>
+        <secondClass>XMLCipher#Factory</secondClass>
+        <oldMethod>getKeyInfo</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptedKey</class>
+        <secondClass>XMLCipher#Factory</secondClass>
+        <oldMethod>getKeyInfo</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptedKey</class>
+        <secondClass>XMLCipher#Factory</secondClass>
+        <oldMethod>setId</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptedKey</class>
+        <secondClass>XMLCipher#Factory</secondClass>
+        <oldMethod>setId</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptedKey</class>
+        <secondClass>XMLCipher#Factory</secondClass>
+        <oldMethod>setId</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.encryption</package>
+        <class>DataReference</class>
+        <secondClass>ReferenceList</secondClass>
+        <oldMethod>getURI</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptedData</class>
+        <secondClass>XMLCipher#Factory</secondClass>
+        <oldMethod>getEncryptionProperties</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptedKey</class>
+        <secondClass>XMLCipher#Factory</secondClass>
+        <oldMethod>getCipherData</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptedData</class>
+        <secondClass>XMLCipher#Factory</secondClass>
+        <oldMethod>setId</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptedData</class>
+        <secondClass>XMLCipher#Factory</secondClass>
+        <oldMethod>setId</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptedData</class>
+        <secondClass>XMLCipher#Factory</secondClass>
+        <oldMethod>setId</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptedKey</class>
+        <secondClass>XMLCipher#Factory</secondClass>
+        <oldMethod>getEncryptionProperties</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.encryption</package>
+        <class>KeyReference</class>
+        <secondClass>ReferenceList</secondClass>
+        <oldMethod>getURI</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptedData</class>
+        <secondClass>XMLCipher#Factory</secondClass>
+        <oldMethod>getEncryptionMethod</oldMethod>
+        <check>NOT_VERIFIED</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Push Down Method">
+        <package>org.apache.xml.security.encryption</package>
+        <class>Transforms</class>
+        <secondClass>XMLCipher</secondClass>
+        <oldMethod>addTransform</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Collapse Hierarchy">
+        <package>org.apache.xml.security.encryption</package>
+        <class>Transforms</class>
+        <secondClass>XMLCipher</secondClass>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptionProperty</class>
+        <parameter>String:Id</parameter>
+        <oldMethod>setId</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptionProperty</class>
+        <parameter>String:Target</parameter>
+        <oldMethod>setTarget</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptedKey</class>
+        <parameter>ReferenceList:referenceList</parameter>
+        <oldMethod>setReferenceList</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.encryption</package>
+        <class>ReferenceList</class>
+        <parameter>Element:element</parameter>
+        <oldMethod>ReferenceList&lt;init&gt;</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.encryption</package>
+        <class>ReferenceList</class>
+        <parameter>String:BaseURI</parameter>
+        <oldMethod>ReferenceList&lt;init&gt;</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.encryption</package>
+        <class>ReferenceList</class>
+        <parameter>Document:doc</parameter>
+        <oldMethod>ReferenceList&lt;init&gt;</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.utils</package>
+        <class>XMLUtils</class>
+        <parameter>org.apache.log4j.Category:cat</parameter>
+        <oldMethod>spitOutVersions</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.encryption</package>
+        <class>ReferenceList</class>
+        <parameter>DataReference:dataReference</parameter>
+        <oldMethod>add</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.encryption</package>
+        <class>ReferenceList</class>
+        <parameter>KeyReference:keyReference</parameter>
+        <oldMethod>add</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.encryption</package>
+        <class>CipherData</class>
+        <parameter>CipherValue:cipherValue</parameter>
+        <oldMethod>setCipherValue</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.xml.security.encryption</package>
+        <class>CipherData</class>
+        <parameter>CipherReference:cipherReference</parameter>
+        <oldMethod>setCipherReference</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Nested Cond Guard Clauses">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>JCEMapper</class>
+        <oldMethod>getKeyTypeFromURI</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Subclass">
+        <package>org.apache.xml.security.encryption</package>
+        <class>Transforms</class>
+        <secondClass>XMLCipher</secondClass>
+        <check>AMBIGUOUS</check>
+        <comment>Transform -&gt; interface
+the class implements transform</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptionProperty</class>
+        <oldMethod>setId</oldMethod>
+        <parameter>String:id</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptionProperty</class>
+        <oldMethod>setTarget</oldMethod>
+        <parameter>String:target</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.encryption</package>
+        <class>EncryptedKey</class>
+        <oldMethod>setReferenceList</oldMethod>
+        <parameter>ReferenceList:list</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.encryption</package>
+        <class>ReferenceList</class>
+        <oldMethod>ReferenceList&lt;init&gt;</oldMethod>
+        <parameter>int:type</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.utils</package>
+        <class>XMLUtils</class>
+        <oldMethod>spitOutVersions</oldMethod>
+        <parameter>org.apache.commons.logging.Log:log</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.encryption</package>
+        <class>ReferenceList</class>
+        <oldMethod>add</oldMethod>
+        <parameter>Reference:reference</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.encryption</package>
+        <class>CipherData</class>
+        <oldMethod>setCipherValue</oldMethod>
+        <parameter>CipherValue:value</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.xml.security.encryption</package>
+        <class>CipherData</class>
+        <oldMethod>setCipherReference</oldMethod>
+        <parameter>CipherReference:reference</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.xml.security.encryption</package>
+        <class>Transforms</class>
+        <parameter>Transform:transform</parameter>
+        <oldMethod>addTransform</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>SignatureAlgorithm</class>
+        <parameter>String:algorithmURI</parameter>
+        <oldMethod>SignatureAlgorithm&lt;init&gt;</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.xml.security.transforms</package>
+        <class>Transforms</class>
+        <parameter>Transform:transform</parameter>
+        <oldMethod>addTransform</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>JCEMapper</class>
+        <oldMethod>getKeyTypeFromURI</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.xml.security.keys.keyresolver.implementations</package>
+        <class>X509IssuerSerialResolver</class>
+        <oldMethod>engineResolveX509Certificate</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.xml.security.signature</package>
+        <class>Reference</class>
+        <oldMethod>calculateDigest</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.xml.security.keys</package>
+        <class>KeyInfo</class>
+        <oldMethod>getX509Certificate</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.xml.security.keys.keyresolver.implementations</package>
+        <class>X509SubjectNameResolver</class>
+        <oldMethod>engineResolveX509Certificate</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.xml.security.utils</package>
+        <class>JavaUtils</class>
+        <oldMethod>writeBytesToFilename</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.xml.security.keys.content</package>
+        <class>X509Data</class>
+        <oldMethod>X509Data&lt;init&gt;</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.xml.security.utils.resolver.implementations</package>
+        <class>ResolverFragment</class>
+        <oldMethod>engineResolve</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.xml.security</package>
+        <class>Init</class>
+        <oldMethod>init</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.xml.security.utils</package>
+        <class>Base64</class>
+        <oldMethod>decode</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.xml.security.c14n.helper</package>
+        <class>AttrCompare</class>
+        <oldMethod>compare</oldMethod>
+        <field>ATTR0_BEFORE_ATTR1</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.xml.security.encryption</package>
+        <class>ReferenceList</class>
+        <oldMethod>ReferenceList&lt;init&gt;</oldMethod>
+        <field>KEY_REFERENCE</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.xml.security.c14n.helper</package>
+        <class>AttrCompare</class>
+        <oldMethod>compare</oldMethod>
+        <field>ATTR1_BEFORE_ATTR0</field>
+        <check>CORRECT</check>
+        <comment>got it by luck but justifiable.</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.xml.security.encryption</package>
+        <class>ReferenceList</class>
+        <oldMethod>ReferenceList&lt;init&gt;</oldMethod>
+        <field>DATA_REFERENCE</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.xml.security.algorithms</package>
+        <class>JCEMapper</class>
+        <oldMethod>getKeyTypeFromURI</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+</Results>

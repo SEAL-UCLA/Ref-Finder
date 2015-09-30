@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Results>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.jmeter.threads</package>
+        <class>JMeterThread</class>
+        <oldMethod>run</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.jmeter.reporters</package>
+        <class>ResultCollector</class>
+        <oldMethod>trimLastLine</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>Proxy</class>
+        <parameter>ProxyControl:target</parameter>
+        <oldMethod>Proxy&lt;init&gt;</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.jmeter.protocol.http.sampler</package>
+        <class>HTTPSampler</class>
+        <parameter>Entry:e</parameter>
+        <oldMethod>sample</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.jmeter.visualizers</package>
+        <class>ViewResultsFullVisualizer</class>
+        <parameter>TreeSelectionEvent:e</parameter>
+        <oldMethod>valueChanged</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.jmeter.visualizers</package>
+        <class>StatTableModel</class>
+        <secondClass>StatVisualizer</secondClass>
+        <oldMethod>getColumnCount</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.jmeter.timers.gui</package>
+        <class>ConstantTimerGui</class>
+        <secondClass>ConstantThroughputTimerGui</secondClass>
+        <oldMethod>keyReleased</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Method">
+        <package>org.apache.jmeter.visualizers</package>
+        <class>StatTableModel</class>
+        <secondClass>StatVisualizer</secondClass>
+        <oldMethod>getColumnName</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Rename Method">
+        <package>org.apache.jmeter.visualizers</package>
+        <class>StatVisualizerModel</class>
+        <oldMethod>getURLStats</oldMethod>
+        <newMethod>getRunningSample</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Rename Method">
+        <package>org.apache.jmeter.util</package>
+        <class>JMeterUtils</class>
+        <oldMethod>reinitializeLocale</oldMethod>
+        <newMethod>setLocale</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.jmeter.assertions</package>
+        <class>ResponseAssertion</class>
+        <oldMethod>evaluateResponse</oldMethod>
+        <field>responseString</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.jmeter.protocol.http.sampler</package>
+        <class>HTTPSampler</class>
+        <oldMethod>getProtocol</oldMethod>
+        <field>protocol</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.jmeter.threads</package>
+        <class>JMeterVariables</class>
+        <oldMethod>get</oldMethod>
+        <field>val</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.jmeter.visualizers</package>
+        <class>RunningSample</class>
+        <oldMethod>getRateString</oldMethod>
+        <field>unit</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>FAILURE</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>LABEL</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>RESPONSE_MESSAGE</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>ASSERTION_RESULT_TAG_NAME</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>BINARY</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>ERROR</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>TIME</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>TIME_STAMP</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>THREAD_NAME</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>PRESERVE</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>FAILURE_MESSAGE</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.jmeter.visualizers</package>
+        <class>StatTableModel</class>
+        <secondClass>StatVisualizer</secondClass>
+        <field>columnNames</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>SAMPLE_RESULT_TAG_NAME</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>XML_SPACE</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>SUCCESSFUL</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>DATA_TYPE</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Move Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>RESPONSE_CODE</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.jmeter.gui.action</package>
+        <class>Load</class>
+        <oldMethod>updateTree</oldMethod>
+        <field>replaced</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.jmeter.save.old.xml</package>
+        <class>TagHandler</class>
+        <oldMethod>getMethodName</oldMethod>
+        <field>first</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.jmeter.gui.tree</package>
+        <class>JMeterTreeNode</class>
+        <oldMethod>setName</oldMethod>
+        <field>userObj</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.jmeter.junit</package>
+        <class>JMeterTest</class>
+        <oldMethod>getObjects</oldMethod>
+        <field>className</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.jmeter.gui.tree</package>
+        <class>JMeterTreeNode</class>
+        <oldMethod>getName</oldMethod>
+        <field>userObj</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.jmeter.timers</package>
+        <class>ConstantTimer</class>
+        <oldMethod>getDelay</oldMethod>
+        <field>delay</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.jmeter.visualizers</package>
+        <class>RunningSample</class>
+        <oldMethod>getRateString</oldMethod>
+        <newMethod>getRate</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.jmeter.protocol.http.sampler</package>
+        <class>HTTPSampler</class>
+        <oldMethod>connect</oldMethod>
+        <newMethod>setPostHeaders</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.jmeter.protocol.http.sampler</package>
+        <class>HTTPSampler</class>
+        <oldMethod>sample</oldMethod>
+        <newMethod>setPostHeaders</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.jmeter.visualizers</package>
+        <class>ViewResultsFullVisualizer</class>
+        <oldMethod>updateGui</oldMethod>
+        <newMethod>addSubResults</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.jmeter.visualizers</package>
+        <class>ViewResultsFullVisualizer</class>
+        <oldMethod>valueChanged</oldMethod>
+        <newMethod>showTextResponse</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.jmeter.threads</package>
+        <class>ListenerNotifier</class>
+        <oldMethod>run</oldMethod>
+        <newMethod>notifyListeners</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.jmeter.config.gui</package>
+        <class>ArgumentsPanel</class>
+        <oldMethod>addArgument</oldMethod>
+        <newMethod>stopTableEditing</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter.protocol.http.sampler</package>
+        <class>HTTPSampler</class>
+        <parameter>boolean:redirected</parameter>
+        <oldMethod>sample</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter.timers</package>
+        <class>ConstantTimer</class>
+        <parameter>long:delay</parameter>
+        <oldMethod>setDelay</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter.timers</package>
+        <class>Timer</class>
+        <parameter>long:delay</parameter>
+        <oldMethod>setDelay</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>FAILURE</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>LABEL</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>RESPONSE_MESSAGE</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>ASSERTION_RESULT_TAG_NAME</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>BINARY</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>ERROR</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>TIME</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>TIME_STAMP</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>THREAD_NAME</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>PRESERVE</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>FAILURE_MESSAGE</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>SAMPLE_RESULT_TAG_NAME</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>XML_SPACE</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>SUCCESSFUL</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>DATA_TYPE</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Pull Up Field">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <field>RESPONSE_CODE</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter.gui.tree</package>
+        <class>JMeterTreeNode</class>
+        <oldMethod>JMeterTreeNode&lt;init&gt;</oldMethod>
+        <parameter>JMeterTreeModel:treeModel</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter.gui.tree</package>
+        <class>JMeterTreeNode</class>
+        <oldMethod>JMeterTreeNode&lt;init&gt;</oldMethod>
+        <parameter>JMeterGUIComponent:userObj</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter.protocol.http.sampler</package>
+        <class>HTTPSampler</class>
+        <oldMethod>sample</oldMethod>
+        <parameter>int:redirects</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter.timers</package>
+        <class>ConstantTimer</class>
+        <oldMethod>setDelay</oldMethod>
+        <parameter>String:delay</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter.protocol.http.proxy</package>
+        <class>ProxyControl</class>
+        <oldMethod>deliverSampler</oldMethod>
+        <parameter>byte[]:serverResponse</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter.timers</package>
+        <class>Timer</class>
+        <oldMethod>setDelay</oldMethod>
+        <parameter>String:delay</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter.visualizers</package>
+        <class>RunningSample</class>
+        <oldMethod>RunningSample&lt;init&gt;</oldMethod>
+        <parameter>String:label</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter.visualizers</package>
+        <class>RunningSample</class>
+        <oldMethod>RunningSample&lt;init&gt;</oldMethod>
+        <parameter>int:index</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Data Value with Object">
+        <package>org.apache.jmeter.visualizers</package>
+        <class>StatVisualizer</class>
+        <oldMethod>myStatTableModel</oldMethod>
+        <newMethod>StatTableModel</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Superclass">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <secondClass>SaveServiceConstants</secondClass>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.jmeter.functions</package>
+        <class>RegexFunction</class>
+        <oldMethod>execute</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.jmeter.protocol.http.sampler</package>
+        <class>HTTPSamplerFull</class>
+        <oldMethod>parseNodes</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Cond Expression">
+        <package>org.apache.jmeter.functions</package>
+        <class>UnknownFunction</class>
+        <oldMethod>execute</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Assertion">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <oldMethod>getConfiguration</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Method with Method Object">
+        <package>org.apache.jmeter.visualizers</package>
+        <class>StatVisualizer</class>
+        <oldMethod>init</oldMethod>
+        <secondClass>StatVisualizer</secondClass>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <oldMethod>getConfiguration</oldMethod>
+        <field>SAVE_FIRST_ASSERTION</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <oldMethod>getConfiguration</oldMethod>
+        <field>SAVE_ALL_ASSERTIONS</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter.visualizers</package>
+        <class>ViewResultsFullVisualizer</class>
+        <oldMethod>valueChanged</oldMethod>
+        <field>HTML_BUTTON_LABEL</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter.protocol.http.sampler</package>
+        <class>HTTPSampler</class>
+        <oldMethod>getProtocol</oldMethod>
+        <field>DEFAULT_PROTOCOL</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter.util</package>
+        <class>JMeterUtils</class>
+        <oldMethod>getJMeterVersion</oldMethod>
+        <field>VERSION</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter.protocol.http.sampler</package>
+        <class>HTTPSampler</class>
+        <oldMethod>sample</oldMethod>
+        <field>MAX_REDIRECTS</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+</Results>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Results>
+    <Refactoring type="Replace Method with Method Object">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Zip</class>
+        <oldMethod>execute</oldMethod>
+        <secondClass>Zip</secondClass>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Method with Method Object">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Zip</class>
+        <oldMethod>getResourcesToAdd</oldMethod>
+        <secondClass>Zip</secondClass>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Ear</class>
+        <oldMethod>zipFile</oldMethod>
+        <field>fu</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>War</class>
+        <oldMethod>zipFile</oldMethod>
+        <field>fu</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+</Results>

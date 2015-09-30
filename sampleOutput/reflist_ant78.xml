@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Results>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.tools.ant.taskdefs.compilers</package>
+        <class>DefaultCompilerAdapter</class>
+        <oldMethod>executeExternalCompile</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.tools.ant.taskdefs.optional</package>
+        <class>Cab</class>
+        <oldMethod>execute</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.tools.ant.taskdefs.optional</package>
+        <class>ReplaceRegExp</class>
+        <oldMethod>doReplace</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.tools.ant.types</package>
+        <class>ZipFileSet</class>
+        <oldMethod>getRef</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Method with Method Object">
+        <package>org.apache.tools.ant.launch</package>
+        <class>Launcher</class>
+        <oldMethod>run</oldMethod>
+        <secondClass>LaunchException</secondClass>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.tools.ant.taskdefs.optional.extension</package>
+        <class>ExtensionUtil</class>
+        <oldMethod>getManifest</oldMethod>
+        <field>m</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.tools.ant.types</package>
+        <class>ZipFileSet</class>
+        <oldMethod>getRef</oldMethod>
+        <field>zfs</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>ImportTask</class>
+        <oldMethod>execute</oldMethod>
+        <field>message</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.tools.ant.taskdefs.optional.metamata</package>
+        <class>AbstractMetamataTask</class>
+        <oldMethod>createTmpFile</oldMethod>
+        <field>tmpFile</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Cond Expression">
+        <package>org.apache.tools.ant.types</package>
+        <class>ZipFileSet</class>
+        <oldMethod>setPrefix</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Cond Expression">
+        <package>org.apache.tools.ant.taskdefs.optional.ssh</package>
+        <class>SSHBase</class>
+        <oldMethod>openSession</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Cond Expression">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Input</class>
+        <oldMethod>execute</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Cond Expression">
+        <package>org.apache.tools.ant.types</package>
+        <class>ZipFileSet</class>
+        <oldMethod>setFullpath</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs.optional.ejb</package>
+        <class>WebsphereDeploymentTool</class>
+        <oldMethod>setNoinform</oldMethod>
+        <parameter>boolean:noinform</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.tools.ant.taskdefs.optional.ejb</package>
+        <class>WebsphereDeploymentTool</class>
+        <parameter>boolean:noinfom</parameter>
+        <oldMethod>setNoinform</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+</Results>

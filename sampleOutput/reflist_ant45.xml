@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Results>
+    <Refactoring type="Rename Method">
+        <package>org.apache.tools.ant.taskdefs.condition</package>
+        <class>Http</class>
+        <oldMethod>SetErrorsBeginAt</oldMethod>
+        <newMethod>setErrorsBeginAt</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Rename Method">
+        <package>org.apache.tools.ant.types</package>
+        <class>FilterSet</class>
+        <oldMethod>addFilterSet</oldMethod>
+        <newMethod>addConfiguredFilterSet</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Rename Method">
+        <package>org.apache.tools.ant.taskdefs.optional.jsp</package>
+        <class>JspC</class>
+        <oldMethod>setSrcdir</oldMethod>
+        <newMethod>setSrcDir</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.tools.ant.taskdefs.optional</package>
+        <class>TraXLiaison</class>
+        <oldMethod>transform</oldMethod>
+        <newMethod>getSource</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Zip</class>
+        <oldMethod>execute</oldMethod>
+        <newMethod>isEmpty</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Tstamp</class>
+        <oldMethod>execute</oldMethod>
+        <newMethod>setProperty</newMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Nested Cond Guard Clauses">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Jar</class>
+        <oldMethod>createManifest</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Nested Cond Guard Clauses">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Javadoc</class>
+        <oldMethod>execute</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Nested Cond Guard Clauses">
+        <package>org.apache.tools.ant.taskdefs.optional.junit</package>
+        <class>JUnitTask</class>
+        <oldMethod>execute</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.tools.ant.taskdefs.optional.ejb</package>
+        <class>DescriptorHandler</class>
+        <oldMethod>endElement</oldMethod>
+        <field>EJB_LOCAL_REF</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.tools.ant.taskdefs.optional.ejb</package>
+        <class>DescriptorHandler</class>
+        <oldMethod>startElement</oldMethod>
+        <field>EJB_LOCAL_REF</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Jar</class>
+        <oldMethod>writeManifest</oldMethod>
+        <field>MANIFEST_NAME</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Jar</class>
+        <oldMethod>zipFile</oldMethod>
+        <field>MANIFEST_NAME</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Expand</class>
+        <oldMethod>extractFile</oldMethod>
+        <field>isIncl</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Expand</class>
+        <oldMethod>extractFile</oldMethod>
+        <field>isExcl</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.tools.ant.util</package>
+        <class>SourceFileScanner</class>
+        <oldMethod>restrict</oldMethod>
+        <field>added</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Zip</class>
+        <parameter>File:file</parameter>
+        <oldMethod>zipFile</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Jar</class>
+        <parameter>File:file</parameter>
+        <oldMethod>zipFile</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>SignJar</class>
+        <parameter>File:keystore</parameter>
+        <oldMethod>setKeystore</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>SignJar</class>
+        <parameter>File:sigfile</parameter>
+        <oldMethod>setSigfile</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.tools.ant.taskdefs.optional.jsp</package>
+        <class>JspC</class>
+        <parameter>String:iepluginid_</parameter>
+        <oldMethod>setIeplugin</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Zip</class>
+        <parameter>long:lastModified</parameter>
+        <oldMethod>zipFile</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Zip</class>
+        <parameter>InputStream:in</parameter>
+        <oldMethod>zipFile</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Tstamp#CustomFormat#Tstamp</class>
+        <parameter>String:prefix</parameter>
+        <oldMethod>CustomFormat&lt;init&gt;</oldMethod>
+        <check>AMBIGUOUS</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Available</class>
+        <parameter>File:f</parameter>
+        <oldMethod>setFile</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.tools.ant.taskdefs.optional.jsp</package>
+        <class>JspC</class>
+        <parameter>boolean:mapped_</parameter>
+        <oldMethod>setMapped</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Ear</class>
+        <oldMethod>zipFile</oldMethod>
+        <parameter>int:mode</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>War</class>
+        <oldMethod>zipFile</oldMethod>
+        <parameter>int:mode</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Zip</class>
+        <oldMethod>zipFile</oldMethod>
+        <parameter>int:mode</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Zip</class>
+        <oldMethod>zipFile</oldMethod>
+        <parameter>long:lastModified</parameter>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Zip</class>
+        <oldMethod>zipFile</oldMethod>
+        <parameter>InputStream:in</parameter>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Zip</class>
+        <oldMethod>zipFile</oldMethod>
+        <parameter>File:fromArchive</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant</package>
+        <class>IntrospectionHelper</class>
+        <oldMethod>createAttributeSetter</oldMethod>
+        <parameter>String:attrName</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Replace</class>
+        <oldMethod>stringReplace</oldMethod>
+        <parameter>boolean:countReplaces</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Jar</class>
+        <oldMethod>zipFile</oldMethod>
+        <parameter>InputStream:is</parameter>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Jar</class>
+        <oldMethod>zipFile</oldMethod>
+        <parameter>long:lastModified</parameter>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Jar</class>
+        <oldMethod>zipFile</oldMethod>
+        <parameter>int:mode</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Jar</class>
+        <oldMethod>zipFile</oldMethod>
+        <parameter>File:fromArchive</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>SignJar</class>
+        <oldMethod>setKeystore</oldMethod>
+        <parameter>String:keystore</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>SignJar</class>
+        <oldMethod>setSigfile</oldMethod>
+        <parameter>String:sigfile</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs.optional.jsp</package>
+        <class>JspC</class>
+        <oldMethod>setIeplugin</oldMethod>
+        <parameter>String:iepluginid</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs.optional.jsp.compilers</package>
+        <class>JspCompilerAdapterFactory</class>
+        <oldMethod>resolveClassName</oldMethod>
+        <parameter>AntClassLoader:classloader</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Zip</class>
+        <oldMethod>addParentDirs</oldMethod>
+        <parameter>int:dirMode</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Zip</class>
+        <oldMethod>zipFile</oldMethod>
+        <parameter>File:file</parameter>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Available</class>
+        <oldMethod>setFile</oldMethod>
+        <parameter>File:file</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs.optional.jsp</package>
+        <class>JspC</class>
+        <oldMethod>setMapped</oldMethod>
+        <parameter>boolean:mapped</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Zip</class>
+        <oldMethod>zipDir</oldMethod>
+        <parameter>int:mode</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.tools.ant.taskdefs.optional</package>
+        <class>ReplaceRegExp</class>
+        <parameter>File:f</parameter>
+        <oldMethod>doReplace</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Assignment to Parameters">
+        <package>org.apache.tools.ant.taskdefs.optional</package>
+        <class>ReplaceRegExp</class>
+        <parameter>RegularExpression:r</parameter>
+        <oldMethod>doReplace</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Cond Expression">
+        <package>org.apache.tools.ant.types</package>
+        <class>Commandline</class>
+        <oldMethod>translateCommandline</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Cond Expression">
+        <package>org.apache.tools.ant.taskdefs.optional.ejb</package>
+        <class>DescriptorHandler</class>
+        <oldMethod>startElement</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Cond Expression">
+        <package>org.apache.tools.ant.taskdefs.optional.ejb</package>
+        <class>DescriptorHandler</class>
+        <oldMethod>endElement</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Cond Expression">
+        <package>org.apache.tools.ant</package>
+        <class>Project</class>
+        <oldMethod>addReference</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Cond Expression">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>XSLTProcess</class>
+        <oldMethod>configureLiaison</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Cond Expression">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Execute</class>
+        <oldMethod>toString</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.tools.ant</package>
+        <class>DirectoryScanner</class>
+        <oldMethod>getDeselectedFiles</oldMethod>
+        <field>count</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Expand</class>
+        <oldMethod>extractFile</oldMethod>
+        <field>isIncl</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Expand</class>
+        <oldMethod>extractFile</oldMethod>
+        <field>isExcl</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.tools.ant.filters</package>
+        <class>LineContains</class>
+        <oldMethod>read</oldMethod>
+        <field>goodLine</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.tools.ant</package>
+        <class>DirectoryScanner</class>
+        <oldMethod>getIncludedFiles</oldMethod>
+        <field>count</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.tools.ant</package>
+        <class>DirectoryScanner</class>
+        <oldMethod>getExcludedDirectories</oldMethod>
+        <field>count</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.tools.ant</package>
+        <class>DirectoryScanner</class>
+        <oldMethod>getExcludedFiles</oldMethod>
+        <field>count</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.tools.ant</package>
+        <class>DirectoryScanner</class>
+        <oldMethod>getNotIncludedFiles</oldMethod>
+        <field>count</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Javadoc</class>
+        <oldMethod>execute</oldMethod>
+        <field>testHref</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.tools.ant</package>
+        <class>DirectoryScanner</class>
+        <oldMethod>getNotIncludedDirectories</oldMethod>
+        <field>count</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.tools.ant</package>
+        <class>DirectoryScanner</class>
+        <oldMethod>getIncludedDirectories</oldMethod>
+        <field>count</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Inline Temp">
+        <package>org.apache.tools.ant</package>
+        <class>DirectoryScanner</class>
+        <oldMethod>getDeselectedDirectories</oldMethod>
+        <field>count</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.tools.ant.taskdefs.compilers</package>
+        <class>DefaultCompilerAdapter</class>
+        <oldMethod>getCompileClasspath</oldMethod>
+        <field>cp</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.tools.ant.taskdefs.optional</package>
+        <class>ReplaceRegExp</class>
+        <oldMethod>doReplace</oldMethod>
+        <field>hasCR</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Input</class>
+        <oldMethod>execute</oldMethod>
+        <field>value</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Basename</class>
+        <oldMethod>execute</oldMethod>
+        <field>value</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Available</class>
+        <oldMethod>execute</oldMethod>
+        <field>oldvalue</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.tools.ant.taskdefs</package>
+        <class>Rmic</class>
+        <oldMethod>moveGeneratedFile</oldMethod>
+        <field>generatedFile</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.tools.ant.taskdefs.rmic</package>
+        <class>DefaultRmicAdapter</class>
+        <oldMethod>getCompileClasspath</oldMethod>
+        <field>cp</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.tools.ant.taskdefs.optional</package>
+        <class>TraXLiaison</class>
+        <oldMethod>logError</oldMethod>
+        <field>locator</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.tools.ant.types</package>
+        <class>XMLCatalog</class>
+        <oldMethod>classpathLookup</oldMethod>
+        <field>cp</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.tools.ant.filters</package>
+        <class>ReplaceTokens</class>
+        <oldMethod>read</oldMethod>
+        <field>newData</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Method with Method Object">
+        <package>org.apache.tools.ant.taskdefs.optional.perforce</package>
+        <class>P4HandlerAdapter</class>
+        <oldMethod>start</oldMethod>
+        <secondClass>P4HandlerAdapter</secondClass>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+</Results>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Results>
+    <Refactoring type="Replace Exception with Test">
+        <package>org.apache.jmeter.protocol.http.sampler</package>
+        <class>HTTPSampler</class>
+        <oldMethod>readResponse</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.jmeter.assertions</package>
+        <class>ResponseAssertion</class>
+        <oldMethod>evaluateResponse</oldMethod>
+        <newMethod>setResultForNull</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.jmeter.assertions</package>
+        <class>SizeAssertion</class>
+        <oldMethod>getResult</oldMethod>
+        <newMethod>setResultForNull</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Extract Method">
+        <package>org.apache.jmeter.assertions</package>
+        <class>XMLAssertion</class>
+        <oldMethod>getResult</oldMethod>
+        <newMethod>setResultForNull</newMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter.protocol.http.control.gui</package>
+        <class>WebServiceSamplerGui</class>
+        <parameter>TestElement:element</parameter>
+        <oldMethod>modifyTestElement</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Parameter">
+        <package>org.apache.jmeter</package>
+        <class>NewDriver</class>
+        <parameter>String[]:args</parameter>
+        <oldMethod>NewDriver&lt;init&gt;</oldMethod>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter.protocol.http.sampler</package>
+        <class>WebServiceSampler</class>
+        <oldMethod>createDocument</oldMethod>
+        <field>MEMORY_CACHE</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter.protocol.http.gui</package>
+        <class>CookiePanel</class>
+        <oldMethod>CookiePanel&lt;init&gt;</oldMethod>
+        <field>clearEachIterationLabel</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter.protocol.http.control</package>
+        <class>CookieManager</class>
+        <oldMethod>CookieManager&lt;init&gt;</oldMethod>
+        <field>CLEAR</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter.config.gui</package>
+        <class>ArgumentsPanel</class>
+        <oldMethod>initializeTableModel</oldMethod>
+        <field>COLUMN_NAMES</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Magic Number with Constant">
+        <package>org.apache.jmeter.protocol.http.sampler</package>
+        <class>WebServiceSampler</class>
+        <oldMethod>sampleWithApache</oldMethod>
+        <field>READ_RESPONSE</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <oldMethod>createCollection</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <oldMethod>createTestElement</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <oldMethod>createMap</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.jmeter</package>
+        <class>JMeter</class>
+        <oldMethod>start</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Consolidate Duplicate Cond Fragments">
+        <package>org.apache.jmeter.protocol.http.control</package>
+        <class>CookieManager</class>
+        <oldMethod>addCookieFromHeader</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <oldMethod>loadSubTree</oldMethod>
+        <field>message</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.jmeter.visualizers</package>
+        <class>GraphModel</class>
+        <oldMethod>addNewSample</oldMethod>
+        <field>start</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.jmeter.protocol.http.sampler</package>
+        <class>HTTPSampler</class>
+        <oldMethod>setupConnection</oldMethod>
+        <field>cookies</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.jmeter.engine</package>
+        <class>StandardJMeterEngine</class>
+        <oldMethod>run</oldMethod>
+        <field>groupCount</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <oldMethod>loadSubTree</oldMethod>
+        <field>message</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Introduce Explaining Variable">
+        <package>org.apache.jmeter.threads</package>
+        <class>TestCompiler</class>
+        <oldMethod>configureWithConfigElements</oldMethod>
+        <field>config</field>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter.protocol.http.sampler</package>
+        <class>HTTPSampler</class>
+        <oldMethod>setupConnection</oldMethod>
+        <parameter>SampleResult:res</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Add Parameter">
+        <package>org.apache.jmeter.protocol.http.control.gui</package>
+        <class>WebServiceSamplerGui</class>
+        <oldMethod>modifyTestElement</oldMethod>
+        <parameter>TestElement:s</parameter>
+        <check>CORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Remove Control Flag">
+        <package>org.apache.jmeter.engine.util</package>
+        <class>CompoundVariable</class>
+        <oldMethod>parseParams</oldMethod>
+        <field>foundOpen</field>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Nested Cond Guard Clauses">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <oldMethod>createMap</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+    <Refactoring type="Replace Nested Cond Guard Clauses">
+        <package>org.apache.jmeter.save</package>
+        <class>SaveService</class>
+        <oldMethod>createTestElement</oldMethod>
+        <check>INCORRECT</check>
+        <comment>n/a</comment>
+    </Refactoring>
+</Results>
