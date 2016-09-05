@@ -1,6 +1,7 @@
 /* 
 *    Ref-Finder
 *    Copyright (C) <2015>  <PLSE_UCLA>
+*    Copyright (C) <2016> University of Szeged
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -18,9 +19,12 @@
 package lsclipse.views;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -30,13 +34,31 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Vector;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import lsclipse.LSDiffRunner;
+import lsclipse.LsclipseException;
 import lsclipse.TopologicalSort;
+import lsclipse.batch.BatchConfig;
+import lsclipse.batch.ConfigFileReader;
+import lsclipse.batch.GitProjectUpdater;
+import lsclipse.batch.QuamocoRunner;
+import lsclipse.batch.SvnProjectUpdater;
+import lsclipse.dialogs.BatchDialog;
+import lsclipse.dialogs.BatchDialog.VersionControlSystem;
 import lsclipse.dialogs.ProgressBarDialog;
+import lsclipse.dialogs.SelectModeDialog;
+import lsclipse.dialogs.SelectModeDialog.Mode;
 import lsclipse.dialogs.SelectProjectDialog;
+import lsclipse.rules.export.ExportController;
+import lsclipse.rules.export.RefactoringExporter;
 import metapackage.MetaInfo;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.CompareUI;
@@ -61,6 +83,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
@@ -82,7 +105,7 @@ import org.eclipse.ui.part.ViewPart;
  */
 
 public class TreeView extends ViewPart {
-
+	
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
@@ -247,6 +270,72 @@ public class TreeView extends ViewPart {
 		}
 	}
 
+	private void createDetailedList(int index) {
+		
+		// clear list
+		list.removeAll();
+		listDiffs.clear();
+		
+		Node node = nodeList.get(index);
+
+		list.add(node.getName());
+		listDiffs.add(null);
+		list.add(node.params);
+		String[] params = node.params.substring(2, node.params.length() - 2).split("\",\"");
+		
+		listDiffs.add(null);
+		// Seperator
+		list.add(" ");
+		listDiffs.add(null);
+
+		int numtabs = 0;
+
+		for (String statement : node.getDependents()) {
+			StringBuilder output = new StringBuilder();
+			if (statement.equals(")"))
+				--numtabs;
+
+			for (int i = 0; i < numtabs; ++i) {
+				output.append("\t");
+			}
+			if (statement.equals("(")) {
+				output.append("(");
+				++numtabs;
+			} else {
+				output.append(statement);
+			}
+			list.add(output.toString());
+			listDiffs.add(null);
+		}
+
+		if (!node.oldFacts.isEmpty()) {
+			list.add("");
+			listDiffs.add(null);
+			list.add("Compare:");
+			listDiffs.add(null);
+			for (String display : node.oldFacts.keySet()) {
+				IJavaElement filenameBase = node.oldFacts.get(display);
+				IJavaElement filenameMod = node.newFacts.get(display);
+				list.add(display);
+				EditorInput ei = new EditorInput(
+						new CompareConfiguration());
+				try {
+					ei.setBase(((IFile) filenameBase
+							.getCorrespondingResource()).getContents());
+				} catch (Exception ex) {
+					ei.setBase("");
+				}
+				try {
+					ei.setMod(((IFile) filenameMod
+							.getCorrespondingResource()).getContents());
+				} catch (Exception ex) {
+					ei.setMod("");
+				}
+				listDiffs.add(ei);				
+			}
+		}
+	}
+	
 	private void makeActions() {
 		// Double click a Node to open the associated file.
 		doubleClickListAction = new Action() {
@@ -266,114 +355,36 @@ public class TreeView extends ViewPart {
 		doubleClickTreeAction = new Action() {
 			public void run() {
 
-				// clear list
-				list.removeAll();
-				listDiffs.clear();
-
 				// Print out the list of code elements associated with this
 				// refactoring
 				int index = viewer.getSelectionIndex();
 				if (index < 0 || index >= nodeList.size())
 					return;
 
-				Node node = nodeList.get(index);
-
-				list.add(node.getName());
-				listDiffs.add(null);
-				list.add(node.params);
-				listDiffs.add(null);
-				// Seperator
-				list.add(" ");
-				listDiffs.add(null);
-
-				int numtabs = 0;
-
-				for (String statement : node.getDependents()) {
-					StringBuilder output = new StringBuilder();
-					if (statement.equals(")"))
-						--numtabs;
-
-					for (int i = 0; i < numtabs; ++i) {
-						output.append("\t");
-					}
-					if (statement.equals("(")) {
-						output.append("(");
-						++numtabs;
-					} else {
-						output.append(statement);
-					}
-					list.add(output.toString());
-					listDiffs.add(null);
-				}
-
-				if (!node.oldFacts.isEmpty()) {
-					list.add("");
-					listDiffs.add(null);
-					list.add("Compare:");
-					listDiffs.add(null);
-					for (String display : node.oldFacts.keySet()) {
-						IJavaElement filenameBase = node.oldFacts.get(display);
-						IJavaElement filenameMod = node.newFacts.get(display);
-						list.add(display);
-						EditorInput ei = new EditorInput(
-								new CompareConfiguration());
-						try {
-							ei.setBase(((IFile) filenameBase
-									.getCorrespondingResource()).getContents());
-						} catch (Exception ex) {
-							ei.setBase("");
-						}
-						try {
-							ei.setMod(((IFile) filenameMod
-									.getCorrespondingResource()).getContents());
-						} catch (Exception ex) {
-							ei.setMod("");
-						}
-						listDiffs.add(ei);
-					}
-				}
-
+				createDetailedList(index);
 			}
 		};
 		// Select Action
 		selectAction = new Action("Select version...") {
 			public void run() {
-				// collect information from seldiag
-				final SelectProjectDialog seldiag = new SelectProjectDialog(
-						parent.getShell());
-				final int returncode = seldiag.open();
+				final SelectModeDialog modeDiag = new SelectModeDialog(parent.getShell());
+				int returncode = modeDiag.open();
 				if (returncode > 0)
 					return;
-
-				long start = System.currentTimeMillis();
-
-				// remember base project (and new project)
-				baseproj = ResourcesPlugin.getWorkspace().getRoot()
-						.getProject(seldiag.getProj1());
-				newproj = ResourcesPlugin.getWorkspace().getRoot()
-						.getProject(seldiag.getProj2());
-
-				// open new log box
-				final ProgressBarDialog pbdiag = new ProgressBarDialog(
-						parent.getShell());
-				pbdiag.open();
-				pbdiag.setStep(0);
-
-				// do lsdiff (ish)
-				if ((new LSDiffRunner()).doFactExtractionForRefFinder(
-						seldiag.getProj1(), seldiag.getProj2(), pbdiag)) {
-					refreshTree();
-				} else {
-					System.out
-							.println("Something went wrong - fact extraction failed");
+				
+				if (modeDiag.getMode() == Mode.TWO_VER) {
+					twoVersionMode();
+				} else if (modeDiag.getMode() == Mode.BATCH) {
+					try {
+						batchMode();
+					} catch (SecurityException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
-				pbdiag.setStep(5);
-				pbdiag.setMessage("Cleaning up... ");
-				pbdiag.appendLog("OK\n");
-
-				pbdiag.dispose();
-				long end = System.currentTimeMillis();
-				System.out.println("Total time: " + (end - start));
 			}
 		};
 		selectAction.setImageDescriptor(PlatformUI.getWorkbench()
@@ -381,6 +392,177 @@ public class TreeView extends ViewPart {
 				.getImageDescriptor(ISharedImages.IMG_OBJ_FOLDER));
 	}
 
+	
+	
+	private void twoVersionMode() {
+		// collect information from seldiag
+		final SelectProjectDialog seldiag = new SelectProjectDialog(
+				parent.getShell());
+		final int returncode = seldiag.open();
+		if (returncode > 0)
+			return;
+
+		long start = System.currentTimeMillis();
+
+		
+		// remember base project (and new project)
+		baseproj = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(seldiag.getProj1());
+		newproj = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(seldiag.getProj2());
+
+		// open new log box
+		final ProgressBarDialog pbdiag = new ProgressBarDialog(
+				parent.getShell());
+		pbdiag.open();
+		pbdiag.setStep(0);
+
+		try {
+			pbdiag.setMessage("Cleaning up... ");
+			cleanUp();
+		} catch (IOException e) {
+			System.err.println("WARNING: Could not delete LSclipse facts! Result may incorrect.");
+			e.printStackTrace();
+		}
+		
+		// do lsdiff (ish)
+		if ((new LSDiffRunner()).doFactExtractionForRefFinder(seldiag.getProj1(), seldiag.getProj2(), pbdiag)) {
+			refreshTree();
+			//export(exportDir); we don't do the export here
+		} else {
+			System.out.println("Something went wrong - fact extraction failed");
+		}
+		pbdiag.setStep(5);
+		pbdiag.appendLog("OK\n");
+
+		pbdiag.dispose();
+		long end = System.currentTimeMillis();
+		System.out.println("Total time: " + (end - start));
+	}
+	
+	private void batchMode() throws SecurityException, IOException {
+		final BatchDialog batchDiag = new BatchDialog(parent.getShell());
+		final int returncode = batchDiag.open();
+		if (returncode > 0)
+			return;
+		
+		baseproj = ResourcesPlugin.getWorkspace().getRoot().getProject(batchDiag.getProj1());
+		newproj = ResourcesPlugin.getWorkspace().getRoot().getProject(batchDiag.getProj2());
+		
+		// create base logger
+		final Logger BASE_LOGGER = Logger.getLogger("BASE_LOGGER");
+		Handler baseLoggerHandler = new FileHandler(batchDiag.getExportDir() + File.separator + "log.txt");
+		baseLoggerHandler.setFormatter(new SimpleFormatter());
+		BASE_LOGGER.addHandler(baseLoggerHandler);
+		
+		final ProgressBarDialog pbdiag = new ProgressBarDialog(parent.getShell());
+		pbdiag.open();
+		
+		try {
+			// first run
+			BASE_LOGGER.info("Cleaning-up before RefFinder first run...");
+			cleanUp();
+			
+			BASE_LOGGER.info("Running RefFinder for the first time...");
+			if ((new LSDiffRunner()).doFactExtractionForRefFinder(baseproj.getName(), newproj.getName(), pbdiag)) {
+				refreshTree();
+				exportBatch(batchDiag.getExportDir(), "base1", "base2");
+			} else {
+				BASE_LOGGER.severe("Fact extraction failed for the first time...");
+			}
+			
+			
+			BASE_LOGGER.info("Running batch analysis...");
+			ConfigFileReader config = new ConfigFileReader(batchDiag.getConfigFile());
+			BatchConfig batchConfig = config.getBatchConfig(batchDiag.getReverseRevisions());
+			
+			boolean batchFailure = false;
+			
+			for (int i = 0; i < batchConfig.size(); ++i) {
+				// create export dir for the current revision pair
+				String exportRevisionDir = createExportRevisionDir(batchDiag.getExportDir(), i==0 ? "base2" : batchConfig.getRevisionComment(i-1), batchConfig.getRevisionComment(i));
+				
+				// create specific logger
+				final Logger SPEC_LOGGER = Logger.getLogger("SPEC_LOGGER_" + exportRevisionDir);
+				Handler specLoggerHandler = new FileHandler(exportRevisionDir + File.separator + "log.txt");
+				specLoggerHandler.setFormatter(new SimpleFormatter());
+				SPEC_LOGGER.addHandler(specLoggerHandler);
+				
+				try {
+					IProject temp = newproj;
+					newproj = baseproj;
+					baseproj = temp;
+					baseproj = ResourcesPlugin.getWorkspace().getRoot().getProject(baseproj.getName());
+					
+					// update project 
+					SPEC_LOGGER.info("Updating project to revision: " + batchConfig.getRevision(i) + " " + batchConfig.getRevisionComment(i));
+					if (batchDiag.getVersionControlSystem() == VersionControlSystem.SVN) {
+						newproj = new SvnProjectUpdater(newproj).updateToRevision(batchConfig.getRevision(i));
+					} else {
+						newproj = new GitProjectUpdater(newproj).updateToRevision(batchConfig.getRevision(i));
+					}
+					
+					// run quamoco
+					//SPEC_LOGGER.info("Running Quamoco...");
+					//new QuamocoRunner(newproj, exportRevisionDir).run();
+
+					// clean up
+					SPEC_LOGGER.info("Cleaning up before RefFinder run...");
+					cleanUp();
+					
+					
+					// run ref-finder
+					SPEC_LOGGER.info("Running RefFinder...");
+					if ((new LSDiffRunner()).doFactExtractionForRefFinder(baseproj.getName(), newproj.getName(), pbdiag)) {
+						refreshTree();
+						SPEC_LOGGER.info("Exporting RefFinder results...");
+						export(exportRevisionDir);
+					} else {
+						SPEC_LOGGER.severe("RefFinder fact extraction failed!");
+					}
+					
+					SPEC_LOGGER.info("DONE!");
+					
+				} catch (LsclipseException ex) {
+					ex.printStackTrace();
+					SPEC_LOGGER.log(Level.SEVERE, "Exception occured", ex);
+					batchFailure = true;
+				} catch (IOException e) {
+					SPEC_LOGGER.log(Level.SEVERE, "Exception occured: Clean up failed! Result may incorrect.", e);
+					e.printStackTrace();
+					batchFailure = true;
+				}
+			} // for
+			if (batchFailure) {
+				BASE_LOGGER.info("Batch analysis FINISHED WITH ERRORS!");
+			} else {
+				BASE_LOGGER.info("Batch analysis DONE!");
+			}
+		} catch (LsclipseException ex) {
+			System.err.print(ex.getMessage());
+			BASE_LOGGER.log(Level.SEVERE, "Exception occured", ex);
+		} catch (IOException e) {
+			BASE_LOGGER.log(Level.SEVERE, "Exception occured: Could not delete LSclipse facts! Results may incorrect.", e);
+			e.printStackTrace();
+		} catch (Exception ex) {
+			BASE_LOGGER.log(Level.SEVERE, "Exception occured", ex);
+			ex.printStackTrace();
+		}
+		
+		pbdiag.dispose();
+	}
+	
+	private void cleanUp() throws IOException {
+		FileUtils.deleteDirectory(MetaInfo.srcDir);
+		FileUtils.deleteDirectory(MetaInfo.resDir);
+		FileUtils.deleteDirectory(MetaInfo.fdbDir);
+		LSDiffRunner.beforePositions.clear();
+		LSDiffRunner.afterPositions.clear();
+		LSDiffRunner.newTypeToFileMap_.clear();
+		LSDiffRunner.oldTypeToFileMap_.clear();
+	}
+	
+	
 	public void refreshTree() {
 		list.removeAll();
 		nodeList.clear();
@@ -434,6 +616,35 @@ public class TreeView extends ViewPart {
 		}
 		System.out.println("\nFor a total of " + totalCount
 				+ " refactorings found.");
+		
+	}
+
+	private String createExportRevisionDir(String exportDirectory, String baseRev, String newRev) {
+		String revDir = exportDirectory + File.separator + "rev_" + baseRev + "-" + newRev;
+		File revDirF = new File(revDir);
+		revDirF.mkdir();
+		return revDir;
+	}
+	
+	private void export(String exportDirectroy) {
+		ExportController exportController = new ExportController(exportDirectroy);
+		for (Node node : nodeList) {
+			try {
+				RefactoringExporter exporter = exportController.getCsvExporter(node);
+				exporter.addRefactoring(node);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		exportController.doAllExport();
+	}
+
+	
+	private void exportBatch(String exportDirectory, String baseRev, String newRev) {
+		String revDir = exportDirectory + File.separator + "rev_" + baseRev + "-" + newRev;
+		File revDirF = new File(revDir);
+		revDirF.mkdir();
+		export(revDir);
 	}
 
 	private String getName(String filledQuery) {
@@ -535,7 +746,6 @@ public class TreeView extends ViewPart {
 	@Override
 	public void setFocus() {
 		// TODO Auto-generated method stub
-
 	}
 
 }

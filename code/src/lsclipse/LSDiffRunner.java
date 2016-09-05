@@ -1,6 +1,7 @@
 /* 
 *    Ref-Finder
 *    Copyright (C) <2015>  <PLSE_UCLA>
+*    Copyright (C) <2016> University of Szeged
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -41,6 +42,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import lsclipse.dialogs.ProgressBarDialog;
+import lsclipse.position.PositionFactory;
 import lsclipse.utils.StringCleaner;
 import lsd.facts.LSDRuleEnumerator;
 import lsd.rule.LSDFact;
@@ -71,15 +73,20 @@ import changetypes.Fact;
 import changetypes.FactBase;
 
 public class LSDiffRunner {
-	private static final int NUM_THREADS = 4;
+	private static final int NUM_THREADS = 1;
 	private static final long TIMEOUT = 60; //wait 60 minutes for fact extraction
-	private static Map<String, IJavaElement> oldTypeToFileMap_ = new ConcurrentHashMap<String, IJavaElement>();
+	
+	public static Map<String, IJavaElement> oldTypeToFileMap_ = new ConcurrentHashMap<String, IJavaElement>();
+	public static Map<String, IJavaElement> newTypeToFileMap_ = new ConcurrentHashMap<String, IJavaElement>();
+	
+	
+	public static PositionFactory beforePositions = new PositionFactory();
+	public static PositionFactory afterPositions = new PositionFactory();
 	
 	public static Map<String, IJavaElement> getOldTypeToFileMap() {
 		return Collections.unmodifiableMap(oldTypeToFileMap_);
 	}
 	
-	private static Map<String, IJavaElement> newTypeToFileMap_ = new ConcurrentHashMap<String, IJavaElement>();
 	
 	public static Map<String, IJavaElement> getNewTypeToFileMap() {
 		return Collections.unmodifiableMap(newTypeToFileMap_);
@@ -159,7 +166,9 @@ public class LSDiffRunner {
 		long beforefacts1 = System.currentTimeMillis();
 		try {
 			allFiles = getFiles(proj1);
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (allFiles == null)
 			return false;
 		progbar.appendLog("Scanning " + allFiles.size() + " files...");
@@ -168,7 +177,7 @@ public class LSDiffRunner {
 		List<Future<FactBase>> futures = new LinkedList<Future<FactBase>>();
 		while (iter.hasNext()) {
 			ICompilationUnit file = iter.next();
-			FactGetter fg = new FactGetter(file, oldTypeToFileMap_);
+			FactGetter fg = new FactGetter(file, oldTypeToFileMap_, beforePositions);
 			futures.add(execService.submit(fg));
 		}
 		execService.shutdown();
@@ -217,7 +226,7 @@ public class LSDiffRunner {
 		futures.clear();
 		while (iter.hasNext()) {
 			ICompilationUnit file = iter.next();
-			FactGetter fg = new FactGetter(file, newTypeToFileMap_);
+			FactGetter fg = new FactGetter(file, newTypeToFileMap_, afterPositions);
 			futures.add(execService.submit(fg));
 		}
 		execService.shutdown();
@@ -391,12 +400,14 @@ public class LSDiffRunner {
 	
 	static class FactGetter implements Callable<FactBase> {
 		Map<String, IJavaElement> typeToFileMap_;
-		ICompilationUnit file_; 
+		ICompilationUnit file_;
+		private PositionFactory positionFactory;
 		
-		public FactGetter(ICompilationUnit file, Map<String, IJavaElement> typeToFileMap) {
+		public FactGetter(ICompilationUnit file, Map<String, IJavaElement> typeToFileMap, PositionFactory positionFactory) {
 			super();
 			file_ = file;
 			typeToFileMap_ = typeToFileMap;
+			this.positionFactory = positionFactory;
 		}
 
 		@Override
@@ -412,7 +423,7 @@ public class LSDiffRunner {
 				assert false;
 			}
 	        try {
-	        	ASTVisitorAtomicChange acvisitor = new ASTVisitorAtomicChange();
+	        	ASTVisitorAtomicChange acvisitor = new ASTVisitorAtomicChange(positionFactory);
 		        ASTNode ast = parser.createAST(new NullProgressMonitor());
 		        ast.accept(acvisitor);
 		        typeToFileMap_.putAll(acvisitor.getTypeToFileMap());

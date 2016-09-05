@@ -8,8 +8,16 @@ Require-Bundle: org.eclipse.ui,org.eclipse.jdt.core,org.eclipse.core.r
  untime,org.eclipse.core.resources
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-ClassPath: lib/jakarta-regexp-1.5.jar,lib/log4j-1.2.7.jar,lib/j
- unit-4.7.jar,lib/svnkit.jar,.
+Bundle-ClassPath: lib/jakarta-regexp-1.5.jar,
+ lib/log4j-1.2.7.jar,
+ lib/junit-4.7.jar,
+ lib/svnkit.jar,
+ .,
+ lib/commons-io-2.4-javadoc.jar,
+ lib/commons-io-2.4-sources.jar,
+ lib/commons-io-2.4-test-sources.jar,
+ lib/commons-io-2.4-tests.jar,
+ lib/commons-io-2.4.jar
 Import-Package: org.eclipse.compare,org.eclipse.compare.structuremerge
  viewer,org.eclipse.ui.ide
 

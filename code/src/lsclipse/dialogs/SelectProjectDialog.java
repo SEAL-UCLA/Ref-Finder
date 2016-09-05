@@ -17,6 +17,7 @@
 */
 package lsclipse.dialogs;
 
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.dialogs.Dialog;
@@ -30,7 +31,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 public class SelectProjectDialog extends Dialog {
-
+	
 	private String proj1 = "";
 	private String proj2 = "";
 
@@ -58,6 +59,8 @@ public class SelectProjectDialog extends Dialog {
 
 	protected Control createDialogArea(Composite parent) {
 		this.getShell().setText("Select Versions");
+		
+		setShellStyle(getShellStyle() | SWT.RESIZE); 
 
 		// overall layout
 		GridLayout layout = new GridLayout();
@@ -101,7 +104,7 @@ public class SelectProjectDialog extends Dialog {
 			cmbProj1.add(proj.getName());
 			cmbProj2.add(proj.getName());
 		}
-
+		
 		return parent;
 	}
 }

@@ -1,6 +1,7 @@
 /* 
 *    Ref-Finder
 *    Copyright (C) <2015>  <PLSE_UCLA>
+*    Copyright (C) <2016> University of Szeged
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -21,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+
+import lsclipse.rules.export.RefactoringExporter;
 
 import org.eclipse.jdt.core.IJavaElement;
 
@@ -45,6 +48,9 @@ public class Node
 	public String params;
 	public Map<String,IJavaElement> oldFacts = new HashMap<String,IJavaElement>();
 	public Map<String,IJavaElement> newFacts = new HashMap<String,IJavaElement>();
+
+	private RefactoringExporter exporter;
+
 
 	public Node(String name, Node p)
 	{
@@ -172,4 +178,10 @@ public class Node
 	
 	public boolean hasChildren()
 	{ return !children.isEmpty(); }	
+	
+	public void setExporter(RefactoringExporter exporter) {
+		this.exporter = exporter;
+	}
+	
+	
 }
