@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+import lsclipse.position.PositionFactory;
+
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
@@ -44,6 +46,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConstructorInvocation;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldAccess;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
@@ -71,6 +74,9 @@ public class ASTVisitorAtomicChange extends ASTVisitor {
 	public FactBase facts;
 	private Map<String, IJavaElement> typeToFileMap_ = new HashMap<String, IJavaElement>();
 
+	
+	private PositionFactory positionFactory;
+	
 	public Map<String, IJavaElement> getTypeToFileMap() {
 		return Collections.unmodifiableMap(typeToFileMap_);
 	}
@@ -82,8 +88,9 @@ public class ASTVisitorAtomicChange extends ASTVisitor {
 	private Stack<IMethodBinding> mtbStack = new Stack<IMethodBinding>();
 	private Stack<ITypeBinding> itbStack = new Stack<ITypeBinding>();
 
-	public ASTVisitorAtomicChange() {
+	public ASTVisitorAtomicChange(PositionFactory positionFactory) {
 		facts = new FactBase();
+		this.positionFactory = positionFactory;
 	}
 
 	public void printFacts(PrintStream out) {
@@ -224,7 +231,7 @@ public class ASTVisitorAtomicChange extends ASTVisitor {
 		return true;
 	}
 
-	private static String getQualifiedName(ITypeBinding itb) {
+	public static String getQualifiedName(ITypeBinding itb) {
 		if (itb.isPrimitive()) {
 			return itb.getName();
 		} else if (itb.isArray()) {
@@ -266,7 +273,7 @@ public class ASTVisitorAtomicChange extends ASTVisitor {
 		}
 	}
 
-	private static String getQualifiedName(IVariableBinding ivb) {
+	public static String getQualifiedName(IVariableBinding ivb) {
 		try {
 			String name = ivb.getName();
 			return getQualifiedName(ivb.getDeclaringClass()) + "#" + name;
@@ -275,7 +282,7 @@ public class ASTVisitorAtomicChange extends ASTVisitor {
 		}
 	}
 
-	private static String getQualifiedName(IMethodBinding imb) {
+	public static String getQualifiedName(IMethodBinding imb) {
 		// TODO(kprete): do not delegate to getSimpleName so the qualified
 		// name can contain the param types and the simple name will stay
 		// as is.
@@ -331,6 +338,14 @@ public class ASTVisitorAtomicChange extends ASTVisitor {
 		return true;
 	}
 
+	public boolean visit(FieldDeclaration node) {
+		for (Object fragment : node.fragments()) {
+			VariableDeclarationFragment vdf = (VariableDeclarationFragment)fragment;
+			positionFactory.createPosition(vdf);
+		}
+		return true;
+	}
+	
 	public boolean visit(TypeDeclaration node) {
 		ITypeBinding itb = node.resolveBinding();
 		itbStack.push(itb);
@@ -339,6 +354,7 @@ public class ASTVisitorAtomicChange extends ASTVisitor {
 			facts.add(Fact.makeTypeFact(getQualifiedName(itb),
 					getSimpleName(itb), itb.getPackage().getName(),
 					itb.isInterface() ? Fact.INTERFACE : Fact.CLASS));
+			positionFactory.createPosition(node);
 		} catch (Exception e) {
 			System.err.println("Cannot resolve bindings for class "
 					+ node.getName().toString());
@@ -408,6 +424,7 @@ public class ASTVisitorAtomicChange extends ASTVisitor {
 				ITypeBinding intb = t.resolveBinding();
 				facts.add(Fact.makeTypeInTypeFact(getQualifiedName(intb),
 						getQualifiedName(itb)));
+				positionFactory.createPosition(t);
 			}
 		} catch (Exception e) {
 			System.err.println("Cannot resolve inner type bindings for class "
@@ -544,6 +561,8 @@ public class ASTVisitorAtomicChange extends ASTVisitor {
 			facts.add(Fact.makeMethodFact(getQualifiedName(mtb),
 					getSimpleName(mtb),
 					getQualifiedName(mtb.getDeclaringClass()), visibility));
+			// create position info
+			positionFactory.createPosition(node);
 		} catch (Exception e) {
 			System.err
 					.println("Cannot resolve return method bindings for method "
